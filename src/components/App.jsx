@@ -18,8 +18,8 @@ function App() {
           <Route path="/new" element={<NewProject />} />
           <Route path="/version" element={<ProjectVersion />} />
           <Route path="/page" element={<ProjectPage />} />
-          <Route path="/result" element={<DiffingResult />} />
         </Route>
+        <Route path="/result" element={<DiffingResult />} />
       </Routes>
     </>
   );
