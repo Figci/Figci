@@ -12,6 +12,7 @@ function BottomNavigator({ buttons }) {
           handleClick={button.handleClick}
           size="medium"
           usingCase={button.usingCase}
+          disabled={button.disabled}
         >
           {button.text}
         </Button>
