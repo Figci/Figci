@@ -44,6 +44,7 @@ module.exports = {
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
-    "guard-for-in": "off"
+    "no-useless-return": "off",
+    "guard-for-in": "off",
   },
 };
