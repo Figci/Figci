@@ -28,6 +28,26 @@ const getPages = async (projectKey, { beforeVersion, afterVersion }) => {
   return responseResult;
 };
 
-const getDiffingResult = () => {};
+const getDiffingResult = async (projectKey, pageId) => {
+  const baseURI = import.meta.env.VITE_BACKEND_BASE_API_URI;
+
+  const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
+
+  const API_URL = generateApiUri(
+    baseURI,
+    `/projects/${projectKey}/pages/${pageId}`,
+  );
+
+  const response = await fetch(API_URL, {
+    method: "GET",
+    headers: {
+      authorization: token,
+    },
+  });
+
+  const responseJson = await response.json();
+
+  return responseJson;
+};
 
 export { getPages, getDiffingResult };

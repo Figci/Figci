@@ -130,4 +130,5 @@ const ProjectPageWrapper = styled.div`
   height: 100%;
   padding: 64px;
 `;
+
 export default ProjectPage;
