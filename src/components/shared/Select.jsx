@@ -5,7 +5,9 @@ function Select({ selectInfo }) {
     selectInfo && (
       <SelectWrapper>
         {selectInfo.label && (
-          <label htmlFor={selectInfo.id}>{selectInfo.label}</label>
+          <label htmlFor={selectInfo.id} className="label">
+            {selectInfo.label}
+          </label>
         )}
         {selectInfo.selects.map(select => (
           <select
@@ -32,29 +34,31 @@ const SelectWrapper = styled.div`
   margin-right: 24px;
 
   select {
-    width: 400px;
+    width: 440px;
     height: 64px;
     margin-bottom: 12px;
     padding: 0px 24px;
     display: flex;
     border-radius: 8px;
     border: 2px solid #000000;
-
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
+
     background-color: #ffffff;
   }
 
   .label {
-    display: block;
     margin-bottom: 12px;
+    display: block;
 
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
+
+    color: #000000;
   }
 
   .description {
@@ -64,17 +68,21 @@ const SelectWrapper = styled.div`
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
+
     color: #868e96;
   }
 
   select:disabled {
     background-color: #e9ecef;
     color: #868e96;
+
     cursor: not-allowed;
   }
 
   .hidden {
     display: none;
+
+    color: #868e96;
   }
 `;
 

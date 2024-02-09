@@ -116,8 +116,8 @@ function ProjectPage() {
       <ProjectPageWrapper>
         <Title title={contents.title} />
         <Select selectInfo={contents.selectInfo} />
-        <BottomNavigator buttons={contents.buttons} />
       </ProjectPageWrapper>
+      <BottomNavigator buttons={contents.buttons} />
     </>
   );
 }

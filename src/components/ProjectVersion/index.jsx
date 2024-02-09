@@ -146,7 +146,7 @@ function ProjectVersion() {
     buttons: [
       {
         text: "이전",
-        usingCase: "solid",
+        usingCase: "line",
         handleClick,
         className: "prev",
       },
@@ -188,10 +188,10 @@ const ContentsWrapper = styled.div`
 `;
 
 const HorizontalAlign = styled.form`
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  width: 100%;
 `;
 
 export default ProjectVersion;
