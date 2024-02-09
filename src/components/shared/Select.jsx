@@ -8,7 +8,13 @@ function Select({ selectInfo }) {
           <label htmlFor={selectInfo.id}>{selectInfo.label}</label>
         )}
         {selectInfo.selects.map(select => (
-          <select key={select.id} id={select.id} onChange={select.onChange}>
+          <select
+            className={select.className}
+            key={select.className}
+            id={select.className}
+            onChange={select.handleChange}
+          >
+            <option className="disabled hidden">{select.placeholder}</option>
             {select.options}
           </select>
         ))}
@@ -31,13 +37,13 @@ const SelectWrapper = styled.div`
     margin-bottom: 12px;
     padding: 0px 24px;
     display: flex;
+    border-radius: 8px;
+    border: 2px solid #000000;
 
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
-    border-radius: 8px;
-    border: 2px solid #000000;
     background-color: #ffffff;
   }
 
@@ -59,6 +65,16 @@ const SelectWrapper = styled.div`
     font-weight: 500;
     line-height: 24px;
     color: #868e96;
+  }
+
+  select:disabled {
+    background-color: #e9ecef;
+    color: #868e96;
+    cursor: not-allowed;
+  }
+
+  .hidden {
+    display: none;
   }
 `;
 
