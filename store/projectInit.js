@@ -4,7 +4,9 @@ const initStore = set => {
   return {
     status: {
       projectKey: null,
+      beforeDate: null,
       beforeVersion: null,
+      afterDate: null,
       afterVersion: null,
       pageId: null,
     },
