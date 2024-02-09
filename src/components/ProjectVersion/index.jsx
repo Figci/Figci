@@ -141,8 +141,7 @@ function ProjectVersion() {
   const contents = {
     title: {
       step: "02",
-      firstSentence: "비교할 해당 피그마 파일의",
-      secondSentence: "이전 / 최신 버전을 입력해 주세요",
+      text: "비교할 해당 피그마 파일의\n이전 / 최신 버전을 입력해 주세요",
     },
     buttons: [
       {

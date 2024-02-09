@@ -75,8 +75,7 @@ function ProjectPage() {
   const contents = {
     title: {
       step: "03",
-      firstSentence: "비교할 페이지를",
-      secondSentence: "선택해주세요.",
+      text: "비교할 페이지를 선택해주세요.",
     },
     selectInfo: {
       id: "selectedPage",

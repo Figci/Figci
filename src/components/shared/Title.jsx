@@ -4,11 +4,7 @@ function Title({ title }) {
   return (
     <TitleWrapper>
       {title.step && <h2 className="step">STEP {title.step}</h2>}
-      <h2 className="title">
-        {title.firstSentence}
-        <br />
-        {title.secondSentence}
-      </h2>
+      <h2 className="title spacing">{title.text}</h2>
     </TitleWrapper>
   );
 }
@@ -28,6 +24,10 @@ const TitleWrapper = styled.div`
 
   .title {
     color: #000000;
+  }
+
+  .spacing {
+    white-space: pre;
   }
 `;
 
