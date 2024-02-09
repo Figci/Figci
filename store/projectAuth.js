@@ -2,26 +2,18 @@ import { create } from "zustand";
 
 const authStore = set => {
   return {
-    auth: {
-      code: null,
-      state: "figci",
-    },
-    setAuth: tokenQueryObject => {
+    authCode: null,
+    authState: "figci",
+    setAuth: authCode => {
       set(state => {
-        state.auth = {
-          ...state.auth,
-          ...tokenQueryObject,
-        };
+        state.authCode = authCode;
 
         return state;
       });
     },
     clearAuth: () => {
       return set(state => {
-        state.auth = {
-          code: null,
-          state: "figci",
-        };
+        state.authCode = null;
 
         return state;
       });

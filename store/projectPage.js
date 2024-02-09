@@ -7,8 +7,8 @@ const pageStore = set => {
     setPages: pageList => {
       const pageIds = [];
 
-      pageList.forEach(item => {
-        const [pageId, pageName] = Object.entries(item)[0];
+      pageList.forEach(page => {
+        const { pageId, pageName } = page;
 
         pageIds.push(pageId);
 

@@ -3,7 +3,7 @@ import { create } from "zustand";
 const initStore = set => {
   return {
     status: {
-      fileKey: null,
+      projectKey: null,
       beforeVersion: null,
       afterVersion: null,
       pageId: null,
@@ -43,7 +43,7 @@ const initStore = set => {
     clearProject: () => {
       return set(state => {
         state.status = {
-          fileKey: null,
+          projectKey: null,
           beforeVersion: null,
           afterVersion: null,
           pageId: null,
