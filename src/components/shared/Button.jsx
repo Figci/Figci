@@ -31,12 +31,12 @@ const USING_CASES = {
 };
 
 function Button({
-  disabled,
+  className,
   handleClick,
-  children,
+  disabled,
   size,
   usingCase,
-  className,
+  children,
 }) {
   const buttonStyle = BUTTON_SIZES[size];
   const buttonMode = USING_CASES[usingCase];

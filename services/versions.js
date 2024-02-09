@@ -13,10 +13,9 @@ const getVersions = async projectsId => {
     },
   });
 
-  const responseJson = await response.json();
-  const versions = responseJson.content;
+  const responseResult = await response.json();
 
-  return versions;
+  return responseResult;
 };
 
 export default getVersions;

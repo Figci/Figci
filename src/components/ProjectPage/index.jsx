@@ -14,10 +14,10 @@ import usePageStatusStore from "../../../store/projectInit";
 
 function ProjectPage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [targetPageId, setTargetPageId] = useState("");
   const { status, setStatus } = usePageStatusStore(state => state);
   const { byPageIds } = usePageListStore();
   const navigate = useNavigate();
-  const [targetPageId, setTargetPageId] = useState("");
 
   setStatus({ pageId: targetPageId });
 

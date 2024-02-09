@@ -44,11 +44,13 @@ function ProjectVersion() {
 
       return;
     }
+
     const { beforeVersion, afterVersion } = projectVersion;
 
     setStatus(projectVersion);
 
     setIsLoaded(true);
+
     const pageList = await getPages(status.projectKey, {
       beforeVersion,
       afterVersion,
@@ -56,6 +58,7 @@ function ProjectVersion() {
 
     if (pageList.result === "error") {
       setIsLoaded(false);
+
       setToastMessage(pageList.message);
       setToast(true);
 
