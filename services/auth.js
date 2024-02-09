@@ -1,4 +1,4 @@
-import generateApiUri from "../components/utils/generateURI";
+import generateApiUri from "../utils/generateURI";
 
 const clientId = import.meta.env.VITE_FIGMA_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_FIGMA_CLIENT_SECRET;
@@ -37,4 +37,12 @@ const getToken = async authCode => {
   return responseJson;
 };
 
-export { getAuth, getToken };
+const fetchToken = async code => {
+  if (code) {
+    const accessToken = await getToken(code);
+
+    localStorage.setItem("FigmaToken", JSON.stringify(accessToken));
+  }
+};
+
+export { getAuth, getToken, fetchToken };

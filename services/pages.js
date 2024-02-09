@@ -1,4 +1,4 @@
-import generateApiUri from "../components/utils/generateURI";
+import generateApiUri from "../utils/generateURI";
 
 const getPages = async (projectKey, { beforeVersion, afterVersion }) => {
   const baseURI = import.meta.env.VITE_BACKEND_BASE_API_URI;
@@ -23,9 +23,9 @@ const getPages = async (projectKey, { beforeVersion, afterVersion }) => {
     },
   });
 
-  const responseJson = await response.json();
+  const result = await response.json();
 
-  return responseJson;
+  return result.content;
 };
 
 const getDiffingResult = () => {};
