@@ -5,7 +5,6 @@ import styled from "styled-components";
 import Welcome from "../Welcome";
 import Modal from "../shared/Modal";
 import Title from "../shared/Title";
-import Input from "../shared/Input";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
@@ -50,8 +49,9 @@ function NewProject() {
     ev.preventDefault();
 
     if (!isValidFigmaUrl(inputValue)) {
-      setToastMessage("유효하지 않은 URL입니다.");
+      setToastMessage("피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲");
       setToast(true);
+      setIsModalOpened(false);
 
       return;
     }
@@ -67,18 +67,7 @@ function NewProject() {
   const contents = {
     title: {
       step: "01",
-      firstSentence: "디자인 변경사항을 확인할",
-      secondSentence: "피그마 프로젝트 URL을 입력해주세요.",
-    },
-    inputInfo: {
-      id: "project",
-      label: "피그마 프로젝트 URL 입력",
-      inputs: [
-        {
-          id: "address",
-          placeholder: "url 주소를 입력해주세요. (예: www.figma.com/abc)",
-        },
-      ],
+      text: "디자인 변경사항을 확인할\n피그마 프로젝트 URL을 입력해주세요.",
     },
     buttons: [
       { text: "다음", usingCase: "solid", handleClick: handleSubmitURI },
@@ -92,13 +81,18 @@ function NewProject() {
           <Welcome handleClick={handleModalClick} />
         </Modal>
       )}
+      l
       <ContentsWrapper>
         <form>
           <Title title={contents.title} />
-          <Input
-            inputInfo={contents.inputInfo}
-            onInputChange={handleChangeInput}
-          />
+          <label htmlFor="projectUrl" className="label">
+            피그마 프로젝트 URL 입력
+            <input
+              id="projectUrl"
+              placeholder="url 주소를 입력해주세요. (예: www.figma.com/abc)"
+              onChange={handleChangeInput}
+            />
+          </label>
         </form>
       </ContentsWrapper>
       <BottomNavigator buttons={contents.buttons} />
@@ -113,6 +107,51 @@ const ContentsWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 64px;
+
+  input {
+    width: 560px;
+    height: 64px;
+    margin-bottom: 12px;
+    padding: 0px 24px;
+    display: flex;
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    border-radius: 8px;
+
+    border: 2px solid #000000;
+    background-color: #ffffff;
+  }
+
+  .projectUrl {
+    margin-top: 64;
+  }
+
+  .label {
+    display: block;
+    margin-top: 64px;
+    margin-bottom: 12px;
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+
+    color: #000000;
+  }
+
+  .description {
+    display: block;
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+
+    color: #868e96;
+  }
 `;
 
 export default NewProject;
