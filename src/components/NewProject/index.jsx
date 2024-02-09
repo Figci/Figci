@@ -1,6 +1,5 @@
-/* eslint-disable consistent-return */
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Welcome from "../Welcome";
@@ -8,33 +7,26 @@ import Modal from "../shared/Modal";
 import Title from "../shared/Title";
 import Input from "../shared/Input";
 import BottomNavigator from "../shared/BottomNavigator";
+import ToastPopup from "../shared/Toast";
 
-import { getToken } from "../../services/auth";
-import getVersions from "../../services/versions";
-import getProjectKeyFromURI from "../utils/getProjectKeyFromURI";
+import getVersions from "../../../services/versions";
+import getProjectKeyFromURI from "../../../utils/getProjectKeyFromURI";
 
-import useAuthStore from "../../../store/projectAuth";
 import useProjectVersionStore from "../../../store/projectVersion";
 import usePageStatusStore from "../../../store/projectInit";
 
 function NewProject() {
+  const navigate = useNavigate();
   const [isModalOpened, setIsModalOpened] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const navigate = useNavigate();
-  const [query] = useSearchParams();
-  const { setStatus } = usePageStatusStore();
-  const { auth, setAuth } = useAuthStore();
-  const { setVersion } = useProjectVersionStore();
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  const code = query.get("code") || auth.code;
-  const state = query.get("state");
+  const { setStatus } = usePageStatusStore();
+  const { setVersion } = useProjectVersionStore();
 
   const setVersionList = newVersions => {
     setVersion(newVersions);
-  };
-
-  const setAuthStore = authParams => {
-    setAuth(authParams);
   };
 
   const handleModalClick = ev => {
@@ -47,8 +39,22 @@ function NewProject() {
     setInputValue(ev.target.value);
   };
 
+  const isValidFigmaUrl = figmaUrl => {
+    const figmaUrlPattern =
+      /^(?:https:\/\/)?(?:www\.)?figma\.com\/file\/([0-9a-zA-Z]{22,128})(?:\/?([^?]+)?(.*))?$/;
+
+    return figmaUrlPattern.test(figmaUrl);
+  };
+
   const handleSubmitURI = async ev => {
     ev.preventDefault();
+
+    if (!isValidFigmaUrl(inputValue)) {
+      setToastMessage("유효하지 않은 URL입니다.");
+      setToast(true);
+
+      return;
+    }
 
     const projectKey = getProjectKeyFromURI(inputValue);
 
@@ -57,40 +63,6 @@ function NewProject() {
 
     navigate("/version");
   };
-
-  useEffect(() => {
-    setAuthStore(code);
-
-    const fetchToken = async () => {
-      try {
-        const authCode = code;
-
-        if (authCode) {
-          const accessToken = await getToken(code);
-
-          localStorage.setItem("FigmaToken", JSON.stringify(accessToken));
-        }
-      } catch (err) {
-        navigate("/", {
-          state: {
-            status: 401,
-            message: "로그인에 실패하였습니다.",
-          },
-        });
-      }
-    };
-
-    if (state !== import.meta.env.VITE_FIGMA_OAUTH_STATE) {
-      navigate("/", {
-        state: {
-          status: 401,
-          message: "로그인에 실패하였습니다.",
-        },
-      });
-    }
-
-    fetchToken();
-  }, []);
 
   const contents = {
     title: {
@@ -130,6 +102,7 @@ function NewProject() {
         </form>
       </ContentsWrapper>
       <BottomNavigator buttons={contents.buttons} />
+      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
     </>
   );
 }

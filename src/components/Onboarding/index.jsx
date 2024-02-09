@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "../shared/Button";
 import ToastPopup from "../shared/Toast";
 
-import { getAuth } from "../../services/auth";
+import { getAuth, fetchToken } from "../../../services/auth";
 import figciLogo from "../../../assets/logo_figci.jpg";
 import onBoardingIcon from "../../../assets/onboarding.png";
 
 function Onboarding() {
   const [isClicked, setIsClicked] = useState(false);
   const [toast, setToast] = useState(false);
+  const [toastMessage, setToageMessage] = useState("");
+  const [query] = useSearchParams();
+  const navigate = useNavigate();
+
+  const code = query.get("code");
+  const state = query.get("state");
 
   useEffect(() => {
     if (isClicked) {
@@ -19,6 +26,20 @@ function Onboarding() {
       setIsClicked(false);
     }
   }, [isClicked]);
+
+  const getAccessToken = async () => {
+    await fetchToken(code);
+
+    navigate("/new");
+  };
+
+  if (code && state) {
+    try {
+      getAccessToken(code);
+    } catch (err) {
+      setToageMessage("로그인에 실패하였습니다.");
+    }
+  }
 
   const onClickButtonHandler = ev => {
     ev.preventDefault();
@@ -57,12 +78,7 @@ function Onboarding() {
           변경사항을 확인해보세요
         </span>
       </Wrapper>
-      {toast && (
-        <ToastPopup
-          setToast={setToast}
-          message="로그인 하는데 문제가 발생했어요 다시 로그인 해주세요."
-        />
-      )}
+      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
     </Container>
   );
 }
