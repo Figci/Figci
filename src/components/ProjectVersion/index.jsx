@@ -7,94 +7,92 @@ import Modal from "../shared/Modal";
 import Title from "../shared/Title";
 import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
-import { getPages } from "../../services/pages";
+import ToastPopup from "../shared/Toast";
+
+import { getPages } from "../../../services/pages";
 
 import useProjectVersionStore from "../../../store/projectVersion";
 import usePageListStore from "../../../store/projectPage";
 import usePageStatusStore from "../../../store/projectInit";
 
 function ProjectVersion() {
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [beforeDate, setBeforeDate] = useState("");
-  const [afterDate, setAfterDate] = useState("");
-  const [beforeVersion, setBeforeVersion] = useState("");
-  const [afterVersion, setAfterVersion] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [projectVersion, setProjectVersion] = useState({});
+
   const navigate = useNavigate();
 
-  const { allDates, byDates } = useProjectVersionStore();
-
   const { status, setStatus, clearProject } = usePageStatusStore();
+  const { allDates, byDates } = useProjectVersionStore();
   const { setPages } = usePageListStore();
 
-  const onChangeBeforeDate = ev => {
-    const date = ev.target.value;
-
-    setBeforeDate(date);
+  const handleChange = ev => {
+    setProjectVersion({
+      ...projectVersion,
+      [ev.currentTarget.className]: ev.target.value,
+    });
   };
 
-  const onChangeBeforeVersion = ev => {
-    const version = ev.target.value;
+  const handleClick = async ev => {
+    ev.preventDefault();
 
-    setBeforeVersion(version);
-  };
+    if (ev.target.classList.contains("prev")) {
+      clearProject();
 
-  const onChangeAfterDate = ev => {
-    const date = ev.target.value;
+      navigate("/new");
 
-    setAfterDate(date);
-  };
+      return;
+    }
+    const { beforeVersion, afterVersion } = projectVersion;
 
-  const onChangeAfterVersion = ev => {
-    const version = ev.target.value;
+    setStatus(projectVersion);
 
-    setAfterVersion(version);
-  };
+    setIsLoaded(true);
+    const pageList = await getPages(status.projectKey, {
+      beforeVersion,
+      afterVersion,
+    });
 
-  const filterNextDates = () => {
-    if (beforeDate) {
-      return allDates.filter(
-        dateString => new Date(dateString) > new Date(beforeDate),
-      );
+    if (pageList.result === "error") {
+      setIsLoaded(false);
+      setToastMessage(pageList.message);
+      setToast(true);
+
+      return;
     }
 
-    return false;
-  };
-
-  const handleClickPrevButton = ev => {
-    ev.preventDefault();
-
-    clearProject();
-
-    navigate(-1);
-  };
-
-  const handleSubmitNextButton = async ev => {
-    ev.preventDefault();
+    setPages(pageList.content);
 
     setIsLoaded(false);
 
-    const selectVersions = {
-      beforeVersion,
-      afterVersion,
-    };
-
-    setStatus(selectVersions);
-
-    const pageList = await getPages(status.projectKey, selectVersions);
-
-    setPages(pageList);
-
-    setIsLoaded(true);
     navigate("/page");
   };
 
-  const prevVersionForm = {
+  const createOption = versions => {
+    const optionList = [];
+
+    for (const versionId in versions) {
+      const versionTitle = versions[versionId].label;
+
+      optionList.push(
+        <option value={versionId} key={versionId}>
+          {versionTitle}
+        </option>,
+      );
+    }
+
+    return optionList;
+  };
+
+  const beforeVersionForm = {
     label: "이전 버전",
     description: "지정한 버전 명이 없으면 시간으로 보여요!",
     selects: [
       {
-        id: "beforeDate",
-        onChange: onChangeBeforeDate,
+        className: "beforeDate",
+        handleChange,
+        placeholder: "버전 선택",
         options: allDates.map(date => (
           <option key={date} value={date}>
             {date}
@@ -102,44 +100,37 @@ function ProjectVersion() {
         )),
       },
       {
-        id: "beforeVersion",
-        onChange: onChangeBeforeVersion,
+        className: "beforeVersion",
+        handleChange,
+        placeholder: "날짜 선택",
         options:
-          beforeDate &&
-          Object.entries(byDates[beforeDate]).map(([key, value]) => (
-            <option key={value.label} value={key}>
-              {value.label}
-            </option>
-          )),
+          projectVersion.beforeDate &&
+          createOption(byDates[projectVersion.beforeDate]),
       },
     ],
   };
 
-  const nextVersionForm = {
+  const afterVersionForm = {
     label: "이후 버전",
     description: "지정한 버전 명이 없으면 시간으로 보여요!",
     selects: [
       {
-        id: "afterDate",
-        onChange: onChangeAfterDate,
-        options:
-          filterNextDates() &&
-          filterNextDates().map(date => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          )),
+        className: "afterDate",
+        handleChange,
+        placeholder: "날짜 선택",
+        options: allDates.map(date => (
+          <option key={date} value={date}>
+            {date}
+          </option>
+        )),
       },
       {
-        id: "afterVersion",
-        onChange: onChangeAfterVersion,
+        className: "afterVersion",
+        handleChange,
+        placeholder: "버전 선택",
         options:
-          afterDate &&
-          Object.entries(byDates[afterDate]).map(([key, value]) => (
-            <option key={value.label} value={key}>
-              {value.label}
-            </option>
-          )),
+          projectVersion.afterDate &&
+          createOption(byDates[projectVersion.afterDate]),
       },
     ],
   };
@@ -151,14 +142,24 @@ function ProjectVersion() {
       secondSentence: "이전 / 최신 버전을 입력해 주세요",
     },
     buttons: [
-      { text: "이전", usingCase: "solid", handleClick: handleClickPrevButton },
-      { text: "다음", usingCase: "solid", handleClick: handleSubmitNextButton },
+      {
+        text: "이전",
+        usingCase: "solid",
+        handleClick,
+        className: "prev",
+      },
+      {
+        text: "다음",
+        usingCase: "solid",
+        handleClick,
+        className: "next",
+      },
     ],
   };
 
   return (
     <>
-      {!isLoaded && (
+      {isLoaded && (
         <Modal>
           <Loading />
         </Modal>
@@ -166,11 +167,12 @@ function ProjectVersion() {
       <ContentsWrapper>
         <Title title={contents.title} />
         <HorizontalAlign>
-          <Select selectInfo={prevVersionForm} />
-          <Select selectInfo={nextVersionForm} />
+          <Select selectInfo={beforeVersionForm} />
+          <Select selectInfo={afterVersionForm} />
         </HorizontalAlign>
       </ContentsWrapper>
       <BottomNavigator buttons={contents.buttons} />
+      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
     </>
   );
 }
