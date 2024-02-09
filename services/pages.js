@@ -25,7 +25,7 @@ const getPages = async (projectKey, { beforeVersion, afterVersion }) => {
 
   const result = await response.json();
 
-  return result.content;
+  return result;
 };
 
 const getDiffingResult = () => {};
