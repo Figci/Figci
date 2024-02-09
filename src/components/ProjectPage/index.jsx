@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,45 +7,48 @@ import Modal from "../shared/Modal";
 import Title from "../shared/Title";
 import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
-import { getDiffingResult } from "../../services/pages";
 
+import { getDiffingResult } from "../../../services/pages";
 import usePageListStore from "../../../store/projectPage";
 import usePageStatusStore from "../../../store/projectInit";
 
 function ProjectPage() {
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [pageList, setPageList] = useState([]);
-  const [selectPage, setSelectPage] = useState("");
-  const navigate = useNavigate();
-  const { status, setStatus } = usePageStatusStore();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { status, setStatus } = usePageStatusStore(state => state);
   const { byPageIds } = usePageListStore();
+  const navigate = useNavigate();
+  const [targetPageId, setTargetPageId] = useState("");
 
-  const onChangeHandler = ev => {
-    const date = ev.target.value;
+  setStatus({ pageId: targetPageId });
 
-    setSelectPage(date);
+  const handleChange = ev => {
+    setTargetPageId(ev.target.value);
   };
 
-  const handleSubmitPage = ev => {
+  const handleClick = ev => {
     ev.preventDefault();
 
-    const { projectKey, beforeVersion, afterVersion } = status;
+    if (ev.target.classList.contains("prev")) {
+      navigate("/version");
 
-    setStatus({ pageId: selectPage });
+      return;
+    }
+
+    const { projectKey, beforeVersion, afterVersion, pageId } = status;
 
     const targetPage = {
       projectKey,
       beforeVersion,
       afterVersion,
-      nodeId: selectPage,
+      pageId,
     };
 
     try {
-      setIsLoaded(false);
+      setIsLoaded(true);
 
       getDiffingResult(targetPage);
 
-      setIsLoaded(true);
+      setIsLoaded(false);
 
       navigate("/result");
     } catch (err) {
@@ -53,34 +56,22 @@ function ProjectPage() {
     }
   };
 
-  const handleClickPrevButton = ev => {
-    ev.preventDefault();
-
-    navigate("/version");
-  };
-
-  useEffect(() => {
-    const storedPageList = byPageIds;
-
-    setPageList(storedPageList);
-  }, []);
-
   const selectOptionRenderList = () => {
     const optionRenderList = [];
-    if (true) {
-      for (const pageId in pageList) {
-        const pageNode = pageList[pageId];
 
-        optionRenderList.push(
-          <option key={pageNode.node_id} value={pageNode.node_id}>
-            {pageNode.name}
-          </option>,
-        );
-      }
+    for (const pageId in byPageIds) {
+      const pageName = byPageIds[pageId];
+
+      optionRenderList.push(
+        <option key={pageId} value={pageId}>
+          {pageName}
+        </option>,
+      );
     }
 
     return optionRenderList;
   };
+
   const contents = {
     title: {
       step: "03",
@@ -88,15 +79,14 @@ function ProjectPage() {
       secondSentence: "선택해주세요.",
     },
     selectInfo: {
-      id: "project",
+      id: "selectedPage",
       label: "비교 페이지 선택",
-      defaultValue: "비교할 페이지 선택",
       selects: [
         {
-          id: "pageSelection",
-          value: "pageSelection",
-          options: pageList && selectOptionRenderList(),
-          onChange: onChangeHandler,
+          className: "selectedPage",
+          options: selectOptionRenderList(),
+          handleChange,
+          placeholder: "페이지 선택",
         },
       ],
       description: "이전 버전과 비교할 수 있는 페이지만 보여요!",
@@ -105,29 +95,28 @@ function ProjectPage() {
       {
         text: "이전",
         usingCase: "line",
-        handleClick: handleClickPrevButton,
+        handleClick,
+        className: "prev",
       },
       {
         text: "비교하기",
         usingCase: "solid",
-        handleClick: handleSubmitPage,
+        handleClick,
+        className: "diffing",
       },
     ],
   };
 
   return (
     <>
-      {!isLoaded && (
+      {isLoaded && (
         <Modal>
           <Loading />
         </Modal>
       )}
       <ProjectPageWrapper>
         <Title title={contents.title} />
-        <Select
-          selectInfo={contents.selectInfo}
-          onInputChange={onChangeHandler}
-        />
+        <Select selectInfo={contents.selectInfo} />
         <BottomNavigator buttons={contents.buttons} />
       </ProjectPageWrapper>
     </>
