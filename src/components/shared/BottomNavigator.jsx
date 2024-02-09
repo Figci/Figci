@@ -7,6 +7,7 @@ function BottomNavigator({ buttons }) {
     <BottomNavWrapper>
       {buttons.map(button => (
         <Button
+          className={button.className}
           key={button.text}
           handleClick={button.handleClick}
           size="medium"

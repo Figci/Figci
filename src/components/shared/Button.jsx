@@ -30,12 +30,20 @@ const USING_CASES = {
   `,
 };
 
-function Button({ disabled, handleClick, children, size, usingCase }) {
+function Button({
+  disabled,
+  handleClick,
+  children,
+  size,
+  usingCase,
+  className,
+}) {
   const buttonStyle = BUTTON_SIZES[size];
   const buttonMode = USING_CASES[usingCase];
 
   return (
     <StyledButton
+      className={className}
       onClick={handleClick}
       disabled={disabled}
       $buttonStyle={buttonStyle}
