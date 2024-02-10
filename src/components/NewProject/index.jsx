@@ -25,10 +25,15 @@ function NewProject() {
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+<<<<<<< HEAD
   useEffect(() => {
     clearProjectStatus();
     clearVersion();
   }, []);
+=======
+  const { setStatus } = usePageStatusStore();
+  const { setVersion } = useProjectVersionStore();
+>>>>>>> 316e724 (♻️ [Refactor] 스토어, service구조 수정에 따른 변수명 수정)
 
   const handleModalClick = ev => {
     ev.preventDefault();
@@ -61,7 +66,11 @@ function NewProject() {
     const projectKey = getProjectKeyFromURI(inputValue);
     const projectUrl = inputValue;
 
+<<<<<<< HEAD
     setStatus({ projectKey, projectUrl: inputValue });
+=======
+    setStatus({ projectKey });
+>>>>>>> 316e724 (♻️ [Refactor] 스토어, service구조 수정에 따른 변수명 수정)
 
     const allVersions = await getAllVersions(projectKey);
 
