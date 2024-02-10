@@ -8,7 +8,7 @@ import Title from "../shared/Title";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
-import getVersions from "../../../services/versions";
+import getAllVersions from "../../../services/getAllVersions";
 import getProjectKeyFromURI from "../../../utils/getProjectKeyFromURI";
 
 import useProjectVersionStore from "../../../store/projectVersion";
@@ -23,17 +23,6 @@ function NewProject() {
 
   const { setStatus } = usePageStatusStore();
   const { setVersion } = useProjectVersionStore();
-
-  const setVersionList = newVersions => {
-    if (newVersions.result === "error") {
-      setToastMessage(newVersions.message);
-      setToast(true);
-
-      return;
-    }
-
-    setVersion(newVersions.content);
-  };
 
   const handleModalClick = ev => {
     ev.preventDefault();
@@ -66,7 +55,17 @@ function NewProject() {
     const projectKey = getProjectKeyFromURI(inputValue);
 
     setStatus({ projectKey });
-    setVersionList(await getVersions(projectKey));
+
+    const allVersions = await getAllVersions(projectKey);
+
+    if (allVersions.result === "error") {
+      setToastMessage(allVersions.message);
+      setToast(true);
+
+      return;
+    }
+
+    setVersion(allVersions.content);
 
     navigate("/version");
   };

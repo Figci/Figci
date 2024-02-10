@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
-import getPages from "../../../services/pages";
+import getCommonPages from "../../../services/getCommonPages";
 
 import useProjectVersionStore from "../../../store/projectVersion";
 import usePageListStore from "../../../store/projectPage";
@@ -25,7 +25,11 @@ function ProjectVersion() {
 
   const { status, setStatus, clearProject } = usePageStatusStore();
   const { allDates, byDates } = useProjectVersionStore();
-  const { setPages } = usePageListStore();
+  const { setPages, clearPages } = usePageListStore();
+
+  useEffect(() => {
+    clearPages();
+  }, []);
 
   const handleChange = ev => {
     setProjectVersion({
@@ -45,13 +49,33 @@ function ProjectVersion() {
       return;
     }
 
-    const { beforeVersion, afterVersion } = projectVersion;
+    const { beforeDate, beforeVersion, afterDate, afterVersion } =
+      projectVersion;
+
+    if (!(beforeVersion && afterVersion)) {
+      setToastMessage("선택하지 않은 버전이 존재합니다.");
+      setToast(true);
+
+      return;
+    }
+
+    const beforeCreatedAt = new Date(
+      byDates[beforeDate][beforeVersion].createdAt,
+    );
+    const afterCreatedAt = new Date(byDates[afterDate][afterVersion].createdAt);
+
+    if (beforeCreatedAt >= afterCreatedAt) {
+      setToastMessage("이후 버전은 이전 버전보다 나중이여야 합니다.");
+      setToast(true);
+
+      return;
+    }
 
     setStatus(projectVersion);
 
     setIsLoaded(true);
 
-    const pageList = await getPages(
+    const pageList = await getCommonPages(
       status.projectKey,
       beforeVersion,
       afterVersion,
