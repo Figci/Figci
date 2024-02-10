@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { fabric } from "fabric";
 import styled from "styled-components";
 
@@ -7,6 +7,7 @@ import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 import Sidebar from "../Sidebar";
 import Button from "../shared/Button";
+import ToastPopup from "../shared/Toast";
 
 import usePageStatusStore from "../../../store/projectInit";
 import usePageListStore from "../../../store/projectPage";
@@ -18,8 +19,11 @@ function DiffingResult() {
   const [canvas, setCanvas] = useState(null);
   const [isLoaded, setIsLoaded] = useState(true);
   const [frameList, setFrameList] = useState([]);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  const { byPageIds } = usePageListStore();
+  const navigate = useNavigate();
+
   const {
     projectKey,
     beforeDate,
@@ -28,11 +32,12 @@ function DiffingResult() {
     afterVersion,
     pageId,
   } = usePageStatusStore(state => state.status);
-  const versionStaus = useProjectVersionStore(state => state.byDates);
+  const { byPageIds } = usePageListStore();
+  const versionStatus = useProjectVersionStore(state => state.byDates);
 
   const getVersionLabel = (date, versionId) => {
-    if (versionStaus[date] && versionStaus[date][versionId]) {
-      return `${date} ${versionStaus[date][versionId].label}`;
+    if (versionStatus[date] && versionStatus[date][versionId]) {
+      return `${date} ${versionStatus[date][versionId].label}`;
     }
 
     return null;
@@ -52,6 +57,15 @@ function DiffingResult() {
         afterVersion,
         pageId,
       );
+
+      if (diffingResult.result === "error") {
+        setIsLoaded(false);
+
+        setToastMessage(diffingResult.message);
+        setToast(true);
+
+        navigate(-1);
+      }
 
       const frames = diffingResult.content.frames.map(frame => {
         return {
@@ -126,7 +140,7 @@ function DiffingResult() {
               frameCount={frameList.length}
             />
           )}
-          <canvas id="canvas" width="100" />
+          <canvas id="canvas" />
         </div>
       </ResultWrapper>
     </>
@@ -144,13 +158,11 @@ const ResultWrapper = styled.div`
 
   .header-information {
     box-sizing: border-box;
-
     width: 100%;
     padding: 24px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-bottom: 2px solid #000000;
   }
 
@@ -186,7 +198,6 @@ const ResultWrapper = styled.div`
     height: 48px;
     margin-left: 40px;
     margin-right: 12px;
-
     border-radius: 48px;
     border: 2px solid #000000;
 
