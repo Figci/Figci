@@ -2,7 +2,7 @@ import generateApiUri from "../utils/generateURI";
 
 const baseURI = import.meta.env.VITE_BACKEND_BASE_API_URI;
 
-const getVersions = async projectsId => {
+const getAllVersions = async projectsId => {
   const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
   const API_URI = generateApiUri(baseURI, `projects/${projectsId}/versions`);
 
@@ -18,4 +18,4 @@ const getVersions = async projectsId => {
   return responseResult;
 };
 
-export default getVersions;
+export default getAllVersions;

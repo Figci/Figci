@@ -1,6 +1,6 @@
 import generateApiUri from "../utils/generateURI";
 
-const getPages = async (projectKey, beforeVersion, afterVersion) => {
+const getCommonPages = async (projectKey, beforeVersion, afterVersion) => {
   const baseURI = import.meta.env.VITE_BACKEND_BASE_API_URI;
 
   const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
@@ -28,4 +28,4 @@ const getPages = async (projectKey, beforeVersion, afterVersion) => {
   return responseResult;
 };
 
-export default getPages;
+export default getCommonPages;
