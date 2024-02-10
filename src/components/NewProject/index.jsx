@@ -25,7 +25,14 @@ function NewProject() {
   const { setVersion } = useProjectVersionStore();
 
   const setVersionList = newVersions => {
-    setVersion(newVersions);
+    if (newVersions.result === "error") {
+      setToastMessage(newVersions.message);
+      setToast(true);
+
+      return;
+    }
+
+    setVersion(newVersions.contents);
   };
 
   const handleModalClick = ev => {
