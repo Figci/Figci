@@ -1,6 +1,11 @@
 import generateApiUri from "../utils/generateURI";
 
-const getPages = async (projectKey, beforeVersion, afterVersion) => {
+const getDiffingResult = async (
+  projectKey,
+  beforeVersion,
+  afterVersion,
+  pageId,
+) => {
   const baseURI = import.meta.env.VITE_BACKEND_BASE_API_URI;
 
   const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
@@ -10,13 +15,13 @@ const getPages = async (projectKey, beforeVersion, afterVersion) => {
     "after-version": afterVersion,
   };
 
-  const API_URI = generateApiUri(
+  const API_URL = generateApiUri(
     baseURI,
-    `projects/${projectKey}/pages`,
+    `/projects/${projectKey}/pages/${pageId}`,
     queryParams,
   );
 
-  const response = await fetch(API_URI, {
+  const response = await fetch(API_URL, {
     method: "GET",
     headers: {
       authorization: token,
@@ -28,4 +33,4 @@ const getPages = async (projectKey, beforeVersion, afterVersion) => {
   return responseResult;
 };
 
-export default getPages;
+export default getDiffingResult;
