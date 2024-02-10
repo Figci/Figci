@@ -28,6 +28,14 @@ const pageStore = set => {
         return state;
       });
     },
+    clearPages: () => {
+      set(state => {
+        state.byPageIds = {};
+        state.allPageIds = [];
+
+        return state;
+      });
+    },
   };
 };
 
