@@ -8,7 +8,6 @@ import Title from "../shared/Title";
 import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
 
-import { getDiffingResult } from "../../../services/pages";
 import usePageListStore from "../../../store/projectPage";
 import usePageStatusStore from "../../../store/projectInit";
 
@@ -34,22 +33,7 @@ function ProjectPage() {
       return;
     }
 
-    const { projectKey, beforeVersion, afterVersion, pageId } = status;
-
-    const targetPage = {
-      projectKey,
-      beforeVersion,
-      afterVersion,
-      pageId,
-    };
-
     try {
-      setIsLoaded(true);
-
-      getDiffingResult(targetPage);
-
-      setIsLoaded(false);
-
       navigate("/result");
     } catch (err) {
       setIsLoaded(false);

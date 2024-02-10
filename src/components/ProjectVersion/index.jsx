@@ -9,7 +9,7 @@ import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
-import { getPages } from "../../../services/pages";
+import getPages from "../../../services/pages";
 
 import useProjectVersionStore from "../../../store/projectVersion";
 import usePageListStore from "../../../store/projectPage";
@@ -51,10 +51,11 @@ function ProjectVersion() {
 
     setIsLoaded(true);
 
-    const pageList = await getPages(status.projectKey, {
+    const pageList = await getPages(
+      status.projectKey,
       beforeVersion,
       afterVersion,
-    });
+    );
 
     if (pageList.result === "error") {
       setIsLoaded(false);
