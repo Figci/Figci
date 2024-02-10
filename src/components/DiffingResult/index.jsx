@@ -31,7 +31,7 @@ function DiffingResult() {
     afterDate,
     afterVersion,
     pageId,
-  } = usePageStatusStore(state => state.status);
+  } = usePageStatusStore();
   const { byPageIds } = usePageListStore();
   const versionStatus = useProjectVersionStore(state => state.byDates);
 
@@ -45,6 +45,7 @@ function DiffingResult() {
 
   const beforeVersionLabel = getVersionLabel(beforeDate, beforeVersion);
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
+
   const pageInfo = { id: "pageId", name: byPageIds[pageId] };
 
   useEffect(() => {

@@ -10,15 +10,15 @@ function Sidebar({ page, framesInfo }) {
     setSelectedFrameId(ev.target.id);
   };
 
-  const handleOpenPageSelectModal = ev => {
+  const handlePageSelectModalOpen = ev => {
     ev.preventDefault();
   };
 
-  const handleOpenCurrentFigmaUrl = ev => {
+  const handleCurrentFigmaUrlOpen = ev => {
     ev.preventDefault();
   };
 
-  const handleOpenNewProjectModal = ev => {
+  const handleNewProjectModalOpen = ev => {
     ev.preventDefault();
   };
 
@@ -29,7 +29,7 @@ function Sidebar({ page, framesInfo }) {
           {page.name}
         </h3>
         <Button
-          handleClick={handleOpenPageSelectModal}
+          handleClick={handlePageSelectModalOpen}
           size="small"
           usingCase="gray"
         >
@@ -57,14 +57,14 @@ function Sidebar({ page, framesInfo }) {
       </div>
       <div className="buttons">
         <Button
-          handleClick={handleOpenCurrentFigmaUrl}
+          handleClick={handleCurrentFigmaUrlOpen}
           size="medium"
           usingCase="solid"
         >
           현재 화면 피그마로 이동하기
         </Button>
         <Button
-          handleClick={handleOpenNewProjectModal}
+          handleClick={handleNewProjectModalOpen}
           size="medium"
           usingCase="line"
         >

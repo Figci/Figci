@@ -63,7 +63,7 @@ function ProjectVersion() {
       setToastMessage(pageList.message);
       setToast(true);
 
-      return;
+      navigate("/new");
     }
 
     setPages(pageList.content);
