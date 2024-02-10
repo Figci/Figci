@@ -32,7 +32,7 @@ function NewProject() {
       return;
     }
 
-    setVersion(newVersions.contents);
+    setVersion(newVersions.content);
   };
 
   const handleModalClick = ev => {

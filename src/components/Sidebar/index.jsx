@@ -1,34 +1,63 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import Button from "../shared/Button";
 
-function Sidebar({ page, frames }) {
-  const handleOpenPageSelectModal = () => {};
-  const handleOpenCurrentFrame = () => {};
-  const handleOpenNewProjectModal = () => {};
+function Sidebar({ page, framesInfo }) {
+  const [selectedFrameId, setSelectedFrameId] = useState(framesInfo[0]);
+
+  const handleFrameClick = ev => {
+    setSelectedFrameId(ev.target.id);
+  };
+
+  const handleOpenPageSelectModal = ev => {
+    ev.preventDefault();
+  };
+
+  const handleOpenCurrentFigmaUrl = ev => {
+    ev.preventDefault();
+  };
+
+  const handleOpenNewProjectModal = ev => {
+    ev.preventDefault();
+  };
 
   return (
     <SidebarWrapper>
       <div className="page">
-        <h3 className="page-title">{page.name}</h3>
-        <button className="reselection" onClick={handleOpenPageSelectModal}>
+        <h3 className="title" key={page.id}>
+          {page.name}
+        </h3>
+        <Button
+          handleClick={handleOpenPageSelectModal}
+          size="small"
+          usingCase="gray"
+        >
           페이지 재선택
-        </button>
+        </Button>
       </div>
       <div className="frame-list">
-        <p className="all-frames">전체 변경된 화면</p>
-        <ul>
-          {frames.frameIdsList &&
-            frames.frameIdsList.map(frame => (
-              <li key={frame.id} className="frame">
-                {frame.name}
-              </li>
-            ))}
+        <div className="titles">
+          <h3 className="title">전체 변경 화면</h3>
+          <h3 className="title-number"> {framesInfo.frameCount}</h3>
+        </div>
+        <ul role="presentation" onClick={handleFrameClick}>
+          {framesInfo.map(frame => (
+            <li
+              key={frame.id}
+              id={frame.id}
+              className={`frame-name ${
+                selectedFrameId === frame.id ? "active" : ""
+              }`}
+            >
+              {frame.name}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="buttons">
         <Button
-          handleClick={handleOpenCurrentFrame}
+          handleClick={handleOpenCurrentFigmaUrl}
           size="medium"
           usingCase="solid"
         >
@@ -48,63 +77,76 @@ function Sidebar({ page, frames }) {
 
 const SidebarWrapper = styled.div`
   box-sizing: border-box;
-
+  width: 305px;
   display: flex;
   flex-direction: column;
+
   border-right: 2px solid #000000;
 
   .page {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
+    padding: 32px;
 
     background-color: #f1f3f5;
   }
 
   .frame-list {
     height: 100%;
-    padding: 24px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
   }
 
-  .frame {
-    display: flex;
+  .frame-name {
     padding: 12px 0px;
 
     font-size: 1rem;
     font-style: normal;
-    font-weight: 500;
     line-height: 28px;
-    color: #000000;
+
+    color: #343e40;
 
     &:active {
       font-size: 1rem;
       font-style: normal;
       font-weight: 700;
       line-height: 28px;
+
       color: #4f4dfb;
     }
   }
 
-  .all-frames {
+  .titles {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .buttons {
+    padding: 32px;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 12px;
+  }
+
+  .title {
+    margin-bottom: 16px;
+
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
+
     color: #000000;
   }
 
-  .buttons {
-    padding: 40px 32px;
-    display: flex;
-    flex-direction: column;
-  }
+  .title-number {
+    margin-bottom: 16px;
 
-  .reselection {
-    box-sizing: border-box;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
 
-    padding: 8px 16px;
+    color: #2623fb;
   }
 
   .logo {
