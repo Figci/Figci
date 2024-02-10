@@ -118,7 +118,7 @@ function DiffingResult() {
                 <p className="version">{afterVersionLabel}</p>
               </div>
               <Button
-                className="reselect_version"
+                className="reselect-version"
                 size="small"
                 usingCase="line"
               >
@@ -158,34 +158,32 @@ const ResultWrapper = styled.div`
 
   .header-information {
     box-sizing: border-box;
-    width: 100%;
-    padding: 24px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    padding: 24px 40px;
     border-bottom: 2px solid #000000;
   }
 
   .version-information {
-    box-sizing: border-box;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
   }
 
   .versions {
-    box-sizing: border-box;
-    margin-right: 24px;
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
+    margin-right: 24px;
   }
 
   .content {
-    box-sizing: border-box;
-
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
   }
 
   .profile {
@@ -196,10 +194,10 @@ const ResultWrapper = styled.div`
   .profile-image {
     width: 48px;
     height: 48px;
-    margin-left: 40px;
-    margin-right: 12px;
     border-radius: 48px;
     border: 2px solid #000000;
+    margin-left: 40px;
+    margin-right: 12px;
 
     background-color: #ffffff;
   }
@@ -232,33 +230,29 @@ const ResultWrapper = styled.div`
   }
 
   .logo-content {
+    display: flex;
+    align-items: center;
     box-sizing: border-box;
-
     width: 305px;
     min-width: 305px;
     padding: 24px 40px;
-    display: flex;
-    align-items: center;
-
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
   }
 
-  .reselect_version {
+  .reselect-version {
     box-sizing: border-box;
-
     padding: 8px 16px;
+    border: 2px solid #000000;
+    border-radius: 24px;
+    white-space: pre-line;
 
+    background-color: #ffffff;
+    color: #000000;
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    border-radius: 24px;
-    white-space: pre-line;
-    border: 2px solid #000000;
-    background-color: #ffffff;
-
-    color: #000000;
   }
 
   .logo {

@@ -19,12 +19,12 @@ function Loading() {
 const Wrapper = styled.div`
   position: relative;
 
-  width: 720px;
-  height: 366px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 720px;
+  height: 366px;
 `;
 
 const TextWrapper = styled.div`

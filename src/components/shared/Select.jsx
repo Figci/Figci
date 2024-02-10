@@ -34,49 +34,47 @@ const SelectWrapper = styled.div`
   margin-right: 24px;
 
   select {
+    display: flex;
     width: 440px;
     height: 64px;
-    margin-bottom: 12px;
     padding: 0px 24px;
-    display: flex;
     border-radius: 8px;
     border: 2px solid #000000;
+    margin-bottom: 12px;
+
+    background-color: #ffffff;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
-
-    background-color: #ffffff;
   }
 
   .label {
-    margin-bottom: 12px;
     display: block;
+    margin-bottom: 12px;
 
+    color: #000000;
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
-
-    color: #000000;
   }
 
   .description {
     display: block;
 
+    color: #868e96;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
-
-    color: #868e96;
   }
 
   select:disabled {
+    cursor: not-allowed;
+
     background-color: #e9ecef;
     color: #868e96;
-
-    cursor: not-allowed;
   }
 
   .hidden {

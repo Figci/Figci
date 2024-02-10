@@ -84,11 +84,11 @@ function Onboarding() {
 }
 
 const Wrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   height: 100%;
   padding: 80px;
   border-left: 2px solid #000000;
@@ -108,25 +108,25 @@ const Wrapper = styled.div`
     padding: 0;
     margin-bottom: 12px;
 
-    font-weight: 700;
     color: #000000;
+    font-weight: 700;
   }
 
   .description.sub {
     padding: 0;
 
+    color: #868e96;
     font-size: 1rem;
     line-height: 24px;
-    color: #868e96;
   }
 `;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 
   .onboarding-left {
     flex-grow: 6;

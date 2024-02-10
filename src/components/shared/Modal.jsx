@@ -22,13 +22,13 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  box-sizing: border-box;
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 2;
   transform: translate(-50%, -50%);
 
+  box-sizing: border-box;
   width: fit-content;
   height: fit-content;
   padding: 64px;

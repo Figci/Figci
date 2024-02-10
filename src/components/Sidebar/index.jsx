@@ -76,11 +76,10 @@ function Sidebar({ page, framesInfo }) {
 }
 
 const SidebarWrapper = styled.div`
-  box-sizing: border-box;
-  width: 305px;
   display: flex;
   flex-direction: column;
-
+  box-sizing: border-box;
+  width: 305px;
   border-right: 2px solid #000000;
 
   .page {
@@ -90,28 +89,26 @@ const SidebarWrapper = styled.div`
   }
 
   .frame-list {
-    height: 100%;
-    padding: 32px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    padding: 32px;
   }
 
   .frame-name {
     padding: 12px 0px;
 
+    color: #343e40;
     font-size: 1rem;
     font-style: normal;
     line-height: 28px;
 
-    color: #343e40;
-
     &:active {
+      color: #4f4dfb;
       font-size: 1rem;
       font-style: normal;
       font-weight: 700;
       line-height: 28px;
-
-      color: #4f4dfb;
     }
   }
 
@@ -121,32 +118,30 @@ const SidebarWrapper = styled.div`
   }
 
   .buttons {
-    padding: 32px;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     row-gap: 12px;
+    padding: 32px;
   }
 
   .title {
     margin-bottom: 16px;
 
+    color: #000000;
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
-
-    color: #000000;
   }
 
   .title-number {
     margin-bottom: 16px;
 
+    color: #2623fb;
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
-
-    color: #2623fb;
   }
 
   .logo {

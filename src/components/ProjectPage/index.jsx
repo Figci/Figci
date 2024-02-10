@@ -108,7 +108,6 @@ function ProjectPage() {
 
 const ProjectPageWrapper = styled.div`
   box-sizing: border-box;
-
   width: 100%;
   height: 100%;
   padding: 64px;

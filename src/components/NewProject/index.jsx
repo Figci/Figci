@@ -110,26 +110,24 @@ function NewProject() {
 
 const ContentsWrapper = styled.div`
   box-sizing: border-box;
-
   width: 100%;
   height: 100%;
   padding: 64px;
 
   input {
+    display: flex;
     width: 560px;
     height: 64px;
-    margin-bottom: 12px;
     padding: 0px 24px;
-    display: flex;
+    border-radius: 8px;
+    border: 2px solid #000000;
+    margin-bottom: 12px;
 
+    background-color: #ffffff;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
-    border-radius: 8px;
-
-    border: 2px solid #000000;
-    background-color: #ffffff;
   }
 
   .projectUrl {
@@ -141,23 +139,21 @@ const ContentsWrapper = styled.div`
     margin-top: 64px;
     margin-bottom: 12px;
 
+    color: #000000;
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
-
-    color: #000000;
   }
 
   .description {
     display: block;
 
+    color: #868e96;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
-
-    color: #868e96;
   }
 `;
 

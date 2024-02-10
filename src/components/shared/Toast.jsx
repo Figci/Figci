@@ -39,8 +39,8 @@ const Toast = styled.div`
   align-items: center;
   width: 900px;
   height: 70px;
-  font-weight: 700;
   border-radius: 20px;
+
   animation: ${fadeInUp} 0.5s ease-in-out;
 
   opacity: 0.8;
@@ -49,6 +49,7 @@ const Toast = styled.div`
   font-family: "Noto Sans KR";
   font-size: 1.125rem;
   text-align: center;
+  font-weight: 700;
 `;
 
 export default ToastPopup;

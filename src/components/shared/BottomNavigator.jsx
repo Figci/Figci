@@ -22,14 +22,14 @@ function BottomNavigator({ buttons }) {
 }
 
 const BottomNavWrapper = styled.div`
-  box-sizing: border-box;
   position: absolute;
   bottom: 0px;
 
-  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  box-sizing: border-box;
+  width: 100%;
   padding: 24px 48px;
   border-top: 2px solid #000000;
 
