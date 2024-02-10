@@ -36,11 +36,6 @@ const USING_CASES = {
     --button-color: #000000;
     --button-background-color: #ffffff;
   `,
-  gray: css`
-    --button-border: none;
-    --button-color: #495057;
-    --button-background-color: #dee2e6;
-  `,
 };
 
 function Button({
