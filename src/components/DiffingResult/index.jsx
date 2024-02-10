@@ -60,6 +60,8 @@ function DiffingResult() {
         pageId,
       );
 
+      console.log(diffingResult);
+
       if (diffingResult.result === "error") {
         setIsLoaded(false);
 
