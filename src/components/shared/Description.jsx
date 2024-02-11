@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { nanoid } from "nanoid";
 
 const DESCRIPTION_SIZES = {
   medium: css`
@@ -18,7 +19,7 @@ function Description({ className, size, text }) {
   return (
     <StyledSpan className={className} $descriptionSize={descriptionSize}>
       {text.split("\\n").map(txt => (
-        <React.Fragment key={txt}>
+        <React.Fragment key={nanoid(10)}>
           {txt}
           <br />
         </React.Fragment>

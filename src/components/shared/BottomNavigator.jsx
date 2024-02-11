@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import styled from "styled-components";
 
 import Button from "./Button";
@@ -8,7 +9,7 @@ function BottomNavigator({ buttons }) {
       {buttons.map(button => (
         <Button
           className={button.className}
-          key={button.text}
+          key={nanoid(10)}
           handleClick={button.handleClick}
           size="medium"
           usingCase={button.usingCase}

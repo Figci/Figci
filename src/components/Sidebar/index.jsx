@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { nanoid } from "nanoid";
 
 import Button from "../shared/Button";
 import Modal from "../shared/Modal";
@@ -90,7 +91,7 @@ function Sidebar({ page, framesInfo }) {
           <ul role="presentation" onClick={handleFrameClick}>
             {framesInfo.map(frame => (
               <li
-                key={frame.id}
+                key={nanoid(10)}
                 id={frame.id}
                 className={`frame-name ${
                   selectedFrameId === frame.id ? "active" : ""
