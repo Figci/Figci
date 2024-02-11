@@ -3,6 +3,7 @@ import { create } from "zustand";
 const initStore = set => {
   return {
     status: {
+      projectUrl: null,
       projectKey: null,
       beforeDate: null,
       beforeVersion: null,
@@ -20,7 +21,7 @@ const initStore = set => {
         return state;
       });
     },
-    clearPage: () => {
+    clearPageStatus: () => {
       return set(state => {
         state.status = {
           ...state.status,
@@ -30,7 +31,7 @@ const initStore = set => {
         return state;
       });
     },
-    clearVersion: () => {
+    clearVersionStatus: () => {
       return set(state => {
         state.status = {
           ...state.status,
@@ -44,9 +45,10 @@ const initStore = set => {
         return state;
       });
     },
-    clearProject: () => {
+    clearProjectStatus: () => {
       return set(state => {
         state.status = {
+          projectUrl: null,
           projectKey: null,
           beforeDate: null,
           beforeVersion: null,
