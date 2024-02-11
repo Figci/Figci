@@ -5,6 +5,7 @@ const initStore = set => {
     status: {
       projectUrl: null,
       projectKey: null,
+      projectUrl: null,
       beforeDate: null,
       beforeVersion: null,
       afterDate: null,

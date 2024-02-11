@@ -59,6 +59,7 @@ function NewProject() {
     }
 
     const projectKey = getProjectKeyFromURI(inputValue);
+    const projectUrl = inputValue;
 
     setStatus({ projectKey, projectUrl: inputValue });
 
@@ -127,6 +128,7 @@ const ContentsWrapper = styled.div`
     padding: 0px 24px;
     border-radius: 8px;
     border: 2px solid #000000;
+    margin-top: 12px;
     margin-bottom: 12px;
 
     background-color: #ffffff;
