@@ -7,7 +7,7 @@ import Modal from "../shared/Modal";
 import Loading from "../shared/Loading";
 import Sidebar from "../Sidebar";
 import Button from "../shared/Button";
-import ToastPopup from "../shared/Toast";
+import Description from "../shared/Description";
 
 import usePageStatusStore from "../../../store/projectInit";
 import usePageListStore from "../../../store/projectPage";
@@ -17,10 +17,11 @@ import figciLogo from "../../../assets/logo_figci.jpg";
 
 function DiffingResult() {
   const [canvas, setCanvas] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(true);
   const [frameList, setFrameList] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [isClickedNewVersion, setIsClickedNewVersion] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ function DiffingResult() {
     afterDate,
     afterVersion,
     pageId,
-  } = usePageStatusStore();
+  } = usePageStatusStore(state => state.status);
   const { byPageIds } = usePageListStore();
   const versionStatus = useProjectVersionStore(state => state.byDates);
 
@@ -66,6 +67,8 @@ function DiffingResult() {
         setToast(true);
 
         navigate(-1);
+
+        return;
       }
 
       const frames = diffingResult.content.frames.map(frame => {
@@ -101,6 +104,43 @@ function DiffingResult() {
           <Loading />
         </Modal>
       )}
+      {isClickedNewVersion && (
+        <Modal>
+          <TextWrapper>
+            <h1 className="reversion-title">새 버전을 비교하시겠어요?</h1>
+            <Description
+              className="reversion-description"
+              size="medium"
+              text="비교하기 버튼을 누루면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
+            />
+          </TextWrapper>
+          <ButtonWrapper>
+            <Button
+              className="close"
+              size="medium"
+              usingCase="line"
+              handleClick={ev => {
+                ev.preventDefault();
+                setIsClickedNewVersion(false);
+              }}
+            >
+              아니오
+            </Button>
+            <Button
+              className="reVersion"
+              size="medium"
+              usingCase="solid"
+              handleClick={ev => {
+                ev.preventDefault();
+
+                navigate("/version");
+              }}
+            >
+              비교할래요!
+            </Button>
+          </ButtonWrapper>
+        </Modal>
+      )}
       <ResultWrapper>
         <header className="result-header">
           <div className="logo-content">
@@ -122,6 +162,10 @@ function DiffingResult() {
                 className="reselect-version"
                 size="small"
                 usingCase="line"
+                handleClick={ev => {
+                  ev.preventDefault();
+                  setIsClickedNewVersion(true);
+                }}
               >
                 버전 재선택
               </Button>
@@ -266,6 +310,38 @@ const ResultWrapper = styled.div`
     height: 20px;
 
     background-color: #000000;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TextWrapper = styled.div`
+  margin-bottom: 48px;
+  width: 500px;
+
+  .reversion-title {
+    margin-bottom: 28px;
+
+    color: #000000;
+    font-size: 1.75rem;
+    font-weight: 900;
+    font-style: normal;
+    line-height: 32px;
+    text-align: center;
+  }
+
+  .reversion-content {
+    display: block;
+
+    color: #495057;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: normal;
+    text-align: center;
+    line-height: 24px;
   }
 `;
 
