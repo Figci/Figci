@@ -50,7 +50,6 @@ const SelectWrapper = styled.div`
 
   .label {
     display: block;
-    margin-bottom: 12px;
 
     color: #000000;
     font-size: 1rem;

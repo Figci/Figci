@@ -34,6 +34,8 @@ const BottomNavWrapper = styled.div`
   padding: 24px 48px;
   border-top: 2px solid #000000;
 
+  background-color: #ffffff;
+
   button {
     margin-left: 16px;
   }
