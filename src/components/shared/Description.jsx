@@ -1,16 +1,12 @@
 import styled, { css } from "styled-components";
 
 const DESCRIPTION_SIZES = {
-  small: css`
-    --descripton-font-size: 0.875rem;
-    --description-line-height: 22px;
-  `,
   medium: css`
-    --descripton-font-size: 1rem;
+    --description-font-size: 1rem;
     --description-line-height: 24px;
   `,
   large: css`
-    --descripton-font-size: 1.125rem;
+    --description-font-size: 1.25rem;
     --description-line-height: 30px;
   `,
 };
