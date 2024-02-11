@@ -30,16 +30,15 @@ function Select({ selectInfo }) {
 
 const SelectWrapper = styled.div`
   box-sizing: border-box;
-  padding-top: 48px;
-  margin-right: 24px;
+  flex-grow: 1;
 
   select {
-    display: flex;
-    width: 440px;
+    width: 100%;
     height: 64px;
     padding: 0px 24px;
     border-radius: 8px;
     border: 2px solid #000000;
+    margin-top: 12px;
     margin-bottom: 12px;
 
     background-color: #ffffff;
@@ -62,6 +61,7 @@ const SelectWrapper = styled.div`
 
   .description {
     display: block;
+    width: 500px;
 
     color: #868e96;
     font-size: 1rem;

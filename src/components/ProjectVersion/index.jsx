@@ -204,17 +204,20 @@ function ProjectVersion() {
 }
 
 const ContentsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   padding: 64px;
 `;
 
-const HorizontalAlign = styled.form`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  width: 100%;
+const HorizontalAlign = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+  width: 70%;
+  margin-top: 64px;
 `;
 
 export default ProjectVersion;

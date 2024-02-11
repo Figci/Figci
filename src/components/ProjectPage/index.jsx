@@ -103,7 +103,9 @@ function ProjectPage() {
       )}
       <ProjectPageWrapper>
         <Title title={contents.title} />
-        <Select selectInfo={contents.selectInfo} />
+        <div className="select">
+          <Select selectInfo={contents.selectInfo} />
+        </div>
       </ProjectPageWrapper>
       <BottomNavigator buttons={contents.buttons} />
     </>
@@ -115,6 +117,11 @@ const ProjectPageWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 64px;
+
+  .select {
+    width: 60%;
+    margin-top: 64px;
+  }
 `;
 
 export default ProjectPage;
