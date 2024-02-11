@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 
 const DESCRIPTION_SIZES = {
@@ -17,10 +18,10 @@ function Description({ className, size, text }) {
   return (
     <StyledSpan className={className} $descriptionSize={descriptionSize}>
       {text.split("\\n").map(txt => (
-        <>
+        <React.Fragment key={txt}>
           {txt}
           <br />
-        </>
+        </React.Fragment>
       ))}
     </StyledSpan>
   );
