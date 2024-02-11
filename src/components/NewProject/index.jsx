@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -16,13 +16,19 @@ import usePageStatusStore from "../../../store/projectInit";
 
 function NewProject() {
   const navigate = useNavigate();
+
+  const { status, setStatus, clearProjectStatus } = usePageStatusStore();
+  const { setVersion, clearVersion } = useProjectVersionStore();
+
   const [isModalOpened, setIsModalOpened] = useState(true);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(status.projectUrl);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
-  const { setStatus } = usePageStatusStore();
-  const { setVersion } = useProjectVersionStore();
+  useEffect(() => {
+    clearProjectStatus();
+    clearVersion();
+  }, []);
 
   const handleModalClick = ev => {
     ev.preventDefault();
@@ -54,7 +60,7 @@ function NewProject() {
 
     const projectKey = getProjectKeyFromURI(inputValue);
 
-    setStatus({ projectKey });
+    setStatus({ projectKey, projectUrl: inputValue });
 
     const allVersions = await getAllVersions(projectKey);
 
@@ -95,6 +101,7 @@ function NewProject() {
             피그마 프로젝트 URL 입력
             <input
               id="projectUrl"
+              defaultValue={inputValue}
               placeholder="url 주소를 입력해주세요. (예: www.figma.com/abc)"
               onChange={handleChangeInput}
             />

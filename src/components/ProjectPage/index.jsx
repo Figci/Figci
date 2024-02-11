@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,11 +14,15 @@ import usePageStatusStore from "../../../store/projectInit";
 function ProjectPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [targetPageId, setTargetPageId] = useState("");
-  const { setStatus } = usePageStatusStore(state => state);
+  const { setStatus, clearPageStatus } = usePageStatusStore(state => state);
   const { byPageIds } = usePageListStore();
   const navigate = useNavigate();
 
   setStatus({ pageId: targetPageId });
+
+  useEffect(() => {
+    clearPageStatus();
+  }, []);
 
   const handleChange = ev => {
     setTargetPageId(ev.target.value);

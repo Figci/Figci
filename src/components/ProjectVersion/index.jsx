@@ -23,11 +23,12 @@ function ProjectVersion() {
 
   const navigate = useNavigate();
 
-  const { status, setStatus, clearProject } = usePageStatusStore();
+  const { status, setStatus, clearVersionStatus } = usePageStatusStore();
   const { allDates, byDates } = useProjectVersionStore();
   const { setPages, clearPages } = usePageListStore();
 
   useEffect(() => {
+    clearVersionStatus();
     clearPages();
   }, []);
 
@@ -42,8 +43,6 @@ function ProjectVersion() {
     ev.preventDefault();
 
     if (ev.target.classList.contains("prev")) {
-      clearProject();
-
       navigate("/new");
 
       return;
