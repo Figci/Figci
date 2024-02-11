@@ -107,11 +107,11 @@ function DiffingResult() {
       {isClickedNewVersion && (
         <Modal>
           <TextWrapper>
-            <h1 className="reversion-title">새 버전을 비교하시겠어요?</h1>
+            <h1 className="re-version-title">새 버전을 비교하시겠어요?</h1>
             <Description
-              className="reversion-description"
+              className="re-version-description"
               size="medium"
-              text="비교하기 버튼을 누루면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
+              text="비교하기 버튼을 누르면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
             />
           </TextWrapper>
           <ButtonWrapper>
@@ -127,7 +127,7 @@ function DiffingResult() {
               아니오
             </Button>
             <Button
-              className="reVersion"
+              className="re-version"
               size="medium"
               usingCase="solid"
               handleClick={ev => {
