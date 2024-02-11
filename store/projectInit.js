@@ -34,7 +34,9 @@ const initStore = set => {
       return set(state => {
         state.status = {
           ...state.status,
+          beforeDate: null,
           beforeVersion: null,
+          afterDate: null,
           afterVersion: null,
           pageId: null,
         };
@@ -46,7 +48,9 @@ const initStore = set => {
       return set(state => {
         state.status = {
           projectKey: null,
+          beforeDate: null,
           beforeVersion: null,
+          afterDate: null,
           afterVersion: null,
           pageId: null,
         };
