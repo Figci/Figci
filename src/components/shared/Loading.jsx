@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Description from "./Description";
 
 function Loading() {
   return (
@@ -6,11 +7,11 @@ function Loading() {
       <Circle />
       <TextWrapper>
         <h1 className="title">파일을 비교중이에요!</h1>
-        <span className="description">
-          파일의 크기와 페이지의 갯수에 따라
-          <br />
-          전체 파일을 비교하는 동안 시간이 많이 걸릴 수 있어요.
-        </span>
+        <Description
+          className="description"
+          size="medium"
+          text="파일의 크기와 페이지의 갯수에 따라\n전체 파일을 비교하는 동안 시간이 많이 걸릴 수 있어요."
+        />
       </TextWrapper>
     </Wrapper>
   );
@@ -39,17 +40,6 @@ const TextWrapper = styled.div`
     font-style: normal;
     font-weight: 900;
     line-height: 48px;
-  }
-
-  .description {
-    display: block;
-
-    color: #495057;
-    text-align: center;
-    font-size: 1.25rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 30px;
   }
 `;
 

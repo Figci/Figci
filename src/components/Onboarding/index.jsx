@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "../shared/Button";
+import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
 
 import { getAuth, fetchToken } from "../../../services/auth";
@@ -56,11 +57,11 @@ function Onboarding() {
           alt="figci-logo-img"
           width="150"
         />
-        <span className="description">
-          피그마 계정으로 로그인하시면 파일버전을 비교해
-          <br />
-          디자인 화면의 변경사항을 쉽게 보여드려요!
-        </span>
+        <Description
+          className="description"
+          size="medium"
+          text="피그마 계정으로 로그인하시면 파일버전을 비교해\n디자인 화면의 변경사항을 쉽게 보여드려요!"
+        />
         <Button handleClick={onClickButtonHandler} size="large">
           피그마 계정으로 로그인
         </Button>
@@ -72,11 +73,11 @@ function Onboarding() {
           <br />
           버전 별 디자인 화면 변경사항을 바로 알려드려요
         </h1>
-        <span className="description sub">
-          피그마 이전 버전과 최신 버전을 비교해
-          <br />
-          변경사항을 확인해보세요
-        </span>
+        <Description
+          className="description sub"
+          size="medium"
+          text="피그마 이전 버전과 최신 버전을 비교해\n변경사항을 확인해보세요"
+        />
       </Wrapper>
       {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
     </Container>
@@ -93,15 +94,12 @@ const Wrapper = styled.div`
   padding: 80px;
   border-left: 2px solid #000000;
 
-  .description {
-    padding: 24px;
+  .logo-image {
     margin-bottom: 24px;
+  }
 
-    font-size: 1.2rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 30px;
-    text-align: center;
+  .description {
+    margin-bottom: 24px;
   }
 
   .description.main {
@@ -109,15 +107,15 @@ const Wrapper = styled.div`
     margin-bottom: 12px;
 
     color: #000000;
+    font-size: 1.2rem;
     font-weight: 700;
+    font-style: normal;
+    line-height: 30px;
+    text-align: center;
   }
 
   .description.sub {
     padding: 0;
-
-    color: #868e96;
-    font-size: 1rem;
-    line-height: 24px;
   }
 `;
 
