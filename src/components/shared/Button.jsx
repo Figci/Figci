@@ -2,11 +2,12 @@ import styled, { css } from "styled-components";
 
 const BUTTON_SIZES = {
   small: css`
-    --button-min-width: 100px;
+    --button-min-width: 64px;
     --button-min-height: 40px;
     --button-font-size: 0.875rem;
+    --button-font-weight: 700;
     --button-padding: 8px 20px;
-    --button-border: 2px solid #080404;
+    --button-border: 2px solid #000000;
     --button-radius: 24px;
   `,
   medium: css`
@@ -74,6 +75,7 @@ const StyledButton = styled.button`
   border-radius: var(--button-radius, 8px);
 
   font-size: var(--button-font-size, 1rem);
+  font-weight: var(--button-font-weight, 600);
   color: var(--button-color, #ffffff);
   background-color: var(--button-background-color, #2623fb);
   cursor: pointer;
