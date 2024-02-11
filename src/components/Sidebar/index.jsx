@@ -1,35 +1,77 @@
-import { useState } from "react";
+/* eslint-disable consistent-return */
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 
+import Modal from "../shared/Modal";
 import Button from "../shared/Button";
 import Modal from "../shared/Modal";
 import Description from "../shared/Description";
 
-function Sidebar({ page, framesInfo }) {
-  const [selectedFrameId, setSelectedFrameId] = useState(framesInfo[0]);
-  const [isClickedNewProject, setIsClickedNewPorject] = useState(false);
+import updateFigmaUrl from "../../../utils/updateFigmaUrl";
+import DELAY_TIME from "../../../constants/timeConstants";
+
+function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
+  const [frameId, setFrameId] = useState(null);
+  const [frameName, setFrameName] = useState(null);
+  const [selectedPageId, setSelectedPageId] = useState(null);
+  const [isClickedNewProject, setIsClickedNewProject] = useState(false);
+  const [isClickedFigmaUrl, setIsClickedFigmaUrl] = useState(false);
 
   const navigate = useNavigate();
 
   const handleFrameClick = ev => {
-    setSelectedFrameId(ev.target.id);
+    ev.preventDefault();
+
+    setFrameId(ev.target.getAttribute("data-id"));
+    setFrameName(ev.target.getAttribute("data-name"));
+
+    onFrameSelect(frameId, frameName);
   };
 
-  const handlePageSelectModalOpen = ev => {
-    ev.preventDefault();
+  const handlePageSelect = ev => {
+    setSelectedPageId(ev.target.value);
   };
 
-  const handleCurrentFigmaUrlOpen = ev => {
-    ev.preventDefault();
+  const currentFigmaUrlOpen = () => {
+    const figmaUrl = updateFigmaUrl(projectUrl, frameId);
+
+    return setTimeout(() => {
+      window.open(figmaUrl, "_blank");
+
+      setIsClickedFigmaUrl(false);
+    }, DELAY_TIME.OPEN_ON_FIGMA);
   };
 
   const handleNewProjectModalOpen = ev => {
     ev.preventDefault();
 
-    setIsClickedNewPorject(true);
+    setIsClickedNewProject(true);
   };
+
+  useEffect(() => {
+    if (framesInfo.length > 0 && frameId === null) {
+      const firstFrame = framesInfo[0];
+
+      setFrameId(firstFrame.id);
+      setFrameName(firstFrame.name);
+    }
+  }, [framesInfo]);
+
+  useEffect(() => {
+    const timerId = (() => {
+      if (isClickedFigmaUrl) {
+        return currentFigmaUrlOpen();
+      }
+    })();
+
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [isClickedFigmaUrl]);
 
   return (
     <>
@@ -51,7 +93,7 @@ function Sidebar({ page, framesInfo }) {
               handleClick={ev => {
                 ev.preventDefault();
 
-                setIsClickedNewPorject(false);
+                setIsClickedNewProject(false);
               }}
             >
               아니오
@@ -71,32 +113,41 @@ function Sidebar({ page, framesInfo }) {
           </ButtonWrapper>
         </Modal>
       )}
+      {isClickedFigmaUrl && (
+        <ModalWrapper>
+          <Modal>
+            <h1 className="popup-title">
+              피그마에서 <br />
+              {frameName} 여는 중
+            </h1>
+            <span>현재 보고계신 화면이 있는 피그마 링크로 이동할게요.</span>
+          </Modal>
+        </ModalWrapper>
+      )}
       <SidebarWrapper>
         <div className="page">
-          <h3 className="title" key={page.id}>
-            {page.name}
-          </h3>
-          <Button
-            handleClick={handlePageSelectModalOpen}
-            size="small"
-            usingCase="gray"
-          >
-            페이지 재선택
-          </Button>
+          <label className="title" htmlFor="page">
+            현재 페이지
+            <select
+              id="page"
+              type="select"
+              aria-label="select"
+              onChange={handlePageSelect}
+            />
+          </label>
         </div>
         <div className="frame-list">
           <div className="titles">
-            <h3 className="title">전체 변경 화면</h3>
-            <h3 className="title-number"> {framesInfo.frameCount}</h3>
+            <h3 className="title">전체 변경 화면 </h3>
+            <h3 className="title-number">{framesInfo.length}</h3>
           </div>
           <ul role="presentation" onClick={handleFrameClick}>
             {framesInfo.map(frame => (
               <li
                 key={nanoid(10)}
-                id={frame.id}
-                className={`frame-name ${
-                  selectedFrameId === frame.id ? "active" : ""
-                }`}
+                data-id={frame.id}
+                data-name={frame.name}
+                className={`frame-name ${frameId === frame.id ? "active" : ""}`}
               >
                 {frame.name}
               </li>
@@ -105,7 +156,9 @@ function Sidebar({ page, framesInfo }) {
         </div>
         <div className="buttons">
           <Button
-            handleClick={handleCurrentFigmaUrlOpen}
+            handleClick={() => {
+              setIsClickedFigmaUrl(true);
+            }}
             size="medium"
             usingCase="solid"
           >
@@ -124,6 +177,19 @@ function Sidebar({ page, framesInfo }) {
   );
 }
 
+const ModalWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  .popup-title {
+    font-size: 1.8 rem;
+    font-style: normal;
+    font-weight: 800;
+    text-align: center;
+    line-height: 32px;
+  }
+`;
+
 const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,7 +198,7 @@ const SidebarWrapper = styled.div`
   border-right: 2px solid #000000;
 
   .page {
-    padding: 32px;
+    padding: 24px;
 
     background-color: #f1f3f5;
   }
@@ -141,7 +207,7 @@ const SidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 32px;
+    padding: 24px;
   }
 
   .frame-name {
@@ -152,7 +218,7 @@ const SidebarWrapper = styled.div`
     font-style: normal;
     line-height: 28px;
 
-    &:active {
+    &.active {
       color: #4f4dfb;
       font-size: 1rem;
       font-style: normal;
@@ -170,12 +236,10 @@ const SidebarWrapper = styled.div`
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     row-gap: 12px;
-    padding: 32px;
+    padding: 24px;
   }
 
   .title {
-    margin-bottom: 16px;
-
     color: #000000;
     font-size: 1.25rem;
     font-style: normal;
@@ -184,6 +248,7 @@ const SidebarWrapper = styled.div`
   }
 
   .title-number {
+    margin-left: 8px;
     margin-bottom: 16px;
 
     color: #2623fb;
