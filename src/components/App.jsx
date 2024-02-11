@@ -7,6 +7,7 @@ import ProjectVersion from "./ProjectVersion";
 import ProjectPage from "./ProjectPage";
 import DiffingResult from "./DiffingResult";
 import Layout from "./Layout";
+import NotFound from "./NotFound";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/new" element={<NewProject />} />
           <Route path="/version" element={<ProjectVersion />} />
           <Route path="/page" element={<ProjectPage />} />
+          <Route path="/*" element={<NotFound />} />
         </Route>
         <Route path="/result" element={<DiffingResult />} />
       </Routes>
