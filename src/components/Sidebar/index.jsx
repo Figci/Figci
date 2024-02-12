@@ -16,7 +16,6 @@ import DELAY_TIME from "../../../constants/timeConstants";
 function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
   const [frameId, setFrameId] = useState(null);
   const [frameName, setFrameName] = useState(null);
-  const [selectedPageId, setSelectedPageId] = useState(null);
   const [isClickedNewProject, setIsClickedNewProject] = useState(false);
   const [isClickedFigmaUrl, setIsClickedFigmaUrl] = useState(false);
 
@@ -117,10 +116,11 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
         <ModalWrapper>
           <Modal>
             <h1 className="popup-title">피그마에서 {frameName} 여는 중</h1>
-            <span className="popup-description">
-              현재 보고계신 화면이 있는 피그마 링크로 이동할게요.
-              <br /> 피그마 파일은 새 창으로 열려요.
-            </span>
+            <Description
+              className="re-version-description"
+              size="medium"
+              text="현재 보고계신 화면이 있는 피그마 링크로 이동할게요.\n피그마 파일은 새 창으로 열려요."
+            />
           </Modal>
         </ModalWrapper>
       )}

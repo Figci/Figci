@@ -29,7 +29,7 @@ function DiffingResult() {
   const navigate = useNavigate();
 
   const versionStatus = useProjectVersionStore(state => state.byDates);
-  const { status, clearPage, setStatus } = usePageStatusStore();
+  const { status, clearPageStatus, setStatus } = usePageStatusStore();
   const {
     projectKey,
     projectUrl,
@@ -106,7 +106,7 @@ function DiffingResult() {
   const handlePageSelect = ev => {
     const newSelectedPageId = ev.target.value;
 
-    clearPage();
+    clearPageStatus();
     setStatus({ pageId: newSelectedPageId });
     setClickedPageId(newSelectedPageId);
   };
@@ -325,7 +325,7 @@ const TextWrapper = styled.div`
   margin-bottom: 48px;
   width: 500px;
 
-  .reversion-title {
+  .re-version-title {
     margin-bottom: 28px;
 
     color: #000000;
@@ -336,7 +336,7 @@ const TextWrapper = styled.div`
     text-align: center;
   }
 
-  .reversion-content {
+  .re-version-content {
     display: block;
 
     color: #495057;
