@@ -28,10 +28,7 @@ function ProjectVersion() {
   const { setPages, clearPages } = usePageListStore();
 
   useEffect(() => {
-<<<<<<< HEAD
     clearVersionStatus();
-=======
->>>>>>> 316e724 (♻️ [Refactor] 스토어, service구조 수정에 따른 변수명 수정)
     clearPages();
   }, []);
 
