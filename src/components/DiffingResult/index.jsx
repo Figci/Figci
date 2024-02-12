@@ -116,7 +116,7 @@ function DiffingResult() {
           </TextWrapper>
           <ButtonWrapper>
             <Button
-              className="close"
+              className="close-button"
               size="medium"
               usingCase="line"
               handleClick={ev => {
