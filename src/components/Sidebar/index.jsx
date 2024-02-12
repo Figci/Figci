@@ -40,7 +40,7 @@ function Sidebar({ page, framesInfo }) {
             <Description
               className="reversion-description"
               size="medium"
-              text="비교하기 버튼을 누루면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
+              text="비교하기 버튼을 누르면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
             />
           </TextWrapper>
           <ButtonWrapper>
@@ -50,6 +50,7 @@ function Sidebar({ page, framesInfo }) {
               usingCase="line"
               handleClick={ev => {
                 ev.preventDefault();
+
                 setIsClickedNewPorject(false);
               }}
             >
