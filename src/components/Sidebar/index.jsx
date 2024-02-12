@@ -6,7 +6,6 @@ import { nanoid } from "nanoid";
 
 import Modal from "../shared/Modal";
 import Button from "../shared/Button";
-import Modal from "../shared/Modal";
 import Description from "../shared/Description";
 
 import updateFigmaUrl from "../../../utils/updateFigmaUrl";

@@ -8,16 +8,19 @@ import Loading from "../shared/Loading";
 import Sidebar from "../Sidebar";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
+import ToastPopup from "../shared/Toast";
 
 import usePageStatusStore from "../../../store/projectInit";
-import usePageListStore from "../../../store/projectPage";
 import useProjectVersionStore from "../../../store/projectVersion";
 import getDiffingResult from "../../../services/getDiffingResult";
 import figciLogo from "../../../assets/logo_figci.jpg";
 
 function DiffingResult() {
-  const [canvas, setCanvas] = useState(null);
   const [frameList, setFrameList] = useState([]);
+  const [selectedFrame, setSelectedFrame] = useState(null);
+  const [canvas, setCanvas] = useState(null);
+  const [clickedPageId, setClickedPageId] = useState("");
+
   const [isLoaded, setIsLoaded] = useState(true);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -25,16 +28,17 @@ function DiffingResult() {
 
   const navigate = useNavigate();
 
+  const versionStatus = useProjectVersionStore(state => state.byDates);
+  const { status, clearPage, setStatus } = usePageStatusStore();
   const {
     projectKey,
+    projectUrl,
     beforeDate,
     beforeVersion,
     afterDate,
     afterVersion,
     pageId,
-  } = usePageStatusStore(state => state.status);
-  const { byPageIds } = usePageListStore();
-  const versionStatus = useProjectVersionStore(state => state.byDates);
+  } = status;
 
   const getVersionLabel = (date, versionId) => {
     if (versionStatus[date] && versionStatus[date][versionId]) {
@@ -47,8 +51,6 @@ function DiffingResult() {
   const beforeVersionLabel = getVersionLabel(beforeDate, beforeVersion);
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
 
-  const pageInfo = { id: "pageId", name: byPageIds[pageId] };
-
   useEffect(() => {
     const fetchDiffingResult = async () => {
       setIsLoaded(true);
@@ -59,8 +61,6 @@ function DiffingResult() {
         afterVersion,
         pageId,
       );
-
-      console.log(diffingResult);
 
       if (diffingResult.result === "error") {
         setIsLoaded(false);
@@ -81,23 +81,35 @@ function DiffingResult() {
       });
 
       setFrameList(frames);
-
       setIsLoaded(false);
     };
 
-    fetchDiffingResult();
-  }, []);
+    if (pageId) {
+      fetchDiffingResult();
+    }
+  }, [clickedPageId]);
 
-  const initCanvas = () =>
-    new fabric.Canvas("canvas", {
-      width: 400,
-      height: 400,
+  useEffect(() => {
+    const newCanvas = new fabric.Canvas("canvas", {
+      width: 650,
+      height: 650,
       backgroundColor: "#CED4DA",
     });
 
-  useEffect(() => {
-    setCanvas(initCanvas());
+    setCanvas(newCanvas);
   }, []);
+
+  const handleFrameSelect = (frameId, frameName) => {
+    setSelectedFrame({ id: frameId, name: frameName });
+  };
+
+  const handlePageSelect = ev => {
+    const newSelectedPageId = ev.target.value;
+
+    clearPage();
+    setStatus({ pageId: newSelectedPageId });
+    setClickedPageId(newSelectedPageId);
+  };
 
   return (
     <>
@@ -175,21 +187,22 @@ function DiffingResult() {
             <div className="profile">
               <div className="line" />
               <div className="profile-image"></div>
-              <p className="username">username</p>
+              <p className="username">김픽시</p>
             </div>
           </div>
         </header>
         <div className="content">
-          {frameList && (
-            <Sidebar
-              page={pageInfo}
-              framesInfo={frameList}
-              frameCount={frameList.length}
-            />
-          )}
+          <Sidebar
+            framesInfo={frameList}
+            projectUrl={projectUrl}
+            onPageSelect={handlePageSelect}
+            onFrameSelect={handleFrameSelect}
+            setClickedPageId={setClickedPageId}
+          />
           <canvas id="canvas" />
         </div>
       </ResultWrapper>
+      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
     </>
   );
 }
@@ -209,7 +222,7 @@ const ResultWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 24px 40px;
+    padding: 24px 32px;
     border-bottom: 2px solid #000000;
   }
 
@@ -239,8 +252,8 @@ const ResultWrapper = styled.div`
   }
 
   .profile-image {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 48px;
     border: 2px solid #000000;
     margin-left: 40px;
@@ -252,6 +265,7 @@ const ResultWrapper = styled.div`
   .label {
     margin-right: 12px;
 
+    color: #000000;
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
@@ -262,7 +276,9 @@ const ResultWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-right: 12px;
 
+    color: #495057;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
@@ -270,7 +286,7 @@ const ResultWrapper = styled.div`
   }
 
   .username {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     text-align: left;
@@ -285,21 +301,6 @@ const ResultWrapper = styled.div`
     padding: 24px 40px;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
-  }
-
-  .reselect-version {
-    box-sizing: border-box;
-    padding: 8px 16px;
-    border: 2px solid #000000;
-    border-radius: 24px;
-    white-space: pre-line;
-
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
   }
 
   .logo {
