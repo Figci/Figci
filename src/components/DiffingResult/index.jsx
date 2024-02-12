@@ -187,7 +187,7 @@ function DiffingResult() {
             <div className="profile">
               <div className="line" />
               <div className="profile-image"></div>
-              <p className="username">김픽시</p>
+              <p className="username"></p>
             </div>
           </div>
         </header>

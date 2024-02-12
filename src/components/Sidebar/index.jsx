@@ -14,10 +14,10 @@ import updateFigmaUrl from "../../../utils/updateFigmaUrl";
 import DELAY_TIME from "../../../constants/timeConstants";
 
 function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
-  const [frameId, setFrameId] = useState(null);
-  const [frameName, setFrameName] = useState(null);
+  const [frameInformation, setFrameInformation] = useState({});
   const [isClickedNewProject, setIsClickedNewProject] = useState(false);
-  const [isClickedFigmaUrl, setIsClickedFigmaUrl] = useState(false);
+  const [isClickedOpenFigmaButton, setIsClickedOpenFigmaButton] =
+    useState(false);
 
   const navigate = useNavigate();
 
@@ -27,19 +27,21 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
   const handleFrameClick = ev => {
     ev.preventDefault();
 
-    setFrameId(ev.target.getAttribute("data-id"));
-    setFrameName(ev.target.getAttribute("data-name"));
+    const frameId = ev.target.getAttribute("data-id");
+    const frameName = ev.target.getAttribute("data-name");
+
+    setFrameInformation({ frameId, frameName });
 
     onFrameSelect(frameId, frameName);
   };
 
   const currentFigmaUrlOpen = () => {
-    const figmaUrl = updateFigmaUrl(projectUrl, frameId);
+    const figmaUrl = updateFigmaUrl(projectUrl, frameInformation.frameId);
 
     return setTimeout(() => {
       window.open(figmaUrl, "_blank");
 
-      setIsClickedFigmaUrl(false);
+      setIsClickedOpenFigmaButton(false);
     }, DELAY_TIME.OPEN_ON_FIGMA);
   };
 
@@ -50,17 +52,19 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
   };
 
   useEffect(() => {
-    if (framesInfo.length > 0 && Object.keys(byPageIds).length > 0) {
+    if (framesInfo.length > 0) {
       const firstFrame = framesInfo[0];
 
-      setFrameId(firstFrame.id);
-      setFrameName(firstFrame.name);
+      setFrameInformation({
+        frameId: firstFrame.id,
+        frameName: firstFrame.name,
+      });
     }
   }, [framesInfo]);
 
   useEffect(() => {
     const timerId = (() => {
-      if (isClickedFigmaUrl) {
+      if (isClickedOpenFigmaButton) {
         return currentFigmaUrlOpen();
       }
     })();
@@ -70,7 +74,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
         clearTimeout(timerId);
       }
     };
-  }, [isClickedFigmaUrl]);
+  }, [isClickedOpenFigmaButton]);
 
   return (
     <>
@@ -112,17 +116,19 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
           </ButtonWrapper>
         </Modal>
       )}
-      {isClickedFigmaUrl && (
-        <ModalWrapper>
-          <Modal>
-            <h1 className="popup-title">피그마에서 {frameName} 여는 중</h1>
+      {isClickedOpenFigmaButton && (
+        <Modal>
+          <TextWrapper>
+            <h1 className="figma-url-title">
+              피그마에서 {frameInformation.frameName} 여는 중
+            </h1>
             <Description
               className="re-version-description"
               size="medium"
               text="현재 보고계신 화면이 있는 피그마 링크로 이동할게요.\n피그마 파일은 새 창으로 열려요."
             />
-          </Modal>
-        </ModalWrapper>
+          </TextWrapper>
+        </Modal>
       )}
       <SidebarWrapper>
         <div className="page">
@@ -146,7 +152,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
         </div>
         <div className="frame-list">
           <div className="titles">
-            <h3 className="title">전체 변경 화면 </h3>
+            <h3 className="title">전체 변경 화면</h3>
             <h3 className="title-number">{framesInfo.length}</h3>
           </div>
           <ul role="presentation" onClick={handleFrameClick}>
@@ -155,7 +161,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
                 key={nanoid(10)}
                 data-id={frame.id}
                 data-name={frame.name}
-                className={`frame-name ${frameId === frame.id ? "active" : ""}`}
+                className={`frame-name ${frameInformation.frameId === frame.id ? "active" : ""}`}
               >
                 {frame.name}
               </li>
@@ -165,7 +171,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
         <div className="buttons">
           <Button
             handleClick={() => {
-              setIsClickedFigmaUrl(true);
+              setIsClickedOpenFigmaButton(true);
             }}
             size="medium"
             usingCase="solid"
@@ -184,36 +190,6 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
     </>
   );
 }
-
-const ModalWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
-  .popup-title {
-    width: 100%;
-    margin-bottom: 12px;
-
-    color: #000000;
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 700;
-    text-align: center;
-    line-height: 32px;
-  }
-
-  .popup-description {
-    width: 100%;
-    margin-right: 20px;
-    margin-left: 20px;
-
-    color: #495057;
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 500;
-    text-align: center;
-    line-height: 24px;
-  }
-`;
 
 const SidebarWrapper = styled.div`
   display: flex;
@@ -334,6 +310,18 @@ const TextWrapper = styled.div`
     font-style: normal;
     text-align: center;
     line-height: 24px;
+  }
+
+  .figma-url-title {
+    width: 100%;
+    margin: 40px 0 12px;
+
+    color: #000000;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    line-height: 32px;
   }
 `;
 

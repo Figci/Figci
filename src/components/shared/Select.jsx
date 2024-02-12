@@ -38,8 +38,7 @@ const SelectWrapper = styled.div`
     padding: 0px 24px;
     border-radius: 8px;
     border: 2px solid #000000;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin: 12px 0;
 
     background-color: #ffffff;
     font-size: 1rem;
