@@ -8,10 +8,12 @@ import Modal from "../shared/Modal";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 
+import usePageListStore from "../../../store/projectPage";
+import usePageStatusStore from "../../../store/projectInit";
 import updateFigmaUrl from "../../../utils/updateFigmaUrl";
 import DELAY_TIME from "../../../constants/timeConstants";
 
-function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
+function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
   const [frameId, setFrameId] = useState(null);
   const [frameName, setFrameName] = useState(null);
   const [selectedPageId, setSelectedPageId] = useState(null);
@@ -20,6 +22,9 @@ function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
 
   const navigate = useNavigate();
 
+  const { status } = usePageStatusStore();
+  const { byPageIds } = usePageListStore();
+
   const handleFrameClick = ev => {
     ev.preventDefault();
 
@@ -27,10 +32,6 @@ function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
     setFrameName(ev.target.getAttribute("data-name"));
 
     onFrameSelect(frameId, frameName);
-  };
-
-  const handlePageSelect = ev => {
-    setSelectedPageId(ev.target.value);
   };
 
   const currentFigmaUrlOpen = () => {
@@ -50,7 +51,7 @@ function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
   };
 
   useEffect(() => {
-    if (framesInfo.length > 0 && frameId === null) {
+    if (framesInfo.length > 0 && Object.keys(byPageIds).length > 0) {
       const firstFrame = framesInfo[0];
 
       setFrameId(firstFrame.id);
@@ -115,11 +116,11 @@ function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
       {isClickedFigmaUrl && (
         <ModalWrapper>
           <Modal>
-            <h1 className="popup-title">
-              피그마에서 <br />
-              {frameName} 여는 중
-            </h1>
-            <span>현재 보고계신 화면이 있는 피그마 링크로 이동할게요.</span>
+            <h1 className="popup-title">피그마에서 {frameName} 여는 중</h1>
+            <span className="popup-description">
+              현재 보고계신 화면이 있는 피그마 링크로 이동할게요.
+              <br /> 피그마 파일은 새 창으로 열려요.
+            </span>
           </Modal>
         </ModalWrapper>
       )}
@@ -131,8 +132,16 @@ function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
               id="page"
               type="select"
               aria-label="select"
-              onChange={handlePageSelect}
-            />
+              onChange={onPageSelect}
+              value={status.pageId || ""}
+            >
+              {byPageIds &&
+                Object.keys(byPageIds).map(pageId => (
+                  <option key={pageId} value={pageId}>
+                    {byPageIds[pageId]}
+                  </option>
+                ))}
+            </select>
           </label>
         </div>
         <div className="frame-list">
@@ -181,11 +190,28 @@ const ModalWrapper = styled.div`
   align-items: center;
 
   .popup-title {
-    font-size: 1.8 rem;
+    width: 100%;
+    margin-bottom: 12px;
+
+    color: #000000;
+    font-size: 1.5rem;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 700;
     text-align: center;
     line-height: 32px;
+  }
+
+  .popup-description {
+    width: 100%;
+    margin-right: 20px;
+    margin-left: 20px;
+
+    color: #495057;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    line-height: 24px;
   }
 `;
 
@@ -195,6 +221,22 @@ const SidebarWrapper = styled.div`
   box-sizing: border-box;
   width: 305px;
   border-right: 2px solid #000000;
+
+  select {
+    width: 100%;
+    height: 64px;
+    padding: 0px 24px;
+    border-radius: 8px;
+    border: 2px solid #000000;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    background-color: #ffffff;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+  }
 
   .page {
     padding: 24px;
@@ -240,7 +282,7 @@ const SidebarWrapper = styled.div`
 
   .title {
     color: #000000;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
