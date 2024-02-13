@@ -29,7 +29,7 @@ const projectStore = set => ({
         pageId: null,
       },
     })),
-  clearVersion: () =>
+  clearProjectVersion: () =>
     set(state => ({
       ...state,
       project: {
