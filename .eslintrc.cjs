@@ -46,5 +46,6 @@ module.exports = {
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
     "no-useless-return": "off",
     "guard-for-in": "off",
+    "consistent-return": "off",
   },
 };
