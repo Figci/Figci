@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import Loading from "../shared/Loading";
@@ -11,21 +12,48 @@ import BottomNavigator from "../shared/BottomNavigator";
 import usePageListStore from "../../../store/projectPage";
 import usePageStatusStore from "../../../store/projectInit";
 
+import getDiffingResultQuery from "../../../services/getDiffingResultQuery";
+import ToastPopup from "../shared/Toast";
+
 function ProjectPage() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [targetPageId, setTargetPageId] = useState("");
-  const { setStatus, clearPageStatus } = usePageStatusStore(state => state);
+  const [toast, setToast] = useState({});
+  const [selectedPageId, setSelectedPageId] = useState("");
+  const { status, setStatus, clearPageStatus } = usePageStatusStore();
   const { byPageIds } = usePageListStore();
   const navigate = useNavigate();
 
-  setStatus({ pageId: targetPageId });
+  const { projectKey, beforeVersion, afterVersion, pageId } = status;
 
   useEffect(() => {
     clearPageStatus();
   }, []);
 
+  const {
+    data: diffingResult,
+    isLoading,
+    isError,
+    error,
+  } = getDiffingResultQuery(projectKey, beforeVersion, afterVersion, pageId);
+
+  useEffect(() => {
+    if (!diffingResult) {
+      return;
+    }
+
+    if (diffingResult.result === "error") {
+      setToast({
+        status: true,
+        message: "해당 페이지는 변경사항이 없습니다",
+      });
+
+      return;
+    }
+
+    navigate("/result");
+  }, [diffingResult]);
+
   const handleChange = ev => {
-    setTargetPageId(ev.target.value);
+    setSelectedPageId(ev.target.value);
   };
 
   const handleClick = ev => {
@@ -37,13 +65,8 @@ function ProjectPage() {
       return;
     }
 
-    try {
-      navigate("/result");
-    } catch (err) {
-      setIsLoaded(false);
-    }
+    setStatus({ pageId: selectedPageId });
   };
-
   const selectOptionRenderList = () => {
     const optionRenderList = [];
 
@@ -94,13 +117,20 @@ function ProjectPage() {
     ],
   };
 
+  if (isLoading) {
+    return (
+      <Modal>
+        <Loading />
+      </Modal>
+    );
+  }
+
+  if (isError) {
+    return setToast({ status: true, message: error.toString() });
+  }
+
   return (
     <>
-      {isLoaded && (
-        <Modal>
-          <Loading />
-        </Modal>
-      )}
       <ProjectPageWrapper>
         <Title title={contents.title} />
         <div className="select">
@@ -108,6 +138,9 @@ function ProjectPage() {
         </div>
       </ProjectPageWrapper>
       <BottomNavigator buttons={contents.buttons} />
+      {toast.status && (
+        <ToastPopup setToast={setToast} message={toast.message} />
+      )}
     </>
   );
 }
