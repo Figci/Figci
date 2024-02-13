@@ -6,7 +6,7 @@ import DELAY_TIME from "../../../constants/timeConstants";
 function ToastPopup({ message, setToast }) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      setToast(false);
+      setToast({ status: false, message: "" });
     }, DELAY_TIME.TOAST);
 
     return () => {
