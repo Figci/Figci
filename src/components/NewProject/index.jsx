@@ -11,22 +11,22 @@ import ToastPopup from "../shared/Toast";
 import getAllVersions from "../../../services/getAllVersions";
 import getProjectKeyFromURI from "../../../utils/getProjectKeyFromURI";
 
+import useProjectStore from "../../../store/project";
 import useProjectVersionStore from "../../../store/projectVersion";
-import usePageStatusStore from "../../../store/projectInit";
 
 function NewProject() {
   const navigate = useNavigate();
 
-  const { status, setStatus, clearProjectStatus } = usePageStatusStore();
+  const { project, setProject, clearProject } = useProjectStore();
   const { setVersion, clearVersion } = useProjectVersionStore();
 
   const [isModalOpened, setIsModalOpened] = useState(true);
-  const [inputValue, setInputValue] = useState(status.projectUrl);
+  const [inputValue, setInputValue] = useState(project.projectUrl);
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
-    clearProjectStatus();
+    clearProject();
     clearVersion();
   }, []);
 
@@ -59,11 +59,8 @@ function NewProject() {
     }
 
     const projectKey = getProjectKeyFromURI(inputValue);
-    const projectUrl = inputValue;
-
-    setStatus({ projectKey, projectUrl: inputValue });
-
     const allVersions = await getAllVersions(projectKey);
+    const projectUrl = inputValue;
 
     if (allVersions.result === "error") {
       setToastMessage(allVersions.message);
@@ -72,6 +69,7 @@ function NewProject() {
       return;
     }
 
+    setProject({ projectKey, projectUrl });
     setVersion(allVersions.content);
 
     navigate("/version");

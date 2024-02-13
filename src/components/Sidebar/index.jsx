@@ -9,34 +9,33 @@ import Button from "../shared/Button";
 import Description from "../shared/Description";
 
 import usePageListStore from "../../../store/projectPage";
-import usePageStatusStore from "../../../store/projectInit";
+import useProjectStore from "../../../store/project";
 import updateFigmaUrl from "../../../utils/updateFigmaUrl";
 import DELAY_TIME from "../../../constants/timeConstants";
 
-function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
-  const [frameInformation, setFrameInformation] = useState({});
+function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
+  const [frameId, setFrameId] = useState(null);
+  const [frameName, setFrameName] = useState(null);
   const [isClickedNewProject, setIsClickedNewProject] = useState(false);
   const [isClickedOpenFigmaButton, setIsClickedOpenFigmaButton] =
     useState(false);
 
   const navigate = useNavigate();
 
-  const { status } = usePageStatusStore();
+  const { project, setProject, clearPageId } = useProjectStore();
   const { byPageIds } = usePageListStore();
 
   const handleFrameClick = ev => {
     ev.preventDefault();
 
-    const frameId = ev.target.getAttribute("data-id");
-    const frameName = ev.target.getAttribute("data-name");
-
-    setFrameInformation({ frameId, frameName });
+    setFrameId(ev.target.getAttribute("data-id"));
+    setFrameName(ev.target.getAttribute("data-name"));
 
     onFrameSelect(frameId, frameName);
   };
 
   const currentFigmaUrlOpen = () => {
-    const figmaUrl = updateFigmaUrl(projectUrl, frameInformation.frameId);
+    const figmaUrl = updateFigmaUrl(projectUrl, frameId);
 
     return setTimeout(() => {
       window.open(figmaUrl, "_blank");
@@ -51,14 +50,19 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
     setIsClickedNewProject(true);
   };
 
+  const handlePageSelect = ev => {
+    const newSelectedPageId = ev.target.value;
+
+    clearPageId();
+    setProject({ pageId: newSelectedPageId });
+  };
+
   useEffect(() => {
     if (framesInfo.length > 0) {
       const firstFrame = framesInfo[0];
 
-      setFrameInformation({
-        frameId: firstFrame.id,
-        frameName: firstFrame.name,
-      });
+      setFrameId(firstFrame.id);
+      setFrameName(firstFrame.name);
     }
   }, [framesInfo]);
 
@@ -119,9 +123,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
       {isClickedOpenFigmaButton && (
         <Modal>
           <TextWrapper>
-            <h1 className="figma-url-title">
-              피그마에서 {frameInformation.frameName} 여는 중
-            </h1>
+            <h1 className="figma-url-title">피그마에서 {frameName} 여는 중</h1>
             <Description
               className="re-version-description"
               size="medium"
@@ -138,8 +140,8 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
               id="page"
               type="select"
               aria-label="select"
-              onChange={onPageSelect}
-              value={status.pageId || ""}
+              onChange={handlePageSelect}
+              value={project.pageId || ""}
             >
               {byPageIds &&
                 Object.keys(byPageIds).map(pageId => (
@@ -161,7 +163,7 @@ function Sidebar({ framesInfo, projectUrl, onPageSelect, onFrameSelect }) {
                 key={nanoid(10)}
                 data-id={frame.id}
                 data-name={frame.name}
-                className={`frame-name ${frameInformation.frameId === frame.id ? "active" : ""}`}
+                className={`frame-name ${frameId === frame.id ? "active" : ""}`}
               >
                 {frame.name}
               </li>

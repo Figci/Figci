@@ -13,7 +13,7 @@ import getCommonPages from "../../../services/getCommonPages";
 
 import useProjectVersionStore from "../../../store/projectVersion";
 import usePageListStore from "../../../store/projectPage";
-import usePageStatusStore from "../../../store/projectInit";
+import useProjectStore from "../../../store/project";
 
 function ProjectVersion() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,12 +23,12 @@ function ProjectVersion() {
 
   const navigate = useNavigate();
 
-  const { status, setStatus, clearVersionStatus } = usePageStatusStore();
+  const { project, setProject, clearProjectVersion } = useProjectStore();
   const { allDates, byDates } = useProjectVersionStore();
   const { setPages, clearPages } = usePageListStore();
 
   useEffect(() => {
-    clearVersionStatus();
+    clearProjectVersion();
     clearPages();
   }, []);
 
@@ -70,12 +70,12 @@ function ProjectVersion() {
       return;
     }
 
-    setStatus(projectVersion);
+    setProject(projectVersion);
 
     setIsLoaded(true);
 
     const pageList = await getCommonPages(
-      status.projectKey,
+      project.projectKey,
       beforeVersion,
       afterVersion,
     );
