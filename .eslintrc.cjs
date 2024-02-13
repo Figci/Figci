@@ -47,5 +47,6 @@ module.exports = {
     "no-useless-return": "off",
     "guard-for-in": "off",
     "consistent-return": "off",
+    "no-shadow": "off",
   },
 };
