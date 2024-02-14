@@ -45,6 +45,8 @@ const projectStore = set => ({
     set(state => ({
       ...state,
       project: {
+        username: null,
+        userProfile: null,
         projectUrl: null,
         projectKey: null,
         beforeDate: null,
