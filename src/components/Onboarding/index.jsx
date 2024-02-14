@@ -7,7 +7,7 @@ import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
 
 import { getAuth, fetchToken } from "../../../services/auth";
-import figciLogo from "../../../assets/logo_figci.jpg";
+import figciLogo from "../../../assets/logo_figci.png";
 import onBoardingIcon from "../../../assets/onboarding.png";
 
 function Onboarding() {
@@ -59,7 +59,7 @@ function Onboarding() {
         />
         <Description
           className="description"
-          size="medium"
+          size="large"
           text="피그마 계정으로 로그인하시면 파일버전을 비교해\n디자인 화면의 변경사항을 쉽게 보여드려요!"
         />
         <Button handleClick={onClickButtonHandler} size="large">
@@ -67,7 +67,7 @@ function Onboarding() {
         </Button>
       </Wrapper>
       <Wrapper className="onboarding-right">
-        <img src={onBoardingIcon} alt="figci-onboarding-img" width="400" />
+        <img src={onBoardingIcon} alt="figci-onboarding-img" width="360" />
         <h1 className="description main">
           비교할 두 피그마 버전을 알려주시면
           <br />
@@ -99,7 +99,7 @@ const Wrapper = styled.div`
   }
 
   .description {
-    margin-bottom: 24px;
+    margin-bottom: 48px;
   }
 
   .description.main {
@@ -127,13 +127,13 @@ const Container = styled.div`
   height: 100vh;
 
   .onboarding-left {
-    flex-grow: 6;
+    flex-grow: 7;
   }
 
   .onboarding-right {
-    flex-grow: 4;
+    flex-grow: 3;
 
-    background-color: #f8f9fa;
+    background-color: #e9ecef;
 
     img {
       margin-bottom: 48px;

@@ -14,8 +14,8 @@ import updateFigmaUrl from "../../../utils/updateFigmaUrl";
 import DELAY_TIME from "../../../constants/timeConstants";
 
 function Sidebar({ framesInfo, projectUrl, onFrameSelect }) {
-  const [frameId, setFrameId] = useState(null);
-  const [frameName, setFrameName] = useState(null);
+  const [frameId, setFrameId] = useState("");
+  const [frameName, setFrameName] = useState("");
   const [isClickedNewProject, setIsClickedNewProject] = useState(false);
   const [isClickedOpenFigmaButton, setIsClickedOpenFigmaButton] =
     useState(false);

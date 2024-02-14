@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import figciLogo from "../../../assets/logo_figci.jpg";
+import figciLogo from "../../../assets/logo_figci.png";
 
 function Header() {
   return (

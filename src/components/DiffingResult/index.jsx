@@ -14,7 +14,7 @@ import useProjectStore from "../../../store/project";
 import useProjectVersionStore from "../../../store/projectVersion";
 import getDiffingResultQuery from "../../../services/getDiffingResultQuery";
 
-import figciLogo from "../../../assets/logo_figci.jpg";
+import figciLogo from "../../../assets/logo_figci.png";
 
 function DiffingResult() {
   const [frameList, setFrameList] = useState([]);
