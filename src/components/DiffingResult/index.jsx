@@ -65,17 +65,16 @@ function DiffingResult() {
       if (diffingResult.result === "error") {
         setToast({ status: true, message: diffingResult.message });
 
-        navigate("/page");
-
         return;
       }
 
-      const frames = diffingResult.content.frames.map(frame => {
-        return {
-          name: frame.name,
-          id: frame.frameId,
-        };
-      });
+      const frames = [];
+
+      for (const frameId in diffingResult.content.frames) {
+        const frame = diffingResult.content.frames[frameId];
+
+        frames.push({ name: frame.name, id: frameId });
+      }
 
       setFrameList(frames);
     }
