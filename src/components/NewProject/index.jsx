@@ -23,7 +23,6 @@ function NewProject() {
   const [isModalOpened, setIsModalOpened] = useState(true);
   const [inputValue, setInputValue] = useState(project.projectUrl);
   const [toast, setToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     clearProject();
@@ -51,8 +50,10 @@ function NewProject() {
     ev.preventDefault();
 
     if (!isValidFigmaUrl(inputValue)) {
-      setToastMessage("피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲");
-      setToast(true);
+      setToast({
+        status: true,
+        message: "피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲",
+      });
       setIsModalOpened(false);
 
       return;
@@ -63,8 +64,7 @@ function NewProject() {
     const projectUrl = inputValue;
 
     if (allVersions.result === "error") {
-      setToastMessage(allVersions.message);
-      setToast(true);
+      setToast({ status: true, message: "allVersions.message" });
 
       return;
     }
@@ -108,7 +108,9 @@ function NewProject() {
         </form>
       </ContentsWrapper>
       <BottomNavigator buttons={contents.buttons} />
-      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
+      {toast.status && (
+        <ToastPopup setToast={setToast} message={toast.message} />
+      )}
     </>
   );
 }
