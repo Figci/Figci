@@ -17,8 +17,7 @@ import useProjectStore from "../../../store/project";
 
 function ProjectVersion() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [toast, setToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toast, setToast] = useState({});
   const [projectVersion, setProjectVersion] = useState({});
 
   const navigate = useNavigate();
@@ -52,8 +51,7 @@ function ProjectVersion() {
       projectVersion;
 
     if (!(beforeVersion && afterVersion)) {
-      setToastMessage("선택하지 않은 버전이 존재합니다.");
-      setToast(true);
+      setToast({ status: true, message: "선택하지 않은 버전이 존재합니다." });
 
       return;
     }
@@ -64,8 +62,10 @@ function ProjectVersion() {
     const afterCreatedAt = new Date(byDates[afterDate][afterVersion].createdAt);
 
     if (beforeCreatedAt >= afterCreatedAt) {
-      setToastMessage("이후 버전은 이전 버전보다 나중이여야 합니다.");
-      setToast(true);
+      setToast({
+        status: true,
+        message: "이후 버전은 이전 버전보다 나중이여야 합니다.",
+      });
 
       return;
     }
@@ -83,8 +83,7 @@ function ProjectVersion() {
     if (pageList.result === "error") {
       setIsLoaded(false);
 
-      setToastMessage(pageList.message);
-      setToast(true);
+      setToast({ statue: true, message: pageList.message });
 
       navigate("/new");
     }
@@ -198,7 +197,9 @@ function ProjectVersion() {
         </HorizontalAlign>
       </ContentsWrapper>
       <BottomNavigator buttons={contents.buttons} />
-      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
+      {toast.status && (
+        <ToastPopup setToast={setToast} message={toast.message} />
+      )}
     </>
   );
 }

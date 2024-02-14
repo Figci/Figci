@@ -10,26 +10,22 @@ import Button from "../shared/Button";
 import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
 
-import usePageStatusStore from "../../../store/projectInit";
+import useProjectStore from "../../../store/project";
 import useProjectVersionStore from "../../../store/projectVersion";
-import getDiffingResult from "../../../services/getDiffingResult";
+import getDiffingResultQuery from "../../../services/getDiffingResultQuery";
+
 import figciLogo from "../../../assets/logo_figci.jpg";
 
 function DiffingResult() {
   const [frameList, setFrameList] = useState([]);
-  const [selectedFrame, setSelectedFrame] = useState(null);
-  const [canvas, setCanvas] = useState(null);
-  const [clickedPageId, setClickedPageId] = useState("");
-
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [toast, setToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [selectedFrame, setSelectedFrame] = useState("");
+  const [canvas, setCanvas] = useState("");
+  const [toast, setToast] = useState({});
   const [isClickedNewVersion, setIsClickedNewVersion] = useState(false);
 
   const navigate = useNavigate();
 
   const versionStatus = useProjectVersionStore(state => state.byDates);
-  const { status, clearPageStatus, setStatus } = usePageStatusStore();
   const {
     projectKey,
     projectUrl,
@@ -38,7 +34,20 @@ function DiffingResult() {
     afterDate,
     afterVersion,
     pageId,
-  } = status;
+  } = useProjectStore(state => state.project);
+
+  const {
+    isLoading,
+    data: diffingResult,
+    isError,
+    error,
+  } = getDiffingResultQuery(projectKey, beforeVersion, afterVersion, pageId);
+
+  if (isError) {
+    setToast({ status: true, message: error.toString() });
+
+    return;
+  }
 
   const getVersionLabel = (date, versionId) => {
     if (versionStatus[date] && versionStatus[date][versionId]) {
@@ -52,23 +61,11 @@ function DiffingResult() {
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
 
   useEffect(() => {
-    const fetchDiffingResult = async () => {
-      setIsLoaded(true);
-
-      const diffingResult = await getDiffingResult(
-        projectKey,
-        beforeVersion,
-        afterVersion,
-        pageId,
-      );
-
+    if (diffingResult) {
       if (diffingResult.result === "error") {
-        setIsLoaded(false);
+        setToast({ status: true, message: diffingResult.message });
 
-        setToastMessage(diffingResult.message);
-        setToast(true);
-
-        navigate(-1);
+        navigate("/page");
 
         return;
       }
@@ -81,13 +78,8 @@ function DiffingResult() {
       });
 
       setFrameList(frames);
-      setIsLoaded(false);
-    };
-
-    if (pageId) {
-      fetchDiffingResult();
     }
-  }, [clickedPageId]);
+  }, [diffingResult]);
 
   useEffect(() => {
     const newCanvas = new fabric.Canvas("canvas", {
@@ -103,17 +95,9 @@ function DiffingResult() {
     setSelectedFrame({ id: frameId, name: frameName });
   };
 
-  const handlePageSelect = ev => {
-    const newSelectedPageId = ev.target.value;
-
-    clearPageStatus();
-    setStatus({ pageId: newSelectedPageId });
-    setClickedPageId(newSelectedPageId);
-  };
-
   return (
     <>
-      {isLoaded && (
+      {isLoading && (
         <Modal>
           <Loading />
         </Modal>
@@ -195,14 +179,14 @@ function DiffingResult() {
           <Sidebar
             framesInfo={frameList}
             projectUrl={projectUrl}
-            onPageSelect={handlePageSelect}
             onFrameSelect={handleFrameSelect}
-            setClickedPageId={setClickedPageId}
           />
           <canvas id="canvas" />
         </div>
       </ResultWrapper>
-      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
+      {toast.status && (
+        <ToastPopup setToast={setToast} message={toast.message} />
+      )}
     </>
   );
 }
