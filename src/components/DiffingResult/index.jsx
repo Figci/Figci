@@ -80,7 +80,7 @@ function DiffingResult() {
   useEffect(() => {
     const initCanvas = () => {
       const canvasInit = new fabric.Canvas("canvas", {
-        width: window.innerWidth - SIZE.FIXED_SIDEBAR_HEIGHT,
+        width: window.innerWidth - SIZE.FIXED_SIDEBAR_WIDTH,
         height: window.innerHeight - SIZE.FIXED_HEADER_HEIGHT,
         backgroundColor: "#CED4DA",
         setZoom: SIZE.SET_ZOOM,
@@ -112,7 +112,7 @@ function DiffingResult() {
           window.innerHeight - SIZE.FIXED_HEADER_HEIGHT,
         );
         canvasRef.current.setWidth(
-          window.innerWidth - SIZE.FIXED_SIDEBAR_HEIGHT,
+          window.innerWidth - SIZE.FIXED_SIDEBAR_WIDTH,
         );
 
         canvasRef.current.calcOffset();
