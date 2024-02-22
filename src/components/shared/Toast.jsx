@@ -30,14 +30,17 @@ const fadeInUp = keyframes`
 `;
 
 const Toast = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 2;
-  top: 85%;
+  top: 87%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 900px;
+  width: 50%;
   height: 70px;
   border-radius: 20px;
 
