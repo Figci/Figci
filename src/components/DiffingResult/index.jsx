@@ -34,7 +34,7 @@ function DiffingResult() {
 
   const versionStatus = useProjectVersionStore(state => state.byDates);
   const {
-    username,
+    userName,
     userProfile,
     projectKey,
     projectUrl,
@@ -303,7 +303,7 @@ function DiffingResult() {
                 alt="user-profile"
                 className="profile-image"
               />
-              <p className="username">{username}</p>
+              <p className="username">{userName}</p>
             </div>
           </div>
         </header>

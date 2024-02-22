@@ -12,8 +12,7 @@ import onBoardingIcon from "../../../assets/onboarding.png";
 
 function Onboarding() {
   const [isClicked, setIsClicked] = useState(false);
-  const [toast, setToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toast, setToast] = useState({});
   const [query] = useSearchParams();
   const navigate = useNavigate();
 
@@ -38,7 +37,7 @@ function Onboarding() {
     try {
       getAccessToken(code);
     } catch (err) {
-      setToastMessage("로그인에 실패하였습니다.");
+      setToast({ status: true, message: "로그인에 실패하였습니다." });
     }
   }
 
@@ -79,7 +78,7 @@ function Onboarding() {
           text="피그마 이전 버전과 최신 버전을 비교해\n변경사항을 확인해보세요"
         />
       </Wrapper>
-      {toast && <ToastPopup setToast={setToast} message={toastMessage} />}
+      {toast && <ToastPopup setToast={setToast} message={toast.message} />}
     </Container>
   );
 }

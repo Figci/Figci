@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware";
 
 const projectStore = set => ({
   project: {
-    username: null,
+    userName: null,
     userProfile: null,
     projectUrl: null,
     projectKey: null,
@@ -45,7 +45,7 @@ const projectStore = set => ({
     set(state => ({
       ...state,
       project: {
-        username: null,
+        userName: null,
         userProfile: null,
         projectUrl: null,
         projectKey: null,

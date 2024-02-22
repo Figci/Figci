@@ -57,7 +57,7 @@ function NewProject() {
     }
 
     setProject({
-      username: userInfo.content.handle,
+      userName: userInfo.content.handle,
       userProfile: userInfo.content.img_url,
     });
   };
