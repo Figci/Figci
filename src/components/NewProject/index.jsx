@@ -48,9 +48,18 @@ function NewProject() {
   };
 
   const getUserInformation = async () => {
-    const { handle: username, img_url: userProfile } = await getUserProfile();
+    const userInfo = await getUserProfile();
 
-    setProject({ username, userProfile });
+    if (userInfo.result === "error") {
+      setToast({ statue: true, message: userInfo.message });
+
+      return;
+    }
+
+    setProject({
+      username: userInfo.content.handle,
+      userProfile: userInfo.content.img_url,
+    });
   };
 
   const handleSubmitURI = async ev => {
