@@ -188,8 +188,9 @@ const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 300px;
-  height: calc(100vh - 150px);
+  width: 295px;
+  min-width: 295px;
+  height: 100vh - 50px;
   border-right: 2px solid #000000;
 
   select {
@@ -220,7 +221,7 @@ const SidebarWrapper = styled.div`
   .frame-list {
     display: flex;
     flex-direction: column;
-    height: 60%;
+    height: 100%;
     padding: 24px;
   }
 
