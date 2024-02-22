@@ -187,7 +187,6 @@ function DiffingResult() {
       );
 
       if (isChangedFrame.includes(frameId)) {
-        
         await renderFabricDifference.call(
           canvasRef.current,
           content.differences,
@@ -196,6 +195,7 @@ function DiffingResult() {
         );
       } else {
         content.frames[frameId].isNew = true;
+        
         await renderFabricDifference.call(
           canvasRef.current,
           content.frames[frameId],
