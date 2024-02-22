@@ -78,7 +78,9 @@ function Onboarding() {
           text="피그마 이전 버전과 최신 버전을 비교해\n변경사항을 확인해보세요"
         />
       </Wrapper>
-      {toast && <ToastPopup setToast={setToast} message={toast.message} />}
+      {toast.status && (
+        <ToastPopup setToast={setToast} message={toast.message} />
+      )}
     </Container>
   );
 }
