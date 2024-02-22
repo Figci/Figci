@@ -32,7 +32,7 @@ const getToken = async authCode => {
   const API_URI = generateApiUri(baseURI, "api/oauth/token", queryParams);
 
   const response = await fetch(API_URI, { method: "POST" });
-  const responseJson = response.json();
+  const responseJson = await response.json();
 
   return responseJson;
 };
