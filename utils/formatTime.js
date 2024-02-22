@@ -1,0 +1,30 @@
+import DELAY_TIME from "../constants/timeConstants";
+
+const formatTime = dateString => {
+  const currentDate = new Date(dateString);
+  const utcMS =
+    currentDate.getTime() + currentDate.getTimezoneOffset() * 60 * 1000;
+
+  const koreaTime = new Date(utcMS + DELAY_TIME.TIME_GAP_MS);
+
+  const year = koreaTime.getFullYear();
+  const month = koreaTime.getMonth();
+  const date = koreaTime.getDate();
+
+  const hour = koreaTime.getHours();
+  const AmPm = hour >= 12 ? "PM" : "AM";
+  const formattedHour = hour % 12 || 12;
+  const minutes =
+    koreaTime.getMinutes() < 10
+      ? `0${koreaTime.getMinutes()}`
+      : koreaTime.getMinutes();
+
+  const formattedDate = `${year}-${month}-${date}`;
+  const formattedTime = `${formattedHour}:${minutes} ${AmPm}`;
+
+  console.log(formattedDate, formattedTime);
+
+  return { formattedDate, formattedTime };
+};
+
+export default formatTime;
