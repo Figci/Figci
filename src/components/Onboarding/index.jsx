@@ -13,7 +13,7 @@ import onBoardingIcon from "../../../assets/onboarding.png";
 function Onboarding() {
   const [isClicked, setIsClicked] = useState(false);
   const [toast, setToast] = useState(false);
-  const [toastMessage, setToageMessage] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
   const [query] = useSearchParams();
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ function Onboarding() {
     try {
       getAccessToken(code);
     } catch (err) {
-      setToageMessage("로그인에 실패하였습니다.");
+      setToastMessage("로그인에 실패하였습니다.");
     }
   }
 
