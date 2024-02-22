@@ -187,6 +187,7 @@ function DiffingResult() {
       );
 
       if (isChangedFrame.includes(frameId)) {
+        
         await renderFabricDifference.call(
           canvasRef.current,
           content.differences,
