@@ -9,6 +9,7 @@ import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
 import getAllVersions from "../../../services/getAllVersions";
+import getUserProfile from "../../../services/getUserProfile";
 import getProjectKeyFromURI from "../../../utils/getProjectKeyFromURI";
 
 import useProjectStore from "../../../store/project";
@@ -46,6 +47,12 @@ function NewProject() {
     return figmaUrlPattern.test(figmaUrl);
   };
 
+  const getUserInformation = async () => {
+    const { handle: username, img_url: userProfile } = await getUserProfile();
+
+    setProject({ username, userProfile });
+  };
+
   const handleSubmitURI = async ev => {
     ev.preventDefault();
 
@@ -68,6 +75,8 @@ function NewProject() {
 
       return;
     }
+
+    await getUserInformation();
 
     setProject({ projectKey, projectUrl });
     setVersion(allVersions.content);
