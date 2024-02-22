@@ -26,7 +26,7 @@ function DiffingResult() {
   const [frameId, setFrameId] = useState("");
   const [frameName, setFrameName] = useState("");
   const [toast, setToast] = useState({});
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState({});
   const [isClickedNewVersion, setIsClickedNewVersion] = useState(false);
 
   const canvasRef = useRef(null);
@@ -115,15 +115,6 @@ function DiffingResult() {
 
     window.addEventListener("resize", resizeCanvas);
 
-    const fetchImageURLToFigma = async () => {
-      const imageUrlObject = await fetchImageUrl(projectKey, setToast);
-      setImageUrl(imageUrlObject);
-    };
-
-    if (!imageUrl) {
-      fetchImageURLToFigma();
-    }
-
     return () => {
       window.removeEventListener("resize", resizeCanvas);
 
@@ -169,54 +160,63 @@ function DiffingResult() {
   useEffect(() => {
     const fetchImageURLToFigma = async () => {
       const imageUrlObject = await fetchImageUrl(projectKey, setToast);
-      setImageUrl(imageUrlObject);
+
+      setImageUrl({ ...imageUrlObject });
+
+      return imageUrlObject;
     };
 
-    if (!imageUrl) {
-      fetchImageURLToFigma();
-    }
+    const renderFabricOnCanvas = async content => {
+      const imgURls =
+        Object.keys(imageUrl).length === 0
+          ? await fetchImageURLToFigma()
+          : imageUrl;
 
-    if (diffingResult && frameId) {
+      const isChangedFrame = Object.values(content.differences).map(
+        differenceNode => differenceNode.frameId,
+      );
+
       const offsetCoordinates = fixCoordinate(
         diffingResult.content.frames[frameId],
       );
 
-      const renderFabricOnCanvas = async content => {
-        const isChangedFrame = Object.values(content.differences).map(
-          differenceNode => differenceNode.frameId,
-        );
+      await renderFabricFrame.call(
+        canvasRef.current,
+        content.frames[frameId],
+        imgURls,
+      );
 
-        await renderFabricFrame.call(
+      if (isChangedFrame.includes(frameId)) {
+        await renderFabricDifference.call(
+          canvasRef.current,
+          content.differences,
+          offsetCoordinates,
+          frameId,
+        );
+      } else {
+        content.frames[frameId].isNew = true;
+        await renderFabricDifference.call(
           canvasRef.current,
           content.frames[frameId],
-          imageUrl,
+          offsetCoordinates,
+          frameId,
         );
-        if (isChangedFrame.includes(frameId)) {
-          renderFabricDifference.call(
-            canvasRef.current,
-            content.differences,
-            offsetCoordinates,
-            frameId,
-          );
-        } else {
-          content.frames[frameId].isNew = true;
-          renderFabricDifference.call(
-            canvasRef.current,
-            content.frames[frameId],
-            offsetCoordinates,
-            frameId,
-          );
-        }
-      };
-
-      if (canvasRef.current) {
-        canvasRef.current.remove(...canvasRef.current.getObjects());
       }
+    };
 
-      renderFabricOnCanvas(diffingResult.content);
+    const renderFabricAfterFetch = async () => {
+      if (diffingResult && frameId) {
+        if (canvasRef.current) {
+          canvasRef.current.remove(...canvasRef.current.getObjects());
+        }
 
-      canvasRef.current.renderAll();
-    }
+        await renderFabricOnCanvas(diffingResult.content);
+
+        canvasRef.current.renderAll();
+      }
+    };
+
+    renderFabricAfterFetch();
   }, [frameId]);
 
   return (
