@@ -20,6 +20,7 @@ import fetchImageUrl from "../../../utils/fetchImage";
 import renderFabricFrame from "../../../services/renderFabricFrame";
 import fixCoordinate from "../../../utils/fixCoordinate";
 import isOwnProperty from "../../../utils/isOwnProperty";
+import SIZE from "../../../constants/sizeConstants";
 
 function DiffingResult() {
   const [frameList, setFrameList] = useState([]);
@@ -79,10 +80,10 @@ function DiffingResult() {
   useEffect(() => {
     const initCanvas = () => {
       const canvasInit = new fabric.Canvas("canvas", {
-        width: window.innerWidth - 295,
-        height: window.innerHeight - 81.9,
+        width: window.innerWidth - SIZE.FIXED_SIDEBAR_HEIGHT,
+        height: window.innerHeight - SIZE.FIXED_HEADER_HEIGHT,
         backgroundColor: "#CED4DA",
-        setZoom: 0.3,
+        setZoom: SIZE.SET_ZOOM,
         selection: false,
       });
 
@@ -107,8 +108,12 @@ function DiffingResult() {
 
     const resizeCanvas = () => {
       if (canvasRef.current) {
-        canvasRef.current.setHeight(window.innerHeight - 81.9);
-        canvasRef.current.setWidth(window.innerWidth - 295);
+        canvasRef.current.setHeight(
+          window.innerHeight - SIZE.FIXED_HEADER_HEIGHT,
+        );
+        canvasRef.current.setWidth(
+          window.innerWidth - SIZE.FIXED_SIDEBAR_HEIGHT,
+        );
 
         canvasRef.current.calcOffset();
         canvasRef.current.renderAll();
