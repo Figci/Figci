@@ -34,6 +34,8 @@ function DiffingResult() {
 
   const versionStatus = useProjectVersionStore(state => state.byDates);
   const {
+    username,
+    userProfile,
     projectKey,
     projectUrl,
     beforeDate,
@@ -77,8 +79,8 @@ function DiffingResult() {
   useEffect(() => {
     const initCanvas = () => {
       const canvasInit = new fabric.Canvas("canvas", {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window.innerWidth - 295,
+        height: window.innerHeight - 81.9,
         backgroundColor: "#CED4DA",
         setZoom: 0.3,
         selection: false,
@@ -105,8 +107,8 @@ function DiffingResult() {
 
     const resizeCanvas = () => {
       if (canvasRef.current) {
-        canvasRef.current.setHeight(window.innerHeight - 90);
-        canvasRef.current.setWidth(window.innerWidth - 290);
+        canvasRef.current.setHeight(window.innerHeight - 81.9);
+        canvasRef.current.setWidth(window.innerWidth - 295);
 
         canvasRef.current.calcOffset();
         canvasRef.current.renderAll();
@@ -195,7 +197,7 @@ function DiffingResult() {
         );
       } else {
         content.frames[frameId].isNew = true;
-        
+
         await renderFabricDifference.call(
           canvasRef.current,
           content.frames[frameId],
@@ -296,8 +298,12 @@ function DiffingResult() {
             </div>
             <div className="profile">
               <div className="line" />
-              <div className="profile-image"></div>
-              <p className="username"></p>
+              <img
+                src={userProfile}
+                alt="user-profile"
+                className="profile-image"
+              />
+              <p className="username">{username}</p>
             </div>
           </div>
         </header>
@@ -334,7 +340,7 @@ const ResultWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 24px 32px;
+    padding: 16px 32px;
     border-bottom: 2px solid #000000;
   }
 
@@ -408,15 +414,15 @@ const ResultWrapper = styled.div`
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    width: 300px;
-    min-width: 290px;
+    width: 295px;
+    min-width: 295px;
     padding: 24px 40px;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
   }
 
   .logo {
-    width: 70px;
+    width: 60px;
     margin-right: 21px;
   }
 
