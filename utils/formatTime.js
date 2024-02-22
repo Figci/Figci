@@ -22,8 +22,6 @@ const formatTime = dateString => {
   const formattedDate = `${year}-${month}-${date}`;
   const formattedTime = `${formattedHour}:${minutes} ${AmPm}`;
 
-  console.log(formattedDate, formattedTime);
-
   return { formattedDate, formattedTime };
 };
 
