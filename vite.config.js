@@ -11,13 +11,7 @@ export default defineConfig({
     environment: "jsdom",
     coverage: {
       all: true,
-      exclude: [
-        "*.config.js",
-        "*.cjs",
-        "**/main.jsx",
-        "**/atoms.js",
-        "**/constant.js",
-      ],
+      exclude: ["*.config.js", "*.cjs", "**/main.jsx", "**/Constant.js"],
     },
   },
   plugins: [react()],
