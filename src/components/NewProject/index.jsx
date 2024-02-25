@@ -112,7 +112,7 @@ function NewProject() {
       )}
       l
       <ContentsWrapper>
-        <form>
+        <form onSubmit={handleSubmitURI}>
           <Title title={contents.title} />
           <label htmlFor="projectUrl" className="label">
             피그마 프로젝트 URL 입력
