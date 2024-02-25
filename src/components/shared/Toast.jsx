@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
-import DELAY_TIME from "../../../constants/timeConstants";
+import DELAY_TIME from "../../constants/timeConstants";
 
 function ToastPopup({ message, setToast }) {
   useEffect(() => {

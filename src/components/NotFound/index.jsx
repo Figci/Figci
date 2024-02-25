@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 
-import notFoundImage from "../../../assets/not-found-image.png";
+import notFoundImage from "../../assets/not-found-image.png";
 
 function NotFound() {
   const navigate = useNavigate();

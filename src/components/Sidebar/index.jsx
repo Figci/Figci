@@ -8,10 +8,12 @@ import Modal from "../shared/Modal";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 
-import usePageListStore from "../../../store/projectPage";
-import useProjectStore from "../../../store/project";
-import updateFigmaUrl from "../../../utils/updateFigmaUrl";
-import DELAY_TIME from "../../../constants/timeConstants";
+import usePageListStore from "../../store/projectPage";
+import useProjectStore from "../../store/project";
+
+import updateFigmaUrl from "../../utils/updateFigmaUrl";
+
+import DELAY_TIME from "../../constants/timeConstants";
 
 function Sidebar({
   selectedFrameId,
@@ -190,7 +192,6 @@ const SidebarWrapper = styled.div`
   box-sizing: border-box;
   width: 295px;
   min-width: 295px;
-  height: 100vh - 50px;
   border-right: 2px solid #000000;
 
   select {
@@ -221,7 +222,8 @@ const SidebarWrapper = styled.div`
   .frame-list {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100vh - 470px);
+    overflow-y: auto;
     padding: 24px;
   }
 

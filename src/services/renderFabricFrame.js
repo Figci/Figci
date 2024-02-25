@@ -1,8 +1,9 @@
-import { fabric } from "fabric";
-import fixCoordinate from "../utils/fixCoordinate";
 import createFabric from "./createFabricObjects";
-import FABRIC_RENDER from "../constants/renderConstants";
+
+import fixCoordinate from "../utils/fixCoordinate";
 import isOwnProperty from "../utils/isOwnProperty";
+
+import FABRIC_RENDER from "../constants/renderConstants";
 
 const renderFabricFrame = async function (frameJSON, imageUrl) {
   const fabricObject = new Map();

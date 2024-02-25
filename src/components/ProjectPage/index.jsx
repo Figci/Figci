@@ -7,12 +7,12 @@ import Modal from "../shared/Modal";
 import Title from "../shared/Title";
 import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
-
-import usePageListStore from "../../../store/projectPage";
-import useProjectStore from "../../../store/project";
-
-import getDiffingResultQuery from "../../../services/getDiffingResultQuery";
 import ToastPopup from "../shared/Toast";
+
+import usePageListStore from "../../store/projectPage";
+import useProjectStore from "../../store/project";
+
+import getDiffingResultQuery from "../../services/getDiffingResultQuery";
 
 function ProjectPage() {
   const [toast, setToast] = useState({});

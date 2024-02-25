@@ -10,17 +10,20 @@ import Button from "../shared/Button";
 import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
 
-import useProjectStore from "../../../store/project";
-import useProjectVersionStore from "../../../store/projectVersion";
-import getDiffingResultQuery from "../../../services/getDiffingResultQuery";
+import useProjectStore from "../../store/project";
+import useProjectVersionStore from "../../store/projectVersion";
 
-import figciLogo from "../../../assets/logo_figci.png";
-import renderFabricDifference from "../../../services/renderFabricDifference";
-import fetchImageUrl from "../../../utils/fetchImage";
-import renderFabricFrame from "../../../services/renderFabricFrame";
-import fixCoordinate from "../../../utils/fixCoordinate";
-import isOwnProperty from "../../../utils/isOwnProperty";
-import SIZE from "../../../constants/sizeConstants";
+import getDiffingResultQuery from "../../services/getDiffingResultQuery";
+import renderFabricDifference from "../../services/renderFabricDifference";
+import renderFabricFrame from "../../services/renderFabricFrame";
+
+import fetchImageUrl from "../../utils/fetchImage";
+import fixCoordinate from "../../utils/fixCoordinate";
+import isOwnProperty from "../../utils/isOwnProperty";
+
+import SIZE from "../../constants/sizeConstants";
+
+import figciLogo from "../../assets/logo_figci.png";
 
 function DiffingResult() {
   const [frameList, setFrameList] = useState([]);

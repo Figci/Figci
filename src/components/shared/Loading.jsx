@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+
 import Description from "./Description";
 
 function Loading() {

@@ -1,4 +1,4 @@
-function getRGBNumber(rgbaString) {
+const getRGBNumber = rgbaString => {
   const values = rgbaString.split(",");
 
   const red = parseInt(values[0].replace(/\D/g, ""), 10);
@@ -7,6 +7,6 @@ function getRGBNumber(rgbaString) {
   const alpha = parseFloat(values[3].replace(/[^\d.]/g, ""));
 
   return [red, green, blue, alpha];
-}
+};
 
 export default getRGBNumber;

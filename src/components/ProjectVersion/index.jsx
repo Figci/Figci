@@ -9,11 +9,11 @@ import Select from "../shared/Select";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
-import getCommonPages from "../../../services/getCommonPages";
+import useProjectVersionStore from "../../store/projectVersion";
+import usePageListStore from "../../store/projectPage";
+import useProjectStore from "../../store/project";
 
-import useProjectVersionStore from "../../../store/projectVersion";
-import usePageListStore from "../../../store/projectPage";
-import useProjectStore from "../../../store/project";
+import getCommonPages from "../../services/getCommonPages";
 
 function ProjectVersion() {
   const [isLoaded, setIsLoaded] = useState(false);

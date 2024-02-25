@@ -8,12 +8,13 @@ import Title from "../shared/Title";
 import BottomNavigator from "../shared/BottomNavigator";
 import ToastPopup from "../shared/Toast";
 
-import getAllVersions from "../../../services/getAllVersions";
-import getUserProfile from "../../../services/getUserProfile";
-import getProjectKeyFromURI from "../../../utils/getProjectKeyFromURI";
+import useProjectStore from "../../store/project";
+import useProjectVersionStore from "../../store/projectVersion";
 
-import useProjectStore from "../../../store/project";
-import useProjectVersionStore from "../../../store/projectVersion";
+import getAllVersions from "../../services/getAllVersions";
+import getUserProfile from "../../services/getUserProfile";
+
+import getProjectKeyFromURI from "../../utils/getProjectKeyFromURI";
 
 function NewProject() {
   const navigate = useNavigate();

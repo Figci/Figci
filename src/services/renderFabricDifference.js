@@ -1,4 +1,5 @@
 import createFabric from "./createFabricObjects";
+
 import getRGBNumber from "../utils/getRGBNumber";
 
 const renderFabricDifference = async function (differences, fixCoord, frameId) {

@@ -1,4 +1,4 @@
-const fetchImageUrl = async function fetchFigmaAPI(projectKey, setToast) {
+const fetchImageUrl = async (projectKey, setToast) => {
   const baseFigmaURL = `/v1/files/${projectKey}/images`;
   const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
 

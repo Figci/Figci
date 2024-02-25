@@ -1,5 +1,7 @@
 import { fabric } from "fabric";
+
 import createDiffText from "../utils/createDiffText";
+
 import FABRIC_RENDER from "../constants/renderConstants";
 
 fabric.Textbox.prototype.set({

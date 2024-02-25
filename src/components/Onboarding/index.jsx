@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
 
-import { getAuth, fetchToken } from "../../../services/auth";
-import figciLogo from "../../../assets/logo_figci.png";
-import onBoardingIcon from "../../../assets/onboarding.png";
+import { getAuth, fetchToken } from "../../services/auth";
+
+import figciLogo from "../../assets/logo_figci.png";
+import onBoardingIcon from "../../assets/onboarding.png";
 
 function Onboarding() {
   const [isClicked, setIsClicked] = useState(false);

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 
-import welcomeIcon from "../../../assets/welcome_icon.png";
+import welcomeIcon from "../../assets/welcome_icon.png";
 
 function Welcome({ handleClick }) {
   return (
