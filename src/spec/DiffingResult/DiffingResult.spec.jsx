@@ -44,7 +44,7 @@ describe("DiffingResult Component Test", () => {
     expect(userImageElement).toBeInTheDocument();
   });
 
-  it("새 프로젝트 비교하기 클릭 시 모달창이 렌더링 되어야 합니다", () => {
+  it("새 프로젝트 비교하기 클릭 시 모달 창이 렌더링 되어야 합니다", () => {
     const newProjectElement = screen.getByText("새 프로젝트 비교하기");
 
     fireEvent.click(newProjectElement);
@@ -54,7 +54,7 @@ describe("DiffingResult Component Test", () => {
     expect(newProjectModal).toBeInTheDocument();
   });
 
-  it("버전 재선택 버튼을 클릭 시 모달창이 렌더링 되어야 합니다", () => {
+  it("버전 재선택 버튼을 클릭 시 모달 창이 렌더링 되어야 합니다", () => {
     const newVersionElement = screen.getByText("버전 재선택");
 
     fireEvent.click(newVersionElement);
@@ -64,7 +64,7 @@ describe("DiffingResult Component Test", () => {
     expect(newVersionModal).toBeInTheDocument();
   });
 
-  it("모달창에서 아니오 버튼을 클릭 시 모달 창이 닫히고, diffingResult화면으로 돌아와야 합니다", () => {
+  it("모달 창에서 아니오 버튼을 클릭 시 모달 창이 닫히고, diffingResult화면으로 돌아와야 합니다", () => {
     const newVersionElement = screen.getByText("버전 재선택");
 
     fireEvent.click(newVersionElement);

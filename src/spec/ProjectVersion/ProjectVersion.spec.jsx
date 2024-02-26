@@ -121,7 +121,7 @@ describe("ProjectVersion Component Test", () => {
     });
   });
 
-  it("이전 버전이 이후 버전보다 나중 일 시 에러토스트를 띄워야 합니다", async () => {
+  it("이전 버전이 이후 버전보다 나중 일시 에러토스트를 띄워야 합니다", async () => {
     const selectBoxElements = screen.getAllByRole("combobox");
     const [
       beforeDateSelectBoxElement,
