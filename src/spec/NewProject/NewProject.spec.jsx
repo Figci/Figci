@@ -1,4 +1,12 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  cleanup,
+} from "@testing-library/react";
+import { afterEach } from "vitest";
+
 import { BrowserRouter } from "react-router-dom";
 
 import Header from "../../components/Header/Header";
@@ -14,6 +22,9 @@ describe("NewProject Component Test", () => {
     render(formatTargetComponent(<NewProject />));
   });
 
+  afterEach(() => {
+    cleanup();
+  });
   it("모달 창이 초기에 렌더링 되어야 합니다", () => {
     const modalElement = screen.getByText("Figci를 바로 사용할 수 있어요!");
 
