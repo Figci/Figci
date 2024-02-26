@@ -8,7 +8,7 @@ import DiffingResult from "../../components/DiffingResult";
 
 const queryClient = new QueryClient();
 
-const formatTagertComponent = targetComponent => {
+const formatTargetComponent = targetComponent => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>{targetComponent}</BrowserRouter>
@@ -17,7 +17,7 @@ const formatTagertComponent = targetComponent => {
 };
 
 beforeEach(() => {
-  render(formatTagertComponent(<DiffingResult />));
+  render(formatTargetComponent(<DiffingResult />));
 });
 
 afterEach(() => {
@@ -68,10 +68,12 @@ describe("DiffingResult Component Test", () => {
 
     fireEvent.click(newVersionElement);
 
+    const modalTitleElement = screen.getByText("새 버전을 비교하시겠어요?");
+
     const closeButton = screen.getByText("아니오");
 
     fireEvent.click(closeButton);
 
-    expect(newVersionElement).toBeInTheDocument();
+    expect(modalTitleElement).not.toBeInTheDocument();
   });
 });
