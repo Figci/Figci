@@ -22,9 +22,9 @@ describe("NewProject Component Test", () => {
 
   it("모달 창 내 '좋아요!' 버튼을 누르면 모달이 닫혀야 합니다", () => {
     const modalElement = screen.getByText("Figci를 바로 사용할 수 있어요!");
-    const closeModalButton = screen.getByText("좋아요!");
+    const closeModalButtonElement = screen.getByText("좋아요!");
 
-    fireEvent.click(closeModalButton);
+    fireEvent.click(closeModalButtonElement);
 
     expect(modalElement).not.toBeInTheDocument();
   });

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { afterEach, expect } from "vitest";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import ProjectPage from "../../components/ProjectPage";
 
