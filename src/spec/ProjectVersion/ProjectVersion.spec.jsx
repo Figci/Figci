@@ -2,10 +2,11 @@ import {
   render,
   screen,
   fireEvent,
-  cleanup,
   waitFor,
+  cleanup,
 } from "@testing-library/react";
-import { afterEach, expect } from "vitest";
+import { expect, afterEach } from "vitest";
+
 import { BrowserRouter } from "react-router-dom";
 
 import ProjectVersion from "../../components/ProjectVersion";

@@ -1,4 +1,5 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
+
 import { BrowserRouter } from "react-router-dom";
 
 import Onboarding from "../../components/Onboarding";

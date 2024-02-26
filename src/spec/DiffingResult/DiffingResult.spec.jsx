@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import { afterEach, expect } from "vitest";
+import { expect, afterEach } from "vitest";
 import "vitest-canvas-mock";
+
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
