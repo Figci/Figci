@@ -30,13 +30,13 @@ describe("NewProject Component Test", () => {
   });
 
   it("URL 입력 페이지 헤더에 서비스 로고와 캐치프라이즈가 렌더 되어야 합니다.", () => {
-    const logo = screen.getByAltText("figci-logo-img");
-    const catchphrase = screen.getByText(
+    const logoElement = screen.getByAltText("figci-logo-img");
+    const catchphraseElement = screen.getByText(
       /피그마 버전을 비교해*디자인 변경사항을 한눈에!/,
     );
 
-    expect(logo).toBeInTheDocument();
-    expect(catchphrase).toBeInTheDocument();
+    expect(logoElement).toBeInTheDocument();
+    expect(catchphraseElement).toBeInTheDocument();
   });
 
   it("URL 입력 페이지에서 타이틀과 입력 필드가 렌더 되어야 합니다", () => {
@@ -56,9 +56,9 @@ describe("NewProject Component Test", () => {
   });
 
   it("유효하지 않은 URL일 경우 토스트 팝업 내 에러 메시지가 띄어져야 합니다", async () => {
-    const closeModalButton = screen.getByText("좋아요!");
+    const closeModalButtonElement = screen.getByText("좋아요!");
 
-    fireEvent.click(closeModalButton);
+    fireEvent.click(closeModalButtonElement);
 
     const invalidUrl = "https://www.figma.com/1234";
     const inputElement = screen.getByPlaceholderText(
@@ -67,9 +67,9 @@ describe("NewProject Component Test", () => {
 
     fireEvent.change(inputElement, { target: { value: invalidUrl } });
 
-    const submitButton = screen.getByText("다음");
+    const submitButtonElement = screen.getByText("다음");
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButtonElement);
 
     await waitFor(() => {
       expect(

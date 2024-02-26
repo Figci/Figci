@@ -50,10 +50,10 @@ describe("ProjectPage Component Test", () => {
 
     fireEvent.click(selectBoxElement);
 
-    const optionsElements = screen.getAllByRole("option");
+    const optionsElement = screen.getAllByRole("option");
 
-    expect(optionsElements[0].textContent).toBe(allPages[0].pageName);
-    expect(optionsElements[1].textContent).toBe(allPages[1].pageName);
+    expect(optionsElement[0].textContent).toBe(allPages[0].pageName);
+    expect(optionsElement[1].textContent).toBe(allPages[1].pageName);
   });
 
   it("비교 페이지 선택 페이지에서 타이틀과 셀렉트가 렌더 되어야 합니다", () => {
