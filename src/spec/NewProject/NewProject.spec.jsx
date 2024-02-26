@@ -16,15 +16,16 @@ const formatTargetComponent = targetComponent => {
   return <BrowserRouter>{targetComponent}</BrowserRouter>;
 };
 
-describe("NewProject Component Test", () => {
-  beforeEach(() => {
-    render(formatTargetComponent(<Header />));
-    render(formatTargetComponent(<NewProject />));
-  });
+beforeEach(() => {
+  render(formatTargetComponent(<Header />));
+  render(formatTargetComponent(<NewProject />));
+});
 
-  afterEach(() => {
-    cleanup();
-  });
+afterEach(() => {
+  cleanup();
+});
+
+describe("NewProject Component Test", () => {
   it("모달 창이 초기에 렌더링 되어야 합니다", () => {
     const modalElement = screen.getByText("Figci를 바로 사용할 수 있어요!");
 
@@ -84,7 +85,7 @@ describe("NewProject Component Test", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText(
+        screen.getByText(
           "피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲",
         ),
       ).toBeInTheDocument();
