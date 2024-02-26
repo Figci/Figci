@@ -40,12 +40,12 @@ describe("NewProject Component Test", () => {
   });
 
   it("URL 입력 페이지에서 타이틀과 입력 필드가 렌더 되어야 합니다", () => {
-    const title = screen.getByText(
+    const titleElement = screen.getByText(
       "디자인 변경사항을 확인할 피그마 프로젝트 URL을 입력해주세요.",
     );
     const inputElement = screen.getByPlaceholderText(/url 주소를 입력해주세요/);
 
-    expect(title).toBeInTheDocument();
+    expect(titleElement).toBeInTheDocument();
     expect(inputElement).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe("NewProject Component Test", () => {
 
     fireEvent.click(submitButton);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.queryByText(
           "피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲",
