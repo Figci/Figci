@@ -1,9 +1,9 @@
 import { render, screen, cleanup } from "@testing-library/react";
+import { afterEach } from "vitest";
 
 import { BrowserRouter } from "react-router-dom";
 
 import Onboarding from "../../components/Onboarding";
-import { afterEach } from "vitest";
 
 const formatTargetComponent = targetComponent => {
   return <BrowserRouter>{targetComponent}</BrowserRouter>;
