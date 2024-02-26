@@ -3,13 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 
 import Onboarding from "../../components/Onboarding";
 
-const formatTagerComponent = targetComponent => {
+const formatTargetComponent = targetComponent => {
   return <BrowserRouter>{targetComponent}</BrowserRouter>;
 };
 
 describe("Onboarding Component Test", () => {
   beforeEach(() => {
-    render(formatTagerComponent(<Onboarding />));
+    render(formatTargetComponent(<Onboarding />));
   });
 
   it("온보딩 페이지에서 메인설명이 렌더 되어야 합니다", () => {

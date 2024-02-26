@@ -89,8 +89,8 @@ describe("ProjectVersion Component Test", () => {
   });
 
   it("마운트 시 이전, 다음 버튼이 렌더링 되어야 합니다", () => {
-    const nextButtonElement = screen.getByText("다음");
     const prevButtonElement = screen.getByText("이전");
+    const nextButtonElement = screen.getByText("다음");
 
     expect(prevButtonElement.type).toBe("submit");
     expect(nextButtonElement.type).toBe("submit");
