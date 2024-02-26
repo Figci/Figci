@@ -1,17 +1,22 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
 import Onboarding from "../../components/Onboarding";
+import { afterEach } from "vitest";
 
 const formatTargetComponent = targetComponent => {
   return <BrowserRouter>{targetComponent}</BrowserRouter>;
 };
 
-describe("Onboarding Component Test", () => {
-  beforeEach(() => {
-    render(formatTargetComponent(<Onboarding />));
-  });
+beforeEach(() => {
+  render(formatTargetComponent(<Onboarding />));
+});
 
+afterEach(() => {
+  cleanup();
+});
+
+describe("Onboarding Component Test", () => {
   it("온보딩 페이지에서 메인설명이 렌더 되어야 합니다", () => {
     const mainDescriptionElement = screen.getByText(
       /피그마 계정으로 로그인하시면 파일버전을 비교해*디자인 화면의 변경사항을 쉽게 보여드려요!/,
