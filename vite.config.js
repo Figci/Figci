@@ -12,6 +12,9 @@ export default defineConfig({
     coverage: {
       all: true,
       exclude: ["*.config.js", "*.cjs", "**/main.jsx", "**/Constant.js"],
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      reportsDirectory: "./coverage",
     },
   },
   plugins: [react()],
