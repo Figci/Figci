@@ -10,12 +10,16 @@ const fetchImageUrl = async (projectKey, setToast) => {
     }
 
     const fetchFrameImageURLs = async () => {
+      console.log("baseFigmaURL & token", baseFigmaURL, token);
+
       const fetchData = await fetch(baseFigmaURL, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log("fetchData", await fetchData.json());
 
       if (!fetchData.ok) {
         setToast({ status: true, message: "Figma API 호출에 실패했습니다" });
