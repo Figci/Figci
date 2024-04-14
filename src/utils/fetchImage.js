@@ -7,14 +7,12 @@ const fetchImageUrl = async (projectKey, setToast) => {
 
   try {
     if (!token) {
-      setToast({ status: true, message: "Figma 토큰이 유효하지 않습니다." });
+      setToast({ status: true, message: "The Figma token is invalid." });
 
       return;
     }
 
     const fetchFrameImageURLs = async () => {
-      console.log("baseFigmaURL & token", baseFigmaURL, token);
-
       const fetchData = await fetch(baseFigmaURL, {
         method: "GET",
         headers: {
@@ -22,10 +20,8 @@ const fetchImageUrl = async (projectKey, setToast) => {
         },
       });
 
-      console.log("fetchData", await fetchData.json());
-
       if (!fetchData.ok) {
-        setToast({ status: true, message: "Figma API 호출에 실패했습니다" });
+        setToast({ status: true, message: "Failed to call the Figma API." });
 
         return;
       }

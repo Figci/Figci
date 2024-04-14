@@ -3,3 +3,4 @@
   to = "https://api.figma.com/:splat"
   status = 200
   force = true
+  
