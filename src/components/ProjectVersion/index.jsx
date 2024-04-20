@@ -51,7 +51,7 @@ function ProjectVersion() {
       projectVersion;
 
     if (!(beforeVersion && afterVersion)) {
-      setToast({ status: true, message: "선택하지 않은 버전이 존재합니다." });
+      setToast({ status: true, message: "A version is not selected." });
 
       return;
     }
@@ -64,7 +64,7 @@ function ProjectVersion() {
     if (beforeCreatedAt >= afterCreatedAt) {
       setToast({
         status: true,
-        message: "이후 버전은 이전 버전보다 나중이여야 합니다.",
+        message: "The latest version must be newer than the previous version.",
       });
 
       return;
@@ -112,13 +112,13 @@ function ProjectVersion() {
   };
 
   const beforeVersionForm = {
-    label: "이전 버전",
-    description: "지정한 버전 명이 없으면 시간으로 보여요!",
+    label: "Previous Version",
+    description: "No version names? Timestamps will be used!",
     selects: [
       {
         className: "beforeDate",
         handleChange,
-        placeholder: "버전 선택",
+        placeholder: "Date Selection",
         options: allDates.map(date => (
           <option key={date} value={date}>
             {date}
@@ -128,7 +128,7 @@ function ProjectVersion() {
       {
         className: "beforeVersion",
         handleChange,
-        placeholder: "날짜 선택",
+        placeholder: "Version Selection",
         options:
           projectVersion.beforeDate &&
           createOption(byDates[projectVersion.beforeDate]),
@@ -137,13 +137,13 @@ function ProjectVersion() {
   };
 
   const afterVersionForm = {
-    label: "이후 버전",
-    description: "지정한 버전 명이 없으면 시간으로 보여요!",
+    label: "Latest Version",
+    description: "No version names? Timestamps will be used!",
     selects: [
       {
         className: "afterDate",
         handleChange,
-        placeholder: "날짜 선택",
+        placeholder: "Date Selection",
         options: allDates.map(date => (
           <option key={date} value={date}>
             {date}
@@ -153,7 +153,7 @@ function ProjectVersion() {
       {
         className: "afterVersion",
         handleChange,
-        placeholder: "버전 선택",
+        placeholder: "Version Selection",
         options:
           projectVersion.afterDate &&
           createOption(byDates[projectVersion.afterDate]),
@@ -164,17 +164,17 @@ function ProjectVersion() {
   const contents = {
     title: {
       step: "02",
-      text: "비교할 해당 피그마 파일의\n이전 / 최신 버전을 입력해 주세요",
+      text: "Choose previous and\nlatest versions to compare",
     },
     buttons: [
       {
-        text: "이전",
+        text: "Previous",
         usingCase: "line",
         handleClick,
         className: "prev",
       },
       {
-        text: "다음",
+        text: "Next",
         usingCase: "solid",
         handleClick,
         className: "next",

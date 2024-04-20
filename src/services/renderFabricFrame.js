@@ -72,17 +72,18 @@ const renderFabricFrame = async function (frameJSON, imageUrl) {
     const clipTargetNode = fabricObject.get(frameJSON.frameId);
 
     clipTargetNode.absolutePositioned = true;
+
     fabricObject.set(frameJSON.frameId, clipTargetNode);
 
-    for (const fabricObjectId in fabricObject) {
-      const isChildOfFrame = fabricObjectId !== frameJSON.frameId;
-      const isNotClipped = !fabricObject.get(fabricObjectId)?.clipPath;
+    for (const fabricEntries of fabricObject) {
+      const isChildOfFrame = fabricEntries[0] !== frameJSON.frameId;
+      const isNotClipped = !fabricObject.get(fabricEntries[0])?.clipPath;
 
       if (isChildOfFrame && isNotClipped) {
-        const clippedTargetNode = fabricObject.get(fabricObjectId);
+        const clippedTargetNode = fabricObject.get(fabricEntries[0]);
 
         clippedTargetNode.clipPath = clipTargetNode;
-        fabricObject.set(fabricObjectId, clippedTargetNode);
+        fabricObject.set(fabricEntries[0], clippedTargetNode);
       }
     }
   }

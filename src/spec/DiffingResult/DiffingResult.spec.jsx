@@ -26,52 +26,52 @@ afterEach(() => {
 });
 
 describe("DiffingResult Component Test", () => {
-  it("마운트 시 버튼이 3개 렌더링 되어야 합니다", () => {
+  it("renders 3 buttons on mount", () => {
     const allButtonElements = screen.getAllByRole("button");
 
     expect(allButtonElements.length).toBe(3);
   });
 
-  it("페이지를 선택할 수 있는 드롭박스가 렌더링 되어야 합니다", () => {
+  it("renders a dropdown to select pages", () => {
     const selectElement = screen.getByRole("combobox");
 
     expect(selectElement).toBeInTheDocument();
   });
 
-  it("로그인 된 유저의 이미지가 렌더링 되어야 합니다", () => {
+  it("renders the logged-in user's image", () => {
     const userImageElement = screen.getByAltText("user-profile");
 
     expect(userImageElement).toBeInTheDocument();
   });
 
-  it("새 프로젝트 비교하기 클릭 시 모달 창이 렌더링 되어야 합니다", () => {
-    const newProjectElement = screen.getByText("새 프로젝트 비교하기");
+  it("renders a modal when clicking Compare New Project", () => {
+    const newProjectElement = screen.getByText("Compare New Project");
 
     fireEvent.click(newProjectElement);
 
-    const newProjectModal = screen.getByText("새 프로젝트를 비교하시겠어요?");
+    const newProjectModal = screen.getByText("Compare a new project?");
 
     expect(newProjectModal).toBeInTheDocument();
   });
 
-  it("버전 재선택 버튼을 클릭 시 모달 창이 렌더링 되어야 합니다", () => {
-    const newVersionElement = screen.getByText("버전 재선택");
+  it("renders a modal when clicking Reselect Versions", () => {
+    const newVersionElement = screen.getByText("Reselect Versions");
 
     fireEvent.click(newVersionElement);
 
-    const newVersionModal = screen.getByText("새 버전을 비교하시겠어요?");
+    const newVersionModal = screen.getByText("Compare a new project?");
 
     expect(newVersionModal).toBeInTheDocument();
   });
 
-  it("모달 창에서 아니오 버튼을 클릭 시 모달 창이 닫히고, diffingResult화면으로 돌아와야 합니다", () => {
-    const newVersionElement = screen.getByText("버전 재선택");
+  it("closes the modal and returns to diffingResult screen when clicking No in the modal", () => {
+    const newVersionElement = screen.getByText("Reselect Versions");
 
     fireEvent.click(newVersionElement);
 
-    const modalTitleElement = screen.getByText("새 버전을 비교하시겠어요?");
+    const modalTitleElement = screen.getByText("Compare a new project?");
 
-    const closeButton = screen.getByText("아니오");
+    const closeButton = screen.getByText("No");
 
     fireEvent.click(closeButton);
 

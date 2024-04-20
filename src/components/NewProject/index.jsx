@@ -69,7 +69,7 @@ function NewProject() {
     if (!isValidFigmaUrl(inputValue)) {
       setToast({
         status: true,
-        message: "피그마 파일 URL 주소가 아니에요. 다시 입력해주세요🥲",
+        message: "That's not a valid Figma file URL. Please try again 🥲",
       });
       setIsModalOpened(false);
 
@@ -97,10 +97,10 @@ function NewProject() {
   const contents = {
     title: {
       step: "01",
-      text: "디자인 변경사항을 확인할\n피그마 프로젝트 URL을 입력해주세요.",
+      text: "Enter the Figma project URL\nto see design changes.",
     },
     buttons: [
-      { text: "다음", usingCase: "solid", handleClick: handleSubmitURI },
+      { text: "Next", usingCase: "solid", handleClick: handleSubmitURI },
     ],
   };
 
@@ -116,11 +116,11 @@ function NewProject() {
         <form onSubmit={handleSubmitURI}>
           <Title title={contents.title} />
           <label htmlFor="projectUrl" className="label">
-            피그마 프로젝트 URL 입력
+            Enter Figma project URL Figma
             <input
               id="projectUrl"
               defaultValue={inputValue}
-              placeholder="url 주소를 입력해주세요. (예: www.figma.com/abc)"
+              placeholder="Please enter the URL. (e.g., www.figma.com/abc)"
               onChange={handleChangeInput}
             />
           </label>

@@ -10,17 +10,17 @@ function Welcome({ handleClick }) {
     <Wrapper>
       <img src={welcomeIcon} alt="welcome-modal-icon" />
       <TextWrapper>
-        <h1 className="title">Figci를 바로 사용할 수 있어요!</h1>
+        <h1 className="title">Ready to use Figci? Let's get started!</h1>
         <Description
           className="description"
           size="large"
-          text="Figci는 피그마 디자인 파일 링크와 파일의 이전/최신 버전을\n
-          선택해주시면 같은 디자인 파일의 변경사항을 바로 볼 수 있어요!\n
-          지금 바로 이용해볼까요?"
+          text="Just share your Figma design file link and pick the old and new versions.\n
+          Figci will instantly show you what's changed between them.\n
+          Want to give it a spin?"
         />
       </TextWrapper>
       <Button handleClick={handleClick} size="large" usingCase="solid">
-        좋아요!
+        Sounds good!
       </Button>
     </Wrapper>
   );

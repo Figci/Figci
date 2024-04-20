@@ -240,11 +240,11 @@ function DiffingResult() {
       {isClickedNewVersion && (
         <Modal>
           <TextWrapper>
-            <h1 className="re-version-title">새 버전을 비교하시겠어요?</h1>
+            <h1 className="re-version-title">Compare a new project?</h1>
             <Description
               className="re-version-description"
               size="medium"
-              text="버튼을 누르면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
+              text="Clicking Compare will exit this screen.\nUnsaved information will be lost."
             />
           </TextWrapper>
           <ButtonWrapper>
@@ -257,7 +257,7 @@ function DiffingResult() {
                 setIsClickedNewVersion(false);
               }}
             >
-              아니오
+              No
             </Button>
             <Button
               className="re-version"
@@ -269,7 +269,7 @@ function DiffingResult() {
                 navigate("/version");
               }}
             >
-              비교할래요!
+              Let's compare!
             </Button>
           </ButtonWrapper>
         </Modal>
@@ -301,7 +301,7 @@ function DiffingResult() {
                   setIsClickedNewVersion(true);
                 }}
               >
-                버전 재선택
+                Reselect Versions
               </Button>
             </div>
             <div className="profile">

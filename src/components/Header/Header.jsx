@@ -10,9 +10,9 @@ function Header() {
         <img className="logo" src={figciLogo} alt="figci-logo-img" />
       </Link>
       <span className="slogan">
-        피그마 버전을 비교해
+        Compare Figma versions to see
         <br />
-        디자인 변경사항을 한눈에!
+        design changes at a glance!
       </span>
     </Wrapper>
   );

@@ -75,29 +75,29 @@ afterEach(() => {
 });
 
 describe("ProjectVersion Component Test", () => {
-  it("마운트 시 버전선택 페이지의 타이틀이 렌더링 되어야 합니다", () => {
+  it("renders version selection page title on mount", () => {
     const titleElement = screen.getByText(
-      "비교할 해당 피그마 파일의 이전 / 최신 버전을 입력해 주세요",
+      "Choose previous and latest versions to compare",
     );
 
     expect(titleElement).toBeInTheDocument();
   });
 
-  it("마운트 시 셀렉트 박스가 렌더링 되어야 합니다", () => {
+  it("renders select boxes on mount", () => {
     const selectBoxElements = screen.getAllByRole("combobox");
 
     expect(selectBoxElements.length).toBe(4);
   });
 
-  it("마운트 시 이전, 다음 버튼이 렌더링 되어야 합니다", () => {
-    const prevButtonElement = screen.getByText("이전");
-    const nextButtonElement = screen.getByText("다음");
+  it("renders previous and next buttons on mount", () => {
+    const prevButtonElement = screen.getByText("Previous");
+    const nextButtonElement = screen.getByText("Next");
 
     expect(prevButtonElement.type).toBe("submit");
     expect(nextButtonElement.type).toBe("submit");
   });
 
-  it("글로벌 상태에 저장된 프로젝트의 버전들을 가져와서 렌더링 해야 합니다", () => {
+  it("fetches and renders project versions from global state", () => {
     const selectBoxElements = screen.getAllByRole("combobox");
     const beforeDateSelectBoxElement = selectBoxElements[0];
 
@@ -109,19 +109,19 @@ describe("ProjectVersion Component Test", () => {
     expect(optionsElements[1].value).toBe("2024-2-25");
   });
 
-  it("선택된 버전이 없을 시, 에러 토스트를 띄워야 합니다", async () => {
-    const nextButtonElement = screen.getByText("다음");
+  it("displays error toast when no versions are selected", async () => {
+    const nextButtonElement = screen.getByText("Next");
 
     fireEvent.click(nextButtonElement);
 
     await waitFor(() => {
-      const toastElement = screen.getByText("선택하지 않은 버전이 존재합니다.");
+      const toastElement = screen.getByText("A version is not selected.");
 
       expect(toastElement).toBeInTheDocument();
     });
   });
 
-  it("이전 버전이 이후 버전보다 나중 일시 에러토스트를 띄워야 합니다", async () => {
+  it("displays error toast when previous version is newer than latest version", async () => {
     const selectBoxElements = screen.getAllByRole("combobox");
     const [
       beforeDateSelectBoxElement,
@@ -146,13 +146,13 @@ describe("ProjectVersion Component Test", () => {
       target: { value: "5219231173" },
     });
 
-    const nextButtonElement = screen.getByText("다음");
+    const nextButtonElement = screen.getByText("Next");
 
     fireEvent.click(nextButtonElement);
 
     await waitFor(() => {
       const toastElement = screen.getByText(
-        "이후 버전은 이전 버전보다 나중이여야 합니다.",
+        "The latest version must be newer than the previous version.",
       );
 
       expect(toastElement).toBeInTheDocument();

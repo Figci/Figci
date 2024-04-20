@@ -46,7 +46,7 @@ afterEach(() => {
 });
 
 describe("ProjectPage Component Test", () => {
-  it("글로벌 상태에 저장된 프로젝트의 공통된 페이지들을 가져와서 렌더링 해야 합니다", () => {
+  it("fetches and renders common project pages from global state", () => {
     const selectBoxElement = screen.getByRole("combobox");
 
     fireEvent.click(selectBoxElement);
@@ -57,17 +57,17 @@ describe("ProjectPage Component Test", () => {
     expect(optionsElement[1].textContent).toBe(allPages[1].pageName);
   });
 
-  it("비교 페이지 선택 페이지에서 타이틀과 셀렉트가 렌더 되어야 합니다", () => {
-    const titleElement = screen.getByText("비교할 페이지를 선택해주세요.");
+  it("renders title and select on compare page selection page", () => {
+    const titleElement = screen.getByText("Select pages to compare.");
     const selectBoxElement = screen.getByRole("combobox");
 
     expect(titleElement).toBeInTheDocument();
     expect(selectBoxElement).toBeInTheDocument();
   });
 
-  it("비교 페이지 선택 페이지에서 이전, 비교하기 버튼이 렌더 되어야 합니다", () => {
-    const backButtonElement = screen.getByText("이전");
-    const compareButtonElement = screen.getByText("비교하기");
+  it("renders previous and compare buttons on compare page selection page", () => {
+    const backButtonElement = screen.getByText("Previous");
+    const compareButtonElement = screen.getByText("Compare");
 
     expect(backButtonElement).toBeInTheDocument();
     expect(compareButtonElement).toBeInTheDocument();

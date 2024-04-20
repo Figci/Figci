@@ -13,11 +13,11 @@ function NotFound() {
     <Container>
       <Wrapper>
         <img className="logo-image" src={notFoundImage} alt="figci-logo-icon" />
-        <h1 className="title">원하시는 페이지를 찾을 수 없어요</h1>
+        <h1 className="title">Can't find the page you're looking for</h1>
         <Description
           className="description"
           size="medium"
-          text="찾으시려는 페이지 주소가 잘못 입력되었거나\n입력한 페이지 주소가 정확한지 다시 한번 확인해 주세요."
+          text="The page URL may be incorrect.\nPlease double-check the URL."
         />
         <Button
           className="home-button"
@@ -27,7 +27,7 @@ function NotFound() {
           size="large"
           usingCase="line"
         >
-          홈 으로 돌아가기
+          Go back to Home
         </Button>
       </Wrapper>
     </Container>

@@ -7,11 +7,11 @@ function Loading() {
     <Wrapper>
       <Circle />
       <TextWrapper>
-        <h1 className="title">파일을 비교중이에요!</h1>
+        <h1 className="title">Comparing files...</h1>
         <Description
           className="description"
           size="medium"
-          text="파일의 크기와 페이지의 갯수에 따라\n전체 파일을 비교하는 동안 시간이 많이 걸릴 수 있어요."
+          text="Depending on the file size and number of pages,\n comparing the entire file may take a while."
         />
       </TextWrapper>
     </Wrapper>

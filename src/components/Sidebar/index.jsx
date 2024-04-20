@@ -72,11 +72,11 @@ function Sidebar({
       {isClickedNewProject && (
         <Modal>
           <TextWrapper>
-            <h1 className="reversion-title">새 프로젝트를 비교하시겠어요?</h1>
+            <h1 className="reversion-title">Compare a new project?</h1>
             <Description
               className="reversion-description"
               size="medium"
-              text="비교하기 버튼을 누르면 현재 화면에서 벗어나게 됩니다.\n보고계신 정보는 저장되지 않아요."
+              text="Clicking Compare will exit this screen.\nUnsaved information will be lost."
             />
           </TextWrapper>
           <ButtonWrapper>
@@ -90,7 +90,7 @@ function Sidebar({
                 setIsClickedNewProject(false);
               }}
             >
-              아니오
+              No
             </Button>
             <Button
               className="reVersion"
@@ -102,7 +102,7 @@ function Sidebar({
                 navigate("/New");
               }}
             >
-              비교할래요!
+              Let's compare!
             </Button>
           </ButtonWrapper>
         </Modal>
@@ -111,12 +111,12 @@ function Sidebar({
         <Modal>
           <TextWrapper>
             <h1 className="figma-url-title">
-              피그마에서 {selectedFrameName} 여는 중
+              Opening {selectedFrameName} in Figma
             </h1>
             <Description
               className="re-version-description"
               size="medium"
-              text="현재 보고계신 화면이 있는 피그마 링크로 이동할게요.\n피그마 파일은 새 창으로 열려요."
+              text="I'll take you to the Figma link containing the current screen.\nThe Figma file will open in a new window."
             />
           </TextWrapper>
         </Modal>
@@ -124,7 +124,7 @@ function Sidebar({
       <SidebarWrapper>
         <div className="page">
           <label className="title" htmlFor="page">
-            현재 페이지
+            Current Page
             <select
               id="page"
               type="select"
@@ -143,7 +143,7 @@ function Sidebar({
         </div>
         <div className="frame-list">
           <div className="titles">
-            <h3 className="title">전체 변경 화면</h3>
+            <h3 className="title">All Changed Screens</h3>
             <h3 className="title-number">{framesInfo.length}</h3>
           </div>
           <ul
@@ -171,14 +171,14 @@ function Sidebar({
             size="medium"
             usingCase="solid"
           >
-            현재 화면 피그마로 이동하기
+            Current Screen in Figma
           </Button>
           <Button
             handleClick={handleNewProjectModalOpen}
             size="medium"
             usingCase="line"
           >
-            새 프로젝트 비교하기
+            Compare New Project
           </Button>
         </div>
       </SidebarWrapper>

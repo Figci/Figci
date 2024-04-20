@@ -38,7 +38,7 @@ function Onboarding() {
     try {
       getAccessToken(code);
     } catch (err) {
-      setToast({ status: true, message: "로그인에 실패하였습니다." });
+      setToast({ status: true, message: "Login failed." });
     }
   }
 
@@ -60,23 +60,23 @@ function Onboarding() {
         <Description
           className="description"
           size="large"
-          text="피그마 계정으로 로그인하시면 파일버전을 비교해\n디자인 화면의 변경사항을 쉽게 보여드려요!"
+          text="Sign in with Figma to easily compare versions and\n spot design changes across screens!"
         />
         <Button handleClick={onClickButtonHandler} size="large">
-          피그마 계정으로 로그인
+          Sign in with Figma
         </Button>
       </Wrapper>
       <Wrapper className="onboarding-right">
         <img src={onBoardingIcon} alt="figci-onboarding-img" width="360" />
         <h1 className="description main">
-          비교할 두 피그마 버전을 알려주시면
+          Select two versions to instantly see
           <br />
-          버전 별 디자인 화면 변경사항을 바로 알려드려요
+          the design differences between them.
         </h1>
         <Description
           className="description sub"
           size="medium"
-          text="피그마 이전 버전과 최신 버전을 비교해\n변경사항을 확인해보세요"
+          text="Compare previous and current versions \n of your Figma file to see what's changed."
         />
       </Wrapper>
       {toast.status && (

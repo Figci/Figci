@@ -82,30 +82,31 @@ function ProjectPage() {
   const contents = {
     title: {
       step: "03",
-      text: "비교할 페이지를 선택해주세요.",
+      text: "Select pages to compare.",
     },
     selectInfo: {
       id: "selectedPage",
-      label: "비교 페이지 선택",
+      label: "Compare Pages",
       selects: [
         {
           className: "selectedPage",
           options: selectOptionRenderList(),
           handleChange,
-          placeholder: "페이지 선택",
+          placeholder: "Page Selection",
         },
       ],
-      description: "이전 버전과 비교할 수 있는 페이지만 보여요!",
+      description:
+        "Only pages that can be compared with the previous version are shown!",
     },
     buttons: [
       {
-        text: "이전",
+        text: "Previous",
         usingCase: "line",
         handleClick,
         className: "prev",
       },
       {
-        text: "비교하기",
+        text: "Compare",
         usingCase: "solid",
         handleClick,
         className: "diffing",
