@@ -1,6 +1,6 @@
 const createDiffText = diffTextObject => {
   if (Object.keys(diffTextObject).length === 0) {
-    return "새로 생긴 노드 입니다.";
+    return "New node created.";
   }
 
   const propertyParser = propertyString => {
@@ -86,15 +86,15 @@ const createDiffText = diffTextObject => {
 
       if (beforeValue === undefined && afterValue !== undefined) {
         if (!isNaN(afterValue)) {
-          differenceResult += `${prop}: ${Number(afterValue).toFixed(1)} 추가됨.\n`;
+          differenceResult += `${prop}: ${Number(afterValue).toFixed(1)} added.\n`;
         } else {
-          differenceResult += `${prop}: ${afterValue} 추가됨.\n`;
+          differenceResult += `${prop}: ${afterValue} added.\n`;
         }
       } else if (beforeValue !== undefined && afterValue === undefined) {
         if (!isNaN(beforeValue)) {
-          differenceResult += `${prop}: ${Number(beforeValue).toFixed(1)} 삭제됨.\n`;
+          differenceResult += `${prop}: ${Number(beforeValue).toFixed(1)} deleted.\n`;
         } else {
-          differenceResult += `${prop}: ${beforeValue} 삭제됨.\n`;
+          differenceResult += `${prop}: ${beforeValue} deleted.\n`;
         }
       } else if (!isNaN(beforeValue) && !isNaN(afterValue)) {
         differenceResult += `${prop}: ${Number(beforeValue).toFixed(1)} => ${Number(afterValue).toFixed(1)}.\n`;
