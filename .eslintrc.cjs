@@ -50,5 +50,6 @@ module.exports = {
     "no-shadow": "off",
     "no-await-in-loop": "off",
     "no-restricted-globals": "off",
+    "react/no-unescaped-entities": "off"
   },
 };
