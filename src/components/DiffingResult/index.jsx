@@ -95,16 +95,28 @@ function DiffingResult() {
 
     const newCanvas = initCanvas();
     newCanvas.on("mouse:wheel", ev => {
-      const delta = ev.e.deltaY;
-      let Zoom = canvasRef.current.getZoom();
-
-      Zoom *= 0.999 ** delta;
-      Zoom = Math.max(0.01, Math.min(20, Zoom));
-
-      canvasRef.current.zoomToPoint({ x: ev.e.offsetX, y: ev.e.offsetY }, Zoom);
-
       ev.e.preventDefault();
       ev.e.stopPropagation();
+
+      if (ev.e.ctrlKey) {
+        const delta = ev.e.deltaY;
+        let Zoom = canvasRef.current.getZoom();
+
+        Zoom *= 0.999 ** delta;
+        Zoom = Math.max(0.01, Math.min(30, Zoom));
+
+        canvasRef.current.zoomToPoint(
+          { x: ev.e.offsetX, y: ev.e.offsetY },
+          Zoom,
+        );
+      } else {
+        const viewport = canvasRef.current.viewportTransform;
+
+        viewport[4] += ev.e.deltaX;
+        viewport[5] += ev.e.deltaY;
+
+        canvasRef.current.requestRenderAll();
+      }
     });
 
     canvasRef.current = newCanvas;
