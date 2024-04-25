@@ -3,6 +3,10 @@ import styled, { css } from "styled-components";
 import { nanoid } from "nanoid";
 
 const DESCRIPTION_SIZES = {
+  small: css`
+    --description-font-size: 0.7rem;
+    --description-line-height: 16px;
+  `,
   medium: css`
     --description-font-size: 1rem;
     --description-line-height: 24px;
