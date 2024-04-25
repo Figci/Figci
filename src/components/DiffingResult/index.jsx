@@ -94,12 +94,14 @@ function DiffingResult() {
     };
 
     const newCanvas = initCanvas();
+
     newCanvas.on("mouse:wheel", ev => {
       ev.e.preventDefault();
       ev.e.stopPropagation();
 
       if (ev.e.ctrlKey) {
         const delta = ev.e.deltaY;
+
         let Zoom = canvasRef.current.getZoom();
 
         Zoom *= 0.999 ** delta;
@@ -266,6 +268,7 @@ function DiffingResult() {
               usingCase="line"
               handleClick={ev => {
                 ev.preventDefault();
+
                 setIsClickedNewVersion(false);
               }}
             >
