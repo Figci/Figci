@@ -12,7 +12,7 @@ function NotFound() {
   return (
     <Container>
       <Wrapper>
-        <img className="logo-image" src={notFoundImage} alt="figci-logo-icon" />
+        <img src={notFoundImage} alt="figci-logo-icon" />
         <h1 className="title">Can't find the page you're looking for</h1>
         <Description
           className="description"
