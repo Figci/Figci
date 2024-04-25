@@ -9,6 +9,7 @@ import Sidebar from "../Sidebar";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
+import ArrowButton from "../ArrowButton";
 
 import useProjectStore from "../../store/project";
 import useProjectVersionStore from "../../store/projectVersion";
@@ -32,6 +33,7 @@ function DiffingResult() {
   const [toast, setToast] = useState({});
   const [imageUrl, setImageUrl] = useState({});
   const [isClickedNewVersion, setIsClickedNewVersion] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const canvasRef = useRef(null);
   const navigate = useNavigate();
@@ -70,14 +72,39 @@ function DiffingResult() {
     return null;
   };
 
+  const changeFrame = frameIndex => {
+    const currentFrame = frameList[frameIndex];
+
+    setCurrentPage(frameIndex);
+    setFrameId(currentFrame.id);
+    setFrameName(currentFrame.name);
+  };
+
   const beforeVersionLabel = getVersionLabel(beforeDate, beforeVersion);
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
+
+  const handlePrevPage = () => {
+    const prevPage = (currentPage - 1 + frameList.length) % frameList.length;
+
+    changeFrame(prevPage);
+  };
+
+  const handleNextPage = () => {
+    const nextPage = (currentPage + 1) % frameList.length;
+
+    changeFrame(nextPage);
+  };
 
   const handleFrameClick = ev => {
     ev.preventDefault();
 
-    setFrameId(ev.target.getAttribute("data-id"));
-    setFrameName(ev.target.getAttribute("data-name"));
+    const clickedFrame = ev.target;
+
+    const frameIndex = Array.from(clickedFrame.parentNode.children).indexOf(
+      clickedFrame,
+    );
+
+    changeFrame(frameIndex);
   };
 
   useEffect(() => {
@@ -150,10 +177,7 @@ function DiffingResult() {
 
   useEffect(() => {
     if (frameList.length > 0) {
-      const firstFrame = frameList[0];
-
-      setFrameId(firstFrame.id);
-      setFrameName(firstFrame.name);
+      changeFrame(0);
     }
   }, [frameList]);
 
@@ -338,7 +362,11 @@ function DiffingResult() {
             selectedFrameId={frameId}
             selectedFrameName={frameName}
           />
-          <canvas id="canvas" ref={canvasRef} />
+          <CanvasWrapper>
+            <canvas id="canvas" ref={canvasRef} />
+            <ArrowButton direction="left" onClick={handlePrevPage} />
+            <ArrowButton direction="right" onClick={handleNextPage} />
+          </CanvasWrapper>
         </div>
       </ResultWrapper>
       {toast.status && (
@@ -347,6 +375,11 @@ function DiffingResult() {
     </>
   );
 }
+
+const CanvasWrapper = styled.div`
+  position: relative;
+  flex: 1;
+`;
 
 const ResultWrapper = styled.div`
   display: flex;
