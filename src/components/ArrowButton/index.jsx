@@ -1,4 +1,3 @@
-// ArrowButton.js
 import React from "react";
 import styled from "styled-components";
 
@@ -15,8 +14,10 @@ const ArrowButtonWrapper = styled.button`
   top: 50%;
   ${({ direction }) => (direction === "left" ? "left: 10px;" : "right: 10px;")}
   transform: translateY(-50%);
+
+  border-radius: 5px;
+  border: 2px solid black;
   background-color: #fff;
-  border: none;
   font-size: 24px;
   cursor: pointer;
 `;
