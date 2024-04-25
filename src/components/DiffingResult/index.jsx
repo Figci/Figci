@@ -366,6 +366,17 @@ function DiffingResult() {
             <canvas id="canvas" ref={canvasRef} />
             <ArrowButton direction="left" onClick={handlePrevPage} />
             <ArrowButton direction="right" onClick={handleNextPage} />
+            {frameList.length ? (
+              <PaginationContainer>
+                <span>
+                  {currentPage + 1} / {frameList.length}
+                </span>
+              </PaginationContainer>
+            ) : (
+              <PaginationContainer>
+                <span>- / -</span>
+              </PaginationContainer>
+            )}
           </CanvasWrapper>
         </div>
       </ResultWrapper>
@@ -376,8 +387,22 @@ function DiffingResult() {
   );
 }
 
+const PaginationContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
 const CanvasWrapper = styled.div`
   position: relative;
+
   flex: 1;
 `;
 
