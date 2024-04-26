@@ -84,16 +84,12 @@ function DiffingResult() {
   const beforeVersionLabel = getVersionLabel(beforeDate, beforeVersion);
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
 
-  const handlePrevPage = () => {
-    const prevPage = (currentPage - 1 + frameList.length) % frameList.length;
+  const handleClickPagination = e => {
+    const direction = e.currentTarget.getAttribute("direction");
+    const offsetIndex = direction === "left" ? 1 : frameList.length - 1;
+    const nextIndex = (currentPage + offsetIndex) % frameList.length;
 
-    changeFrame(prevPage);
-  };
-
-  const handleNextPage = () => {
-    const nextPage = (currentPage + 1) % frameList.length;
-
-    changeFrame(nextPage);
+    changeFrame(nextIndex);
   };
 
   const handleFrameClick = ev => {
@@ -368,12 +364,12 @@ function DiffingResult() {
             <PaginationButton
               direction="left"
               src={prevButton}
-              onClick={handlePrevPage}
+              onClick={handleClickPagination}
             />
             <PaginationButton
               direction="right"
               src={nextButton}
-              onClick={handleNextPage}
+              onClick={handleClickPagination}
             />
             {frameList.length ? (
               <PaginationWrapper>
