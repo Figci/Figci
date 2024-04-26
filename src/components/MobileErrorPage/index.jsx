@@ -32,7 +32,6 @@ function MobileErrorPage() {
 const Header = styled.header`
   display: flex;
   justify-content: flex-start;
-
   margin-bottom: 20px;
   margin-left: 30px;
   margin-top: 40px;
@@ -58,11 +57,10 @@ const Image = styled.img`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
-  box-sizing: border-box;
-  height: calc(100vh - 150px);
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  height: calc(100vh - 150px);
 
   .title {
     margin-bottom: 20px;
@@ -76,7 +74,7 @@ const Container = styled.div`
   }
 
   .description {
-    font-size: 20px;
+    font-size: 1rem;
   }
 `;
 

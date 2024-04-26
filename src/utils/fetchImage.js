@@ -1,8 +1,8 @@
 const fetchImageUrl = async (projectKey, setToast) => {
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-  
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+
   const baseFigmaURL = `${PROXY}/v1/files/${projectKey}/images`;
-  
+
   const token = JSON.parse(localStorage.getItem("FigmaToken")).access_token;
 
   try {
