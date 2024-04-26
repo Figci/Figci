@@ -9,7 +9,6 @@ import Sidebar from "../Sidebar";
 import Button from "../shared/Button";
 import Description from "../shared/Description";
 import ToastPopup from "../shared/Toast";
-import ArrowButton from "../ArrowButton";
 
 import useProjectStore from "../../store/project";
 import useProjectVersionStore from "../../store/projectVersion";
@@ -25,6 +24,8 @@ import isOwnProperty from "../../utils/isOwnProperty";
 import SIZE from "../../constants/sizeConstants";
 
 import figciLogo from "../../assets/logo_figci.png";
+import prevButton from "../../assets/prev_button_icon.png";
+import nextButton from "../../assets/next_button_icon.png";
 
 function DiffingResult() {
   const [frameList, setFrameList] = useState([]);
@@ -364,18 +365,26 @@ function DiffingResult() {
           />
           <CanvasWrapper>
             <canvas id="canvas" ref={canvasRef} />
-            <ArrowButton direction="left" onClick={handlePrevPage} />
-            <ArrowButton direction="right" onClick={handleNextPage} />
+            <PaginationButton
+              direction="left"
+              src={prevButton}
+              onClick={handlePrevPage}
+            />
+            <PaginationButton
+              direction="right"
+              src={nextButton}
+              onClick={handleNextPage}
+            />
             {frameList.length ? (
-              <PaginationContainer>
+              <PaginationWrapper>
                 <span>
                   {currentPage + 1} / {frameList.length}
                 </span>
-              </PaginationContainer>
+              </PaginationWrapper>
             ) : (
-              <PaginationContainer>
+              <PaginationWrapper>
                 <span>- / -</span>
-              </PaginationContainer>
+              </PaginationWrapper>
             )}
           </CanvasWrapper>
         </div>
@@ -387,15 +396,28 @@ function DiffingResult() {
   );
 }
 
-const PaginationContainer = styled.div`
+const PaginationButton = styled.img`
+  position: absolute;
+  top: 50%;
+  ${({ direction }) => (direction === "left" ? "left: 10px;" : "right: 10px;")}
+  transform: translateY(-50%);
+
+  width: 40px;
+  height: 40px;
+
+  cursor: pointer;
+`;
+
+const PaginationWrapper = styled.div`
   position: absolute;
   bottom: 20px;
   right: 20px;
 
+  padding: 10px 20px;
+
   background-color: #000000;
   color: #ffffff;
   border-radius: 20px;
-  padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -422,7 +444,7 @@ const ResultWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     padding: 16px 32px;
-    border-bottom: 2px solid #000000;
+    border: 2px solid #000000;
   }
 
   .version-information {
