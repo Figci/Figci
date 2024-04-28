@@ -11,7 +11,7 @@ function Loading() {
         <Description
           className="description"
           size="medium"
-          text="Depending on the file size and number of pages,\n comparing the entire file may take a while."
+          text="Depending on the file size and number of pages, comparing the entire file may take some time.\n Particularly for large Figma files, it could take more than a minute."
         />
       </TextWrapper>
     </Wrapper>
