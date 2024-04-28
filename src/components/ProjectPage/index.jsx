@@ -17,6 +17,7 @@ import getDiffingResultQuery from "../../services/getDiffingResultQuery";
 function ProjectPage() {
   const [toast, setToast] = useState({});
   const [selectedPageId, setSelectedPageId] = useState("");
+  const [isClick, setIsClick] = useState(false);
 
   const { byPageIds } = usePageListStore();
   const { project, setProject, clearPageId } = useProjectStore();
@@ -33,19 +34,27 @@ function ProjectPage() {
     isLoading,
     isError,
     error,
-  } = getDiffingResultQuery(projectKey, beforeVersion, afterVersion, pageId);
+  } = getDiffingResultQuery(
+    projectKey,
+    beforeVersion,
+    afterVersion,
+    pageId,
+    isClick,
+  );
 
   useEffect(() => {
-    if (diffingResult) {
+    if (diffingResult && isClick) {
       if (diffingResult.result === "error") {
         setToast({ status: true, message: diffingResult.message });
+        setIsClick(false);
 
         return;
       }
 
+      setIsClick(false);
       navigate("/result");
     }
-  }, [diffingResult]);
+  }, [diffingResult, isClick]);
 
   const handleChange = ev => {
     setSelectedPageId(ev.target.value);
@@ -61,6 +70,7 @@ function ProjectPage() {
     }
 
     setProject({ pageId: selectedPageId });
+    setIsClick(true);
   };
 
   const selectOptionRenderList = () => {

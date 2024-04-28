@@ -39,6 +39,7 @@ const getDiffingResultQuery = (
   beforeVersion,
   afterVersion,
   pageId,
+  isClick,
 ) => {
   return useQuery(
     `${beforeVersion}-${afterVersion}-${pageId}`,
@@ -55,7 +56,7 @@ const getDiffingResultQuery = (
     {
       cacheTime: 300000,
       staleTime: Infinity,
-      enabled: !!pageId,
+      enabled: isClick,
     },
   );
 };
