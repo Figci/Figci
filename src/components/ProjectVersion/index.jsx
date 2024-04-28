@@ -83,9 +83,9 @@ function ProjectVersion() {
     if (pageList.result === "error") {
       setIsLoaded(false);
 
-      setToast({ statue: true, message: pageList.message });
+      setToast({ status: true, message: pageList.message });
 
-      navigate("/new");
+      return;
     }
 
     setPages(pageList.content);
