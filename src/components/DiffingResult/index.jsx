@@ -440,7 +440,7 @@ const ResultWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     padding: 16px 32px;
-    border: 2px solid #000000;
+    border-bottom: 2px solid #000000;
   }
 
   .version-information {
