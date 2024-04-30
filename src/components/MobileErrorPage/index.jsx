@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Description from "../shared/Description";
 
-import mobileErrorImage from "../../assets/mobile_error_image.png";
+import mobileErrorImage from "../../assets/not-found-image.png";
 import figciLogo from "../../assets/logo_figci.png";
 
 function MobileErrorPage() {
