@@ -395,25 +395,25 @@ function DiffingResult() {
 const PaginationButton = styled.img`
   position: absolute;
   top: 50%;
-  ${({ direction }) => (direction === "left" ? "left: 10px;" : "right: 10px;")}
+  ${({ direction }) => (direction === "left" ? "left: 24px;" : "right: 24px;")}
   transform: translateY(-50%);
 
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
 
   cursor: pointer;
 `;
 
 const PaginationWrapper = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
 
   padding: 10px 20px;
-
-  background-color: #000000;
-  color: #ffffff;
   border-radius: 20px;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
   font-size: 16px;
   font-weight: bold;
 `;
