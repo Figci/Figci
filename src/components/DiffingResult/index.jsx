@@ -84,9 +84,9 @@ function DiffingResult() {
   const beforeVersionLabel = getVersionLabel(beforeDate, beforeVersion);
   const afterVersionLabel = getVersionLabel(afterDate, afterVersion);
 
-  const handleClickPagination = e => {
-    const direction = e.currentTarget.getAttribute("direction");
-    const offsetIndex = direction === "left" ? 1 : frameList.length - 1;
+  const handleClickPagination = ev => {
+    const direction = ev.currentTarget.getAttribute("direction");
+    const offsetIndex = direction === "left" ? frameList.length - 1 : 1;
     const nextIndex = (currentPage + offsetIndex) % frameList.length;
 
     changeFrame(nextIndex);
