@@ -111,7 +111,6 @@ function NewProject() {
           <Welcome handleClick={handleModalClick} />
         </Modal>
       )}
-      l
       <ContentsWrapper>
         <form onSubmit={handleSubmitURI}>
           <Title title={contents.title} />
@@ -142,7 +141,8 @@ const ContentsWrapper = styled.div`
 
   input {
     display: flex;
-    width: 560px;
+    width: 100%;
+    max-width: 560px;
     height: 64px;
     padding: 0px 24px;
     border-radius: 8px;

@@ -27,7 +27,7 @@ const TitleWrapper = styled.div`
   }
 
   .spacing {
-    white-space: pre;
+    white-space: pre-wrap;
   }
 `;
 
