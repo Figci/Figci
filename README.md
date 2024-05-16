@@ -1,15 +1,52 @@
 # Figci
 
+## 🧑🏻‍🏫 서비스 소개
+
+### **Figci (Figma, Compare, Interface designs)**
 <img src="src/assets/readme/thumbnail_figci.png" width="720" />
 
-**Figci (Figma, Compare, Interface designs)**
 
 <br />
+
+**Figci**는 Git의 코드 변경사항을 시각적으로 표시해주는 아이디어에 착안하여 개발된 Figma 프로젝트 파일의 버전 관리 웹 서비스 및 피그마 플러그인 서비스 입니다. 
+
 <br />
 
-# 1. Service Introduction
+**Figci**는 사용자가 선택한 특정 버전 간의 모든 요소의 차이점을 분석하여서 변경사항이 감지된 사항 를 시각적으로 강조하여서 표시해주고 동시에 변경 사항을 텍스트로 표시해줍니다.
 
-## 💡 Motivation
+## 🔗 Links
+<div style="text-align:center; font-size: 16px;">
+  <a href="https://www.figma.com/community/plugin/1339982367203490154"><b>🔌 피그마 앱 플러그인</b></a> |
+  <a href="https://client.figci.net"><b>🌐 웹 앱 서비스</b></a>
+</div>
+
+## 💼 Contents
+- [**프로젝트 소개**](#figci)
+  - [🧑🏻‍🏫 서비스 소개](#🧑🏻‍🏫-서비스-소개)
+  - [💡 기획 동기](#💡-기획-동기)
+  - [🚀 기술 스택](#🚀-기술-스택)
+- [**기능 설명**](#기능-설명)
+- [**기술 챌린지**](#기술-챌린지)
+  - [🤔 Diffing: 효율적인 차이 분석 로직을 향한 여정](#🤔-diffing-효율적인-차이-분석-로직을-향한-여정)
+  - [🗄️ 복잡한 피그마 Data를 MongoDB에 어떻게 저장할까?](#🗄️-복잡한-피그마-data를-mongodb에-어떻게-저장할까)
+  - [📚 16MB 이상의 대용량 파일은 MongoDB에 어떻게 저장할까?](#📚-16mb-이상의-대용량-파일은-mongodb에-어떻게-저장할까)
+  - [🎨 피그마 JSON 파일을 어떻게 렌더할 수 있을까?](#🎨-피그마-json-파일을-어떻게-렌더할-수-있을까)
+  - [👤 플러그인에서는 OAuth 로그인을 어떻게 구현해야 할까?](#👤-플러그인에서는-oauth-로그인을-어떻게-구현해야-할까)
+
+- [**개발 이슈**](#4-issue)
+  - [🙅‍♂️ 캔버스에 이벤트가 발생하지 않는다?!](#🙅‍♂️-캔버스에-이벤트가-발생하지-않는다)
+  - [🫨 렌더링 순서가 뒤죽박죽!](#🫨-렌더링-순서가-뒤죽박죽)
+  - [🦥 diffing 응답속도가 너무 느려요! (feat. Testing)](#🦥-diffing-응답속도가-너무-느려요-feat-testing)
+  - [❔gridFS Map 데이터가 JSON 직렬화시 데이터가 사라진다?](#❔-gridfs-map-데이터가-json-직렬화시-데이터가-사라진다)
+  
+
+- [**팀 문화 & 코드 컨벤션**](#team-culture--convention)
+  - [📋 팀 문화](#📋-team-culture)
+  - [🤝 코드 컨벤션](#🤝-convention)
+  - [👨‍👩‍👦 팀원 소개](#👨‍👩‍👦-팀원-소개)
+  - [✍️ 프로젝트 회고](#✍️-회고)
+
+## 💡 기획 동기
 
 디자이너였던 팀원이 현업에서 개발자와의 협업 중 겪었던 불편함을 해결하기 위해 아이디어를 구상했습니다.<br />
 이 아이디어로 해결하고자 한 주요 문제점은 다음과 같습니다.
@@ -26,7 +63,7 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 <br />
 
-## 🚀 Stacks
+## 🚀 기술 스택
 
 ### FrontEnd
 
@@ -67,10 +104,13 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 <br />
 <br />
 
-# 2. Feature
+# 기능 설명
 ### 1) 피그마 계정 로그인
+<details><summary><b>🎥 Preview</b></summary>
+<p>
 <img src="src/assets/readme/gif_login.gif" width="720" alt="피그마 계정 로그인 gif"/>
-
+</p>
+</details>
 → `OAuth 2.0` 를 통해 Figma 계정으로 로그인하여 `Aceess Token`을 요청합니다.
 
 > 로그인 성공 시 서비스 페이지로 redirect 하며 Welcome 모달이 렌더링 됩니다.<br />
@@ -79,7 +119,11 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 ### 2) 프로젝트 버전 선택 (Web)
 
+<details><summary><b>🎥 Preview</b></summary>
+<p>
 <img src="src/assets/readme/gif_version.gif" width="720" alt="버전 선택 gif"/>
+</p>
+</details>
 
 → 사용자가 변경사항을 확인하고 싶은 프로젝트의 링크를 입력하면 해당 프로젝트의 모든 버전 리스트가 나타나며, 사용자가 비교하고자 하는 두 버전을 선택할 수 있습니다.
 
@@ -88,7 +132,11 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 ### 3) 변경사항 시각화 (Web)
 
+<details><summary><b>🎥 Preview</b></summary>
+<p>
 <img src="src/assets/readme/gif_difference.gif" width="720" alt="변경사항 시각화 gif"/>
+</p>
+</details>
 
 → 사용자가 선택한 두 버전에 공통으로 존재하는 페이지 중 하나를 선택하면 해당 페이지에 있는
 모든 변경사항이 있는 프레임들을 렌더링한 뒤, 변경사항을 시각화합니다.
@@ -99,23 +147,33 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 ### 4) 새로운 버전 선택 하기 & 피그마로 이동하기 (Web)
 
+<details><summary><b>🎥 Preview</b></summary>
+<p>
+
 |새 버전 선택 하기|피그마로 이동하기|
 |----|----|
 |<img src="src/assets/readme/gif_reversion.gif" width="max-content" alt="새 버전 선택 gif"/>|<img src="src/assets/readme/gif_open_figma.gif" width="max-content" alt="피그마에서 열기 gif"/>|
 |현재 프로젝트의 **다른 버전 간의 차이점**을 확인할 수 있습니다.|확인 중인 디자인 요소를 **피그마 앱**에서 확인 할 수 있습니다.|
+
+</p>
+</details>
 
 > 현재 프로젝트의 다른 버전을 선택할 수 있도록 버전 선택 창으로 리디렉션 됩니다.<br />
 > 피그마 어플리케이션에서 사용자가 확인 중인 디자인의 요소의 위치에 자동 포커스 되어서 보여집니다.<br />
 
 ### 5) 변경사항 페이지네이션 (Plugin)
 
+<details><summary><b>🎥 Preview</b></summary>
+<p>
 <img src="src/assets/readme/gif_pagination.gif" width="720" alt="페이지네이션 gif"/>
+</p>
+</details>
 
 → 변경사항이 있는 모든 요소들을 직접 클릭해서 확인 할 수도 있지만,<br />
 화살표 버튼을 통해서 변경사항이 있는 요소들을 하나씩 확인 할 수도 있습니다.<br />
 <br />
 
-# 3. Challenge
+# 기술 챌린지
 
 ## 🤔 Diffing: 효율적인 차이 분석 로직을 향한 여정
 
@@ -161,7 +219,133 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 <br />
 
-## 🗄️ 복잡한 피그마 Data를 MongoDB에 어떻게 저장할까? <a id="flattenFigmaData"></a>
+## 📚 16MB 이상의 대용량 파일은 MongoDB에 어떻게 저장할까?
+
+두 버전의 피그마 디자인을 비교하기 위해서 피그마 API 로부터 피그마 데이터가 16MB 이상일 경우 MongoDB에 저장 시 에러가 발생했습니다.
+
+### 1) MongoDB에서 대용량의 파일을 저장 할 수 없는 이유는?
+MongoDB에서는 단일 Document의 최대 저장 가능 용량을 16MB로 제한하고 있습니다.
+
+문서 저장 크기를 제한하는 이유는 공식문서에서 아래와 같이 설명하고 있습니다.
+
+> 1. 인덱싱과 쿼리 **성능을 최적화**하기 위해
+> 2. 메모리 사용량을 관리하고 **시스템 안정성**을 유지하기 위해
+> 3. 네트워크 대역폭을 효율적으로 사용해서 **속도를 최적화** 하기 위해
+> 4. 문서 업데이트 작업의 **원자성과 일관성을 유지**하기 위해
+
+### 2) GridFS는 어떤 기능이고 어떻게 동작할까?
+GridFS는 MongoDB에서 제공하는 대용량 파일을 저장하기 위한 기능으로 파일을 청크(chunk)라는 작은 단위로 분할해서 chunk 컬렉션에 저장하고, 파일의 메타데이터는 files 컬렉션에 저장해서 관리합니다.
+
+GridFS를 사용하여 대용량 파일을 저장할 때는 다음과 같은 과정을 거칩니다
+
+1. 파일을 GridFS에 저장할 때, 파일은 청크 단위로 분할 합니다.
+2. 각 청크는 고유한 ObjectId를 공유하고 `chunks` 컬렉션에 저장 됩니다.
+3. 파일의 메타데이터(파일명, 크기, 청크 정보 등)는 `files` 컬렉션에 저장 됩니다.
+4. 파일 조회시 `files` 에서 메타데이터를 찾고, 해당 파일의`chunks` 를 합쳐서 파일을 재구성 합니다.
+
+요약하자면
+
+![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/c7bd2de3-794b-4814-a83f-05c37494a320)
+
+- 파일구성 :  GridFS는 메타데이터 `files`와 작은 단위로 쪼갠 `chunk` 로 구성됩니다.
+- 청크의 기본 크기는 255KB이며 파일의 고유 objectId를 참조해서 파일을 재구성합니다.
+- 청크 단위로 파일을 읽고 쓸때 스트리밍 방식으로 이루어지므로 실시간 데이터 처리가 가능합니다.
+- 대용량 파일을 안정적으로 처리 할 수 있고 스트리밍 방식으로 메모리 사용량을 최소화할 수 있습니다
+
+### 3) 스트림 (Stream) 이란?
+MongoDB의 GridFS에서 대용량 파일을 다룰 때는 스트림 `Stream`방식을 사용하여 데이터를 처리합니다.
+`Stream`이란 단어에서 유추할수 있듯이 데이터를 끊기지 않고 연속적으로 전송하고 처리하는 방식입니다.
+
+`Stream` 의 장점을 요약하자면 다음과 같습니다.
+
+1. 메모리 효율성
+    - 대용량 파일을 청크 단위로 처리하므로 메모리 사용량을 최소화 합니다.
+2. 네트워크 효율성
+    - 각 청크는 독립적으로 전송되므로 네트워크 대역폭을 효율적으로 활용하고 전송시간을 단축 합니다.
+3. 실시간 데이터 처리
+    - 청크 단위로 데이터를 처리하는 동시에 변환, 압축등 추가적인 작업을 실시간으로 수행 할 수 있습니다.
+
+⇒ `GridFS`에서 스트림 방식을 사용함으로써 대용량 파일을 효율적으로 처리할 수 있고, 이벤트 기반 처리를 통해 에러 핸들링과 로직 작성이 간편해지고 메모리와 효율성을 높이고 실시간 데이터 처리가 가능해집니다.
+
+### 4) 우리 서비스에서 gridFS 를 어떻게 적용할 수 있을까?
+- **파일 용량에 따른 저장방식 분기처리**
+
+평탄화된 피그마 데이터를 직렬화 하여서 `length` 메서드를 사용해서 구한 파일의 크기에 따라서 <span style="color: #CBF6C1">gridFS 파일 형태로 저장할지 </span>스키마 구조대로 컬렉션에 <span style="color: #FFA5A5">Document 로 저장할지 </span> 분기처리 하였습니다.
+
+```js
+
+// lenth 메서드를 활용해서 파일의 크기를 구하기
+const documentSize = JSON.stringify(document).length;
+	if (documentSize <= CONSTANT.MAX_DOCUMENT_SIZE) {
+	// 16MB 이하 데이터의 경우 스미카 설계대로 Document 저장
+    const flattenedDocument = await Document.create(document);
+
+    return flattenedDocument;
+  }
+
+	// 16MB 이상 데이터의 경우 gridFS 파일로 저장
+  const gridFSDocument = await saveDocumentToGridFS(document);
+
+  return gridFSDocument;
+```
+
+GridFS를 활용하여 대용량 파일을 처리하는 방식은 아래의 순서로 동작합니다.
+
+1. gridFS 파일을 저장하려는 DB에 연결 하기 위한 bucket을 생성
+    
+    ```jsx
+    const initBucket = async () => {
+      const db = mongoose.connection.client.db(CONFIG.DB_NAME);
+    
+      bucket = new GridFSBucket(db, { bucketName: CONSTANT.BUCKET_NAME });
+    };
+    ```
+    
+2. 해당 bucket에 데이터 처리를 위한 stream 메서드를 실행
+    - 파일 저장 시: `GridFSBucket.openUploadStream()`
+    - 파일 조회 시: `GridFSBucket.openDownloadStream()`
+3. chunk 단위로 데이터를 처리
+    - 저장 시 : 메타데이터를 `files` 컬렉션에 저장하고, 파일 청크를 `chunks` 컬렉션에 저장한다.
+    - 조회 시 : 메타데이터를 `files` 컬렉션에서 조회하고  `chunks` 에서 청크로 파일을 재구성한다.
+4. 결과 반환
+    - chunk 데이터를 하나로 합쳐 데이터를 재구성하여서 결과값을 `resolve` 메서드에 담아 반환한다.
+    - gridFS 메서드를 호출한곳에서 gridFS Stream의 반환값이 Truthy 일때 다음 로직을 수행한다.
+5. 에러 핸들링
+    - chunk 단위의 데이터 처리를 실패 했을때 null을 `resolve` 메서드에 담아 반환한다.
+    - gridFS 메서드를 호출한곳에서 gridFS Stream의 반환값이 Falsy 일때 에러 핸들링 수행한다.
+
+### 5) GridFS 파일과 Document 객체의 데이터 구조가 달라요..
+피그마 파일 데이터가 `16MB 이하인 경우`, 설계된 <span style="color: #CBF6C1">스키마에 따라 Map 형식으로 문서가 저장</span>됩니다. 반면, <span style="color: #FFA5A5">GridFS 파일은 피그마 파일 데이터 Object 타입 그대로 저장</span>되므로, Map 구조를 기반으로 동작하는 `비교 로직 수행 시 에러가 발생`했습니다.
+
+기존 스키마 설계대로 저장된 <span style="color: #CBF6C1">document 객체의 Map 타입</span>과 <span style="color: #FFA5A5">gridFS 파일 데이터의 Object 타입</span>을 같게 하기 위해서 <i><u>gridFS 데이터를 반환하기 전 Map 자료구조로 변환하는 로직을 수행</u></i>하도록 하여서 문제를 해결 할 수 있었습니다.
+
+```jsx
+// GridFS 파일 조회 시 ===================================================
+
+// Object 타입 데이터
+const gridFSFileBuffer = await downloadStreamToBuffer(downloadStream);
+const gridFSDocument = JSON.parse(gridFSFileBuffer.toString());
+
+// Object => Map 변환 로직 수행
+const convertedDocument = convertObjectToMap(gridFSDocument);
+
+return convertedDocument;
+
+
+// GridFS 파일 저장 시 ===================================================
+// Object 타입 데이터
+const savedGridFSObject = await uploadStreamToGridFS(
+	uploadStream, 
+	flattenFigmaJson,
+);
+
+// Object => Map 변환 로직 수행
+const convertedDocument = convertObjectToMap(savedGridFSObject);
+
+return convertedDocument;
+```
+
+## 🗄️ 복잡한 피그마 Data를 MongoDB에 어떻게 저장할까?
 
 ### 1) 초기 접근 방식: 피그마 JSON 데이터 저장 방식 고려
 
@@ -324,7 +508,7 @@ if (frameJSON.property.clipsContent === true) {
 
 <br />
 
-## 4. 플러그인에서는 OAuth 로그인을 어떻게 구현해야 할까?
+## 👤 플러그인에서는 OAuth 로그인을 어떻게 구현해야 할까?
 
 ### 1) 플러그인 환경에서는 redirect가 되지 않는다?
 
@@ -407,7 +591,7 @@ _→ 서버로 redirectURL을 우회하여 AccessToken을 클라이언트 측으
 <br />
 <br />
 
-# 4. Issue
+# Issue
 
 ## 🙅‍♂️ 캔버스에 이벤트가 발생하지 않는다?!
 
@@ -474,7 +658,7 @@ useEffect(() => {
 ### 2) 문제 해결
 
 1️⃣ 평탄화 시 실제 피그마 디자인의 중첩 구조를 보장하기 위해  `DFS(깊이 우선 탐색)` 대신 `BFS(너비 우선 탐색)로` 알고리즘을 변경하여 피그마 상에 중첩되어있는 구조를 보장하면서 평탄화할 수 있었습니다.<br />
-🔗 [**DFS** 로 피그마 데이터 평탄화 하기](#flattenFigmaData)
+🔗 [**DFS** 로 피그마 데이터 평탄화 하기](#🗄️-복잡한-피그마-data를-mongodb에-어떻게-저장할까)
 
 2️⃣ 평탄화된 디자인 요소의 중첩된 순서를 보장하기 위해 Fabric 객체로 변환된 피그마 데이터를 순회할때 Object 형태 대신 Map 형태로 변경하였습니다. 이를 통해 피그마 데이터의 원래 중첩 구조 순서대로 Fabric 객체가 만들어진 순서를 보장하여서 Canvas에 렌더링함으로 실제 피그마 상에 디자인과 동일한 순서대로 디자인 요소를 렌더 할 수 있었습니다.
 
@@ -614,7 +798,180 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 <br />
 <br />
 
-# 4. Team Culture & Convention
+## ❔ gridFS Map 데이터가 JSON 직렬화시 데이터가 사라진다?
+
+서버에서 <span style="color: #CBF6C1">**gridFS의 Map 데이터**</span>를 전송할 때 Map 구조가 Object로 직렬화 되면서 Map 내부 데이터가 소실되고 빈 객체를 전달하면서 클라이언트에서 프레임 내부가 빈 화면으로 렌더링 되는 에러가 발생했습니다.
+
+반면에 <span style="color: #FFA5A5">**MongoDB에서 조회한 Map 데이터**</span>를 비교한 결과는 클라이언트에 전송될 때 데이터가 유지된 채 Object로 직렬화 되고 있었습니다. 이에 따라 <span style="color: #CBF6C1">**gridFS의 Map 데이터**</span>가 Object 타입으로  직렬화 시 데이터가 소실되는 이유와 데이터 소실을 방지하면서 Object 데이터로 직렬화 하기 위한 방법을 찾아야 했었습니다.
+
+### 1) Map 구조 데이터가 왜 Object 타입으로 변환 되어있을까?
+<hr />
+서버에서 데이터를 클라이언트에 전송할때 연속된 데이터 형식인 JSON로 ***직렬화*** 되어서 전송하고 클라이언트에서는 `response.json()` 를 실행해서 ***역직렬화*** 해서 Javascript 객체 형태로 데이터에 접근할 수 있습니다.
+
+이때 클라이언트에서 전송된 데이터를 확인해보면 Map 데이터가 Object로 변환되는 이유는 <u>***`JSON`은 Map을 지원하지 않기 때문에***</u>Map 구조가 Object로 변환됩니다.
+
+JSON에 Map 지원이 없는 이유를 직접적으로  명시하지는 않지만 공식문서의 설계 목표와 원칙에서 
+알수 있듯이 단순성과 범용성을 중요하게 여기는 JSON의 특성 때문으로 유추 해볼 수 있습니다.
+
+> JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write
+
+### 2) Map 구조가 Object로 변환될때 왜 Map 데이터가 소실 될까?
+<hr />
+Map 데이터가 Object 로 변환되면서 Map 내부 데이터가 소실되고 빈 객체  `{}` 를 반환하고 있어서  프레임 내부 노드 데이터인 “nodes” 가 소실되고 캔버스에 렌더링 될때 빈 프레임만 렌더링 되는 에러가 발생했습니다.
+
+<br />
+
+|서버 -> 클라이언트 데이터 전송시 `nodes`의 Map 데이터가 소실(오른쪽) 되고 {} 빈 객체를 전달(왼쪽)|
+| ---- |
+|![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/b2dc3710-232f-445a-81fd-784eb6cdeb69)|
+ 
+<br />
+
+서버에서 데이터를 전송할때 연속된 형태의 JSON 형식으로 변환하는 직렬화 과정을 거치는데 이때 Map 내부 데이터가 소실되는이유는 `JSON`에는 Map을 처리할 수 없어서 Map을 일반 Object 객체로 취급하게 되기 때문에 Map 에서 Object 형태 (키-값) 로 접근할 수 있는 데이터가 없는 경우 빈 객체 `{}` 를 반환합니다.
+
+> **JSON은 Object 형태로 (키-값) 구성되어있지 않은 데이터는 다룰 수 없다.**
+
+### 3) MongoDB의 Map 데이터는 Object 변환시 소실되지 않는 이유
+<hr />
+그렇다면 왜 <span style="color: #FFA5A5">MongoDB에서 조회한 Map 데이터</span>는 Object 직렬화시 왜 Map 내부 데이터가 소실되지 않을까?
+
+|MongoDB Map 데이터 nodes의 데이터가 유실되지 않고 Object로 직렬화 되어서 클라이언트 데이터 전송됨|
+|----|
+|![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/681b2c8a-f684-4162-8fe1-56d1a2264e65)|
+
+MongoDB 에서 조회한 Map 데이터가 클라이언트에 전송 될때 nodes의 Map 데이터가 유실되지 않고 Object로 변환됩니다.
+
+MongoDB Map 데이터와 gridFS Map 데이터가 어떤 차이점을 가지고 있는지 확인하기 위해서 `fs` 모듈을 사용해서 클라이언트에 전송하기 전의 데이터를 텍스트 파일로 추출해서 비교해보았습니다.
+
+|1. Map 으로 변환된 gridFS 파일 데이터|2. MongoDB에 조회한 Map 구조 데이터|
+|----|----|
+|![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/1c2fdfce-02ad-49dd-bd9e-4b463c267e5d)|![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/51b8d2dd-b795-46c7-97a1-ea0d24319ff3)|
+
+<span style="color: #CBF6C1"></span>
+<span style="color: #FFA5A5"></span>
+
+
+<span style="color: #FFA5A5">MongoDB 데이터</span>는 `_id` 속성이 추가된것을 제외하면 <span style="color: #CBF6C1">gridFS 파일 데이터</span>와 구조가 동일해 보이지만 <span style="color: #FFA5A5">MongoDB 데이터</span>는 MongoDB 드라이버 내부에서 저장된 `BSON Map` 데이터를 `Javascript Map`으로 역직렬화해서 반환된 값이기 때문에 내부적으로는 ***Javascript Object 형태로도 값을 가지고 있는*** Map 데이터 입니다.
+
+> **즉, MongoDB 에서 조회한 데이터는 BSON Map 형식으로 Object 형태로도 값을 가지고 있기 때문에 직렬화시 Map 내부 데이터를 유지할 수 있습니다.**
+
+### 4) Map을 JSON으로 직렬화 할때 데이터를 유지할 수 있는 방법
+<hr />
+Map을 JSON으로 직렬화 할때 내부 데이터를 유지할 수 있는 방법에 대해서 코드로 확인해 보자면
+
+```jsx
+const map = new Map();
+
+// 직렬화시 데이터가 누락됩니다.
+map.set("name", "figci");
+
+// 직렬화시 데이터가 포함됩니다.
+map["team"] = "coreInsight";
+
+console.log(JSON.stringify(m));
+// {"team":"coreInsight"}
+```
+
+`set` 메서드로 추가한 “name” 은 직렬화시 key 값으로 데이터에 접근할수 없으므로 소실되고 object 형태의 key값으로 추가한 “team” 데이터는 key 값으로 데이터에 접근할 수 있으므로 유지됩니다.
+
+> **즉, Object 형태의 키-값으로 접근할 수 있는 데이터의 경우 JSON으로 직렬화시 데이터가 유지됩니다.**
+
+### 5) MongoDB에서 사용하는 BSON 형식은 무엇일까?
+<hr />
+MongoDB에서는 데이터를 조금 다른 방식으로 저장합니다. document를 저장하거나 프로시저를 호출할 때 `BSON(Binary JSON)`이라는 이진 형식으로 직렬화된 포맷을 사용해서 데이터를 효율적으로 저장하고 전송할 수 있도록 합니다.
+
+> [BSON](https://www.mongodb.com/docs/manual/reference/glossary/#std-term-BSON) is a binary serialization format used to store documents and make remote procedure calls in MongoDB.
+
+### 🧐 BSON 이란?
+
+`BSON`은 MongoDB에서 개발한 바이너리 직렬화 형식으로 JSON 기반으로 설계되었지만 효율성과 유연성 때문에 데이터 직렬화와 전송에 적합한 형식으로 인정받아 현재는 다른 프로젝트와 시스템에서도 널리 사용되고 있습니다.  
+
+- BSON 의 구조
+
+아래의 간단한 JSON 데이터를 BSON 형식으로 변환한 코드를 보면서 차이점을 확인할 수 있습니다.
+
+JSON 데이터가 binary 형태의 데이터로 변환되고 데이터의 길이, 타입 등 여러 메타데이터를 가지게 됩니다.
+
+```jsx
+// JSON - human readable
+{"hello": "world"}
+
+// BSON - machine readable
+\x16\x00\x00\x00           // total document size
+\x02                       // 0x02 = type String
+hello\x00                  // field name
+\x06\x00\x00\x00world\x00  // field value
+\x00                       // 0x00 = type EOO ('end of object')
+```
+<br />
+
+> 1. MongoDB는 데이터를 저장할때 내부적으로 `BSON` 형식을 사용하여서 저장한다.
+> 2. `BSON`은 `JSON`에서 지원하지 않는 다양한 자료구조를 지원하므로 유연성과 확장성이 높다.
+> 3. MongoDB에서 조회한 Map 데이터는 이미 Javascript Object 형태의 데이터를 가지고 있다.
+> 4. `BSON`은 다양한 인덱싱, 쿼리 기능을 지원할 수 있게 하는 MongoDB의 핵심 기능 요소이다.
+
+<br />
+MongoDB Map 데이터를 조회해서 클라이언트 전송시 아래의 순서로 데이터 변환이 일어납니다.
+
+1. MongoDB 데이터 저장 :
+    - MongoDB Driver에서 Javacript Object  ⇒ BSON Map 형식으로 직렬화
+2. MongoDB 데이터 조회
+    - MongoDB Driver에서 BSON Map ⇒ JavaScript Map으로 역직렬화 후 결과 반환
+
+      ⇒ 이때 Javascript Object (키-값) 형태로도 값을 가질수 있게 됩니다.
+    
+3. 서버 ⇒ 클라이언트 데이터 전송 :
+    - 네트워크 데이터 전송을 위해 JavaScript Map ⇒ JSON으로 직렬화하여 전송
+    
+      ⇒ Javascript Object 형태의 값을 가지고있기때문에 데이터가 소실되지 않습니다.
+    
+4. 클라이언트 데이터 출력 : 
+    - `response.json()` 으로 JSON  ⇒ Javascript Object 로 역직렬화 후 결과 반환
+
+
+### 6) gridFS Map 데이터를 손실 없이 Object로 변환하기
+<hr />
+Map 으로 변환된 gridFS 파일의 데이터 유실을 막기위해서 아래와 같은 2가지 방법을 생각했습니다.
+
+<br />
+<br />
+
+> **❌ 방법 1.**  gridFS 파일 Map 변환시 Javascript Map 이 아닌 BSON Map 으로 변환하기 ( 불가능 )
+
+⇒ BSON으로 변환하는 작업은 MongoDB 드라이브 내부에서 이루어지는 작업이기 떄문에 직접 구현이 불가
+
+> **✅  방법2.**  ****gridFS 파일 Map 변환시 Object 형태의 데이터 (키- 값) 추가 해추기
+
+⇒ JSON으로 직렬화시 Map을 Object 취급하므로 키-값으로 조회가능한 데이터의 경우 데이터 변환 가능함.
+
+**`방법 1`** 은 불가능 하다고 판단되어 **`방법 2`** 를 선택했습니다. Map 데이터를 생성시 Object 형태의 키-값 데이터를 함께 저장하면은 Map → Object 직렬화시 내부 데이터를 유지할 수가 있도록 했습니다.
+
+```jsx
+// 기존 로직 - object Entries의 이중 배열 데이터를 Map으로 변환
+if (key === "pages" || key === "frames" || key === "nodes") {
+  convertedObj[key] = new Map(
+    Object.entries(obj[key]).map(([pageId, pageValue]) => [
+      pageId,
+      convertObjectToMap(pageValue),
+    ]),
+  );
+}
+
+// 개선 후 로직 - set 메서드로 Map 데이터 추가 후 Object 타입의 데이터 추가
+if (key === "pages" || key === "frames" || key === "nodes") {
+  const convertedMap = new Map();
+
+  for (const [pageId, pageNodes] of Object.entries(gridFSObject[key])) {
+    convertedMap.set(pageId, convertObjectToMap(pageNodes)); // map 데이터 추가
+    convertedMap[pageId] = convertObjectToMap(pageNodes); // object 데이터 추가
+  }
+
+  convertedObject[key] = convertedMap;
+} 
+```
+<br />
+
+# Team Culture & Convention
 
 ## 📋 Team Culture
 
