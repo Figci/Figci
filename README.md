@@ -14,11 +14,15 @@
 
 **Figci**는 사용자가 선택한 특정 버전 간의 모든 요소의 차이점을 분석하여서 변경사항이 감지된 사항 를 시각적으로 강조하여서 표시해주고 동시에 변경 사항을 텍스트로 표시해줍니다.
 
+<br />
+
 ## 🔗 Links
+
 <div style="text-align:center; font-size: 16px;">
-  <a href="https://www.figma.com/community/plugin/1339982367203490154"><b>🔌 피그마 앱 플러그인</b></a> |
-  <a href="https://client.figci.net"><b>🌐 웹 앱 서비스</b></a>
+  <a href="https://www.figma.com/community/plugin/1339982367203490154"><b>🔌 피그마 앱 플러그인</b></a> | <a href="https://client.figci.net"><b>🌐 웹 앱 서비스</b></a>
 </div>
+
+<br />
 
 ## 💼 Contents
 - [**프로젝트 소개**](#figci)
@@ -28,23 +32,63 @@
 - [**기능 설명**](#기능-설명)
 - [**기술 챌린지**](#기술-챌린지)
   - [🤔 Diffing: 효율적인 차이 분석 로직을 향한 여정](#🤔-diffing-효율적인-차이-분석-로직을-향한-여정)
+    - [1) 초기 접근 방식: 동시 트리 순회](#1-초기-접근-방식-동시-트리-순회)
+    - [2) 해결책 : 트리 평탄화](#2-해결책--트리-평탄화)
+    - [3) 수정된 접근 방식 : 노드 ID를 기준으로 한 트리 순회](#3-수정된-접근-방식--노드-id를-기준으로-한-트리-순회)
+
   - [🗄️ 복잡한 피그마 Data를 MongoDB에 어떻게 저장할까?](#🗄️-복잡한-피그마-data를-mongodb에-어떻게-저장할까)
+    - [1) 초기 접근 방식: 피그마 JSON 데이터 저장 방식 고려](#1-초기-접근-방식-피그마-json-데이터-저장-방식-고려)
+    - [2) 해결 방안 모색 : 피그마 파일 스키마 구조화](#2-해결-방안-모색--피그마-파일-스키마-구조화)
+
   - [📚 16MB 이상의 대용량 파일은 MongoDB에 어떻게 저장할까?](#📚-16mb-이상의-대용량-파일은-mongodb에-어떻게-저장할까)
+    - [1) 문제 인식 : 피그마 데이터 16MB 이상일 경우 MongoDB 저장 시 에러 발생](#1-문제-인식--피그마-데이터-16mb-이상일-경우-mongodb-저장-시-에러-발생)
+    - [2) 문제 원인 : MongoDB에서 대용량의 파일을 저장 할 수 없는 이유는?](#2-문제-원인--mongodb에서-대용량의-파일을-저장-할-수-없는-이유는)
+    - [3) 해결 방안 모색 : GridFS는 어떤 기능이고 어떻게 동작할까?](#3-해결-방안-모색--gridfs는-어떤-기능이고-어떻게-동작할까)
+    - [4) 문제 해결 : 우리 서비스에서 gridFS 를 어떻게 적용할 수 있을까?](#4-문제-해결--우리-서비스에서-gridfs-를-어떻게-적용할-수-있을까)
+    - [5) 추가 문제 인식 : GridFS 파일과 Document 객체의 데이터 구조가 달라요..](#5-추가-문제-인식--gridfs-파일과-document-객체의-데이터-구조가-달라요)
+    - [6) 문제 해결 : GridFS 파일을 Document 객체와 동일한 Map 구조로 변환](#6-문제-해결--gridfs-파일을-document-객체와-동일한-map-구조로-변환)
+  
   - [🎨 피그마 JSON 파일을 어떻게 렌더할 수 있을까?](#🎨-피그마-json-파일을-어떻게-렌더할-수-있을까)
+    - [1) 데이터 분석: 피그마 JSON 파일은 어떻게 구성되어 있을까?](#1-데이터-분석-피그마-json-파일은-어떻게-구성되어-있을까)
+    - [2) 피그마 요소 렌더링 : 피그마의 다양한 요소를 어떻게 효과적으로 렌더 할 수 있을까?](#2-다양한-피그마-요소-렌더링--피그마의-여러가지-도형이나-이미지를-어떻게-효과적으로-렌더할-수-있을까)
+    - [3) 객체의 이벤트 상호 작용 : 요소 간 발생하는 이벤트에 따라 상호작용하게 할 수 없을까?](#3-객체의-이벤트-상호-작용--요소-간-발생하는-이벤트에-따라-상호작용하게-할-수-없을까)
+    - [4) 피그마 디자인 속성 구현 : 피그마에 디자인 시스템 속성은 어떻게 구현할 수 있을까?](#4-피그마-디자인-속성-구현--피그마에-디자인-시스템-속성은-어떻게-구현할-수-있을까)
+
   - [👤 플러그인에서는 OAuth 로그인을 어떻게 구현해야 할까?](#👤-플러그인에서는-oauth-로그인을-어떻게-구현해야-할까)
+    - [1) 문제 인식 : 플러그인 환경에서는 redirect가 되지 않는다?](#1-문제-인식--플러그인-환경에서는-redirect가-되지-않는다)
+    - [2) 해결 방안 모색 : 서버로 우회하여 OAuth인증을 받자!](#2-해결-방안-모색--서버로-우회하여-oauth인증을-받자)
+    - [3) 추가 문제 인식 : 근데.. 클라이언트 측에서 인증 완료 여부를 어떻게 알지..? 😳](#3-추가-문제-인식--근데-클라이언트-측에서-인증-완료-여부를-어떻게-알지-😳)
+    - [4) 문제 해결 : Polling 방식을 사용한 인증 확인 요청](#4-문제-해결--polling-방식을-사용한-인증-확인-요청)
 
 - [**개발 이슈**](#4-issue)
   - [🙅‍♂️ 캔버스에 이벤트가 발생하지 않는다?!](#🙅‍♂️-캔버스에-이벤트가-발생하지-않는다)
+    - [1) 문제 원인 : Fabric.js 캔버스의 반복 렌더링](#1-문제-원인--fabricjs-캔버스의-반복-렌더링)
+    - [2) 문제 해결 : Fabric.js 캔버스의 sideEffect 처리](#2-문제-해결--fabricjs-캔버스의-sideeffect-처리)
   - [🫨 렌더링 순서가 뒤죽박죽!](#🫨-렌더링-순서가-뒤죽박죽)
+    - [1) 문제 원인 : Fabric 객체 생성 시 생성 순서 미보장](#1-문제-원인--fabric-객체-생성-시-생성-순서-미보장)
+    - [2) 문제 해결 : BFS 알고리즘 적용과 Map 자료구조 사용으로 객체 생성 순서 보장](#2-문제-해결--bfs-알고리즘-적용과-map-자료구조-사용으로-객체-생성-순서-보장)
+
   - [🦥 diffing 응답속도가 너무 느려요! (feat. Testing)](#🦥-diffing-응답속도가-너무-느려요-feat-testing)
+    - [1) 문제 원인: MongoDB에서 diffing 결과 조회 시 서브트리로 치환 로직에서 응답 속도 지연](#1-문제-원인-mongodb에서-diffing-결과-조회-시-서브트리로-치환-로직에서-응답-속도-지연)
+    - [2) 원인 분석 : 서브트리 치환 로직의 정확한 소요 시간 측정](#2-원인-분석--mongodb의-diffing-결과-프레임-서브트리-치환-로직의-정확한-소요-시간-측정)
+    - [3) 문제 해결: diffing 결과를 바로 응답하므로 서브트리 치환 로직 생략](#3-문제-해결-diffing-결과를-바로-응답하므로-서브트리-치환-로직-생략)
+    - [4) 테스트 결과 : 개선된 로직으로 기존 대비 약 2.5배의 응답 속도 향상 달성](#4-테스트-결과--개선된-로직으로-기존-대비-약-25배의-응답-속도-향상-달성)
+
   - [❔gridFS Map 데이터가 JSON 직렬화시 데이터가 사라진다?](#❔-gridfs-map-데이터가-json-직렬화시-데이터가-사라진다)
-  
+    - [1) 문제 인식 : gridFS Map 데이터 전송 시 데이터 소실로 인한 렌더링 에러 발생](#1-문제-인식--서버에서-gridfs-map-데이터-전송-시-내부-데이터-소실로-인한-렌더링-에러-발생)
+    - [2) 원인 분석 : Map 구조 데이터가 왜 Object 타입으로 변환 되어있을까?](#2-원인-분석--map-구조-데이터가-왜-object-타입으로-변환-되어있을까)
+    - [3) 원인 분석 : Map 구조가 Object로 변환될때 왜 Map 데이터가 소실 될까?](#3-원인-분석--map-구조가-object로-변환될때-왜-map-데이터가-소실-될까)
+    - [4) 원인 분석 : MongoDB의 Map 데이터는 Object 변환시 소실되지 않는 이유](#4-원인-분석--mongodb의-map-데이터는-object-변환시-소실되지-않는-이유)
+    - [5) 해결 방안 모색 : Map을 JSON으로 직렬화 할때 데이터를 유지할 수 있는 방법](#5-해결-방안-모색--map을-json으로-직렬화-할때-데이터를-유지할-수-있는-방법)
+    - [6) 문제 해결 : gridFS Map 데이터를 손실 없이 Object로 변환하기](#6-문제-해결--gridfs-map-데이터를-손실-없이-object로-변환하기)
 
 - [**팀 문화 & 코드 컨벤션**](#team-culture--convention)
   - [📋 팀 문화](#📋-team-culture)
   - [🤝 코드 컨벤션](#🤝-convention)
   - [👨‍👩‍👦 팀원 소개](#👨‍👩‍👦-팀원-소개)
   - [✍️ 프로젝트 회고](#✍️-회고)
+
+<br />
 
 ## 💡 기획 동기
 
@@ -141,7 +185,7 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 → 사용자가 선택한 두 버전에 공통으로 존재하는 페이지 중 하나를 선택하면 해당 페이지에 있는
 모든 변경사항이 있는 프레임들을 렌더링한 뒤, 변경사항을 시각화합니다.
 
-> <span style="color: red">빨간색 테두리</span>는 이전 버전과 대비하여 이후버전에서 변경사항이 생긴 요소 입니다. <br />
+> <span style="color: red">빨간색 테두리</span>는 이전 버전과 대비하여 이후 버전에서 변경사항이 생긴 요소 입니다. <br />
 > <span style="color: green">초록색 테두리</span>는 이전 버전에는 존재하지 않았으나, 이후 버전에서 새롭게 추가된 요소입니다.<br />
 > 각각의 테두리에 마우스를 hover할 시 디테일한 변경사항을 표시해줍니다.<br />
 
@@ -221,9 +265,14 @@ Git에서는 코드의 변경 사항을 초록색 또는 빨간색으로 표시�
 
 ## 📚 16MB 이상의 대용량 파일은 MongoDB에 어떻게 저장할까?
 
+### 1) 문제 인식 : 피그마 데이터 16MB 이상일 경우 MongoDB 저장 시 에러 발생
+
 두 버전의 피그마 디자인을 비교하기 위해서 피그마 API 로부터 피그마 데이터가 16MB 이상일 경우 MongoDB에 저장 시 에러가 발생했습니다.
 
-### 1) MongoDB에서 대용량의 파일을 저장 할 수 없는 이유는?
+<br />
+
+### 2) 문제 원인 : MongoDB에서 대용량의 파일을 저장 할 수 없는 이유는?
+
 MongoDB에서는 단일 Document의 최대 저장 가능 용량을 16MB로 제한하고 있습니다.
 
 문서 저장 크기를 제한하는 이유는 공식문서에서 아래와 같이 설명하고 있습니다.
@@ -233,7 +282,10 @@ MongoDB에서는 단일 Document의 최대 저장 가능 용량을 16MB로 제�
 > 3. 네트워크 대역폭을 효율적으로 사용해서 **속도를 최적화** 하기 위해
 > 4. 문서 업데이트 작업의 **원자성과 일관성을 유지**하기 위해
 
-### 2) GridFS는 어떤 기능이고 어떻게 동작할까?
+<br />
+
+### 3) 해결 방안 모색 : GridFS는 어떤 기능이고 어떻게 동작할까?
+
 GridFS는 MongoDB에서 제공하는 대용량 파일을 저장하기 위한 기능으로 파일을 청크(chunk)라는 작은 단위로 분할해서 chunk 컬렉션에 저장하고, 파일의 메타데이터는 files 컬렉션에 저장해서 관리합니다.
 
 GridFS를 사용하여 대용량 파일을 저장할 때는 다음과 같은 과정을 거칩니다
@@ -252,9 +304,12 @@ GridFS를 사용하여 대용량 파일을 저장할 때는 다음과 같은 과
 - 청크 단위로 파일을 읽고 쓸때 스트리밍 방식으로 이루어지므로 실시간 데이터 처리가 가능합니다.
 - 대용량 파일을 안정적으로 처리 할 수 있고 스트리밍 방식으로 메모리 사용량을 최소화할 수 있습니다
 
-### 3) 스트림 (Stream) 이란?
-MongoDB의 GridFS에서 대용량 파일을 다룰 때는 스트림 `Stream`방식을 사용하여 데이터를 처리합니다.
-`Stream`이란 단어에서 유추할수 있듯이 데이터를 끊기지 않고 연속적으로 전송하고 처리하는 방식입니다.
+>
+> **💡 스트림 (Stream) 이란?**
+>
+> MongoDB의 GridFS에서 대용량 파일을 다룰 때는 스트림 `Stream`방식을 사용하여 데이터를 처리합니다.
+>
+>`Stream`이란 단어에서 유추할수 있듯이 데이터를 끊기지 않고 연속적으로 전송하고 처리하는 방식입니다.
 
 `Stream` 의 장점을 요약하자면 다음과 같습니다.
 
@@ -267,7 +322,10 @@ MongoDB의 GridFS에서 대용량 파일을 다룰 때는 스트림 `Stream`방�
 
 ⇒ `GridFS`에서 스트림 방식을 사용함으로써 대용량 파일을 효율적으로 처리할 수 있고, 이벤트 기반 처리를 통해 에러 핸들링과 로직 작성이 간편해지고 메모리와 효율성을 높이고 실시간 데이터 처리가 가능해집니다.
 
-### 4) 우리 서비스에서 gridFS 를 어떻게 적용할 수 있을까?
+<br />
+
+### 4) 문제 해결 : 우리 서비스에서 gridFS 를 어떻게 적용할 수 있을까?
+
 - **파일 용량에 따른 저장방식 분기처리**
 
 평탄화된 피그마 데이터를 직렬화 하여서 `length` 메서드를 사용해서 구한 파일의 크기에 따라서 <span style="color: #CBF6C1">gridFS 파일 형태로 저장할지 </span>스키마 구조대로 컬렉션에 <span style="color: #FFA5A5">Document 로 저장할지 </span> 분기처리 하였습니다.
@@ -314,8 +372,19 @@ GridFS를 활용하여 대용량 파일을 처리하는 방식은 아래의 순�
     - chunk 단위의 데이터 처리를 실패 했을때 null을 `resolve` 메서드에 담아 반환한다.
     - gridFS 메서드를 호출한곳에서 gridFS Stream의 반환값이 Falsy 일때 에러 핸들링 수행한다.
 
-### 5) GridFS 파일과 Document 객체의 데이터 구조가 달라요..
+<br />
+
+### 5) 추가 문제 인식 : GridFS 파일과 Document 객체의 데이터 구조가 달라요..
+
+<hr />
+
 피그마 파일 데이터가 `16MB 이하인 경우`, 설계된 <span style="color: #CBF6C1">스키마에 따라 Map 형식으로 문서가 저장</span>됩니다. 반면, <span style="color: #FFA5A5">GridFS 파일은 피그마 파일 데이터 Object 타입 그대로 저장</span>되므로, Map 구조를 기반으로 동작하는 `비교 로직 수행 시 에러가 발생`했습니다.
+
+<br />
+
+### 6) 문제 해결 : GridFS 파일을 Document 객체와 동일한 Map 구조로 변환
+
+<hr />
 
 기존 스키마 설계대로 저장된 <span style="color: #CBF6C1">document 객체의 Map 타입</span>과 <span style="color: #FFA5A5">gridFS 파일 데이터의 Object 타입</span>을 같게 하기 위해서 <i><u>gridFS 데이터를 반환하기 전 Map 자료구조로 변환하는 로직을 수행</u></i>하도록 하여서 문제를 해결 할 수 있었습니다.
 
@@ -345,6 +414,8 @@ const convertedDocument = convertObjectToMap(savedGridFSObject);
 return convertedDocument;
 ```
 
+<br />
+
 ## 🗄️ 복잡한 피그마 Data를 MongoDB에 어떻게 저장할까?
 
 ### 1) 초기 접근 방식: 피그마 JSON 데이터 저장 방식 고려
@@ -359,7 +430,7 @@ return convertedDocument;
 
 <br />
 
-### 2) 해결책 : 피그마 파일 스키마 구조화
+### 2) 해결 방안 모색 : 피그마 파일 스키마 구조화
 
 <img src="src/assets/readme/image_database.png" width="720" alt="스키마 디자인 이미지"/>
 
@@ -374,7 +445,7 @@ Node 데이터를 평탄화 시킨 뒤 DB에 저장함으로 써 트리 구조�
 
 ## 🎨 피그마 JSON 파일을 어떻게 렌더할 수 있을까?
 
-### 1) 피그마 JSON 파일은 어떻게 구성되어 있을까?
+### 1) 데이터 분석: 피그마 JSON 파일은 어떻게 구성되어 있을까?
 
 **피그마 속성 분류**<br />
 서버로부터 전달받은 Figma JSON 트리를 Fabric.js를 사용하여 캔버스에 렌더링해야 했습니다.<br />
@@ -408,9 +479,13 @@ overrides: [ { id, overriddenFields },
 
 <br />
 
-### 2) 도형이나 이미지를 어떻게 다르게 렌더할 수 있을까?
+### 2) 다양한 피그마 요소 렌더링 : 피그마의 여러가지 도형이나 이미지를 어떻게 효과적으로 렌더할 수 있을까?
 
-피그마 데이터에서 분류한 속성들 중에서 디자인 속성을 canvas에 구현하고, 사용자의 사용자의 마우스 이벤트에 따라서 변경된 영역과 정보를 보여주어야 했기 때문에 이벤트 처리가 용이하고 각 이벤트에 따라서 상호작용할 수 있도록 ```fabric.js``` 를 사용하였습니다.
+#### 🎨 Why Fabaric.js?
+
+피그마 데이터에서 분류한 속성들 중에서 디자인 속성을 canvas에 구현하고, 사용자의 마우스 이벤트에 따라서 변경된 영역과 정보를 보여주어야 했기 때문에 이벤트 처리가 용이하고 각 이벤트에 따라서 상호작용할 수 있도록 ```fabric.js``` 를 사용하였습니다.
+
+<hr />
 
 **피그마 타입별 렌더 함수 작성**<br />
 피그마 디자인 파일의 JSON 데이터를 Fabric.js 객체로 변환하는 맵핑 함수를 구현하였습니다. <br /> 서버에서 전달받은 피그마 데이터를 한번의 순회로 fabric 객체로 변환하여서 디자인 요소들을 Canvas에 효과적으로 렌더링할 수 있게 되었습니다.
@@ -437,7 +512,7 @@ const renderFunctionByFigmaType = {
 
 <br />
 
-### 3) 요소 간 발생하는 이벤트에 따라 상호작용하게 할 수 없을까?
+### 3) 객체의 이벤트 상호 작용 : 요소 간 발생하는 이벤트에 따라 상호작용하게 할 수 없을까?
 
 사용자 경험을 고려해서 이전 버전과 비교해 **변경사항이 감지된 영역을 먼저 시각적으로 강조해 표시** 하고<br /> 사용자가 확인하기 원하는 영역에 마우스 이벤트가 발생했을 때만 변경된 내용이 보여지게 하고 싶었습니다.
 
@@ -445,6 +520,7 @@ const renderFunctionByFigmaType = {
 마우스 이벤트 발생에 따라 변경내용이 동적으로 보여지도록 **변경영역 도형과 변경사항 텍스트의 속성을 맵핑 후 렌더**하여서 사용자의 상호작용에 따라 실시간으로 변경내용이 보여지도록 구현하였습니다.
 
 ```javascript
+// 변경 사항 영역을 표시해주는 Rectangle 도형 객체
 rectObject.on("mouseover", () => {
   const [r, g, b, o] = getRGBNumber(rectObject.fill);
   const mouseoverColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
@@ -452,6 +528,7 @@ rectObject.on("mouseover", () => {
   rectObject.set({
     fill: mouseoverColor,
   });
+  // mouseOver 이벤트 발생시 변경사항 텍스트 보이기
   textObject.set({
     visible: true,
   });
@@ -465,6 +542,8 @@ rectObject.on("mouseout", () => {
   rectObject.set({
     fill: mouseoutColor,
   });
+
+  // mouseOut 이벤트 발생시 변경사항 텍스트 가리기
   textObject.set({
     visible: false,
   });
@@ -474,43 +553,29 @@ rectObject.on("mouseout", () => {
 
 <br />
 
-### 4) 피그마에 디자인 시스템 속성은 어떻게 구현할 수 있을까?
+### 4) 피그마 디자인 속성 구현 : 피그마에 디자인 시스템 속성은 어떻게 구현할 수 있을까?
 
 피그마 JSON 데이터를 canvas에 구현하면서 어려웠던 부분 중 하나는 피그마 디자인 시스템에서 사용하는 속성을 구현하지 못해서 실제 디자인과 다르게 보여지는 문제가 발생했습니다. <br />
-그 중 clipPath 속성을 구현한 부분에 대해서 작성했습니다.
+
+여러가지 피그마 디자인 속성 중 clipPath 속성을 구현한 부분에 대해서 작성했습니다.
 
 <br />
 
-> [!NOTE] <br /> > **`clipPath` 관련 속성**<br />
+> 💡 **`clipPath` 속성이란?**
 >
-> Figma 데이터에서 `clipsContent` 속성값을 확인하였습니다.<br />`clipsContent`가 true인 경우, 연결된 자식 노드를 찾아 `Fabric.js`객체로 변환하고<br /> `clipPath` 속성에 부모 노드를 추가하여 자식 노드와 부모 노드를 연결하였습니다.
+> clipPath 속성은 특정 영역을 잘라내어 그 영역 밖의 부분은 보이지 않게 하는 속성입니다.
 
-```javascript
-if (frameJSON.property.clipsContent === true) {
-  const clipTargetNode = fabricObject.get(frameJSON.frameId);
+<img src="src/assets/readme/image_clippath.png" width="720" alt="clippath"/>
 
-  clipTargetNode.absolutePositioned = true;
-  fabricObject.set(frameJSON.frameId, clipTargetNode);
+Figma 데이터에서 `clipsContent` 속성값을 확인하였습니다.<br />
+`clipsContent`가 true인 경우, 연결된 자식 노드를 찾아 `Fabric.js`객체로 변환하고<br /> `clipPath` 속성에 부모 노드를 추가하여 자식 노드와 부모 노드를 연결하였습니다.
 
-  for (const fabricObjectId in fabricObject) {
-    const isChildFrame = fabricObjectId !== frameJSON.frameId;
-    const isNotClipped = !fabricObject.get(fabricObjectId)?.clipPath;
-
-    if (isChildFrame && isNotClipped) {
-      const clippedTargetNode = fabricObject.get(fabricObjectId);
-
-      clippedTargetNode.clipPath = clipTargetNode;
-      fabricObject.set(fabricObjectId, clippedTargetNode);
-    }
-  }
-}
-```
 
 <br />
 
 ## 👤 플러그인에서는 OAuth 로그인을 어떻게 구현해야 할까?
 
-### 1) 플러그인 환경에서는 redirect가 되지 않는다?
+### 1) 문제 인식 : 플러그인 환경에서는 redirect가 되지 않는다?
 
 OAuth 2.0의 동작 과정은 사용자가 인증 서버에서 로그인하고 인증을 완료한 후,<br />
 저희가 등록한 `redirectURL`로 리디렉션하는 단계를 포함합니다.
@@ -532,7 +597,7 @@ _**이 문제를 해결하기 위해 저희는 OAuth인증을 저희가 구축�
 
 <br />
 
-### 2) 서버로 우회하여 OAuth인증을 받자!
+### 2) 해결 방안 모색 : 서버로 우회하여 OAuth인증을 받자!
 
 **저희가 생각해낸 방법은,**
 
@@ -559,7 +624,7 @@ _→ 서버로 redirectURL을 우회하여 AccessToken을 클라이언트 측으
 
 <br />
 
-### 3) 근데.. 클라이언트 측에서 인증 완료 여부를 어떻게 알지..? 😳
+### 3) 추가 문제 인식 : 근데.. 클라이언트 측에서 인증 완료 여부를 어떻게 알지..? 😳
 
 다만 서버로 우회하는 OAuth로그인 방식을 구현하면서 마주했던 또다른 문제점은
 
@@ -580,6 +645,8 @@ _→ 서버로 redirectURL을 우회하여 AccessToken을 클라이언트 측으
 
 <br />
 
+### 4) 문제 해결 : Polling 방식을 사용한 인증 확인 요청
+
 클라이언트 측에서는 로그인을 완료를 하게되면, <br />
 해당 시점 이후부터는 일정한 시간마다 서버에 지속적으로 AccessToken 전달을 요청하는 request를 보내게 됩니다.<br />
 서버측에서는 인증이 성공적으로 완료가 되어서 AccessToken을 발급 받았다면 <br />
@@ -588,7 +655,6 @@ _→ 서버로 redirectURL을 우회하여 AccessToken을 클라이언트 측으
 클라이언트 측에서는 AccessToken을 응답으로 받게 되면, 서버로 Polling 요청을 중단합니다. <br />
 이렇게 OAuth 로그인을 구현함으로써 플러그인 환경에서도 AccessToken을 발급받아 Figma REST API를 사용 할 수 있었습니다.<br />
 
-<br />
 <br />
 
 # Issue
@@ -599,7 +665,7 @@ _→ 서버로 redirectURL을 우회하여 AccessToken을 클라이언트 측으
 
 <br />
 
-### 1) 문제 원인
+### 1) 문제 원인 : Fabric.js 캔버스의 반복 렌더링
 
 Fabric.js에서는 객체가 그려지는 `lower.canvas`와 사용자 이벤트를 처리하는 `upper.canvas`가 분리되어 있는데<br /> 이벤트 처리를 담당하는 `upper.canvas` 에 문제가 있다고 판단했습니다.
 
@@ -610,7 +676,7 @@ Fabric.js에서는 객체가 그려지는 `lower.canvas`와 사용자 이벤트�
 
 <br />
 
-### 2) 문제 해결
+### 2) 문제 해결 : Fabric.js 캔버스의 sideEffect 처리
 
 #### 🧐 왜 `upper.canvas` 가 두 번 생성이 되고있을까?
 
@@ -650,12 +716,13 @@ useEffect(() => {
 
 ## 🫨 렌더링 순서가 뒤죽박죽!
 
-### 1) 문제 원인
+### 1) 문제 원인 : Fabric 객체 생성 시 생성 순서 미보장
 
 피그마에서는 디자인 요소의 중첩 구조에 따라 z-index를 구분하지만, 서버로부터 전달받은 JSON 데이터는 실제 중첩 구조와 다르게 평탄화되어 있었습니다. 또한 평탄화된 디자인 요소를 fabric 객체로 변환해서 Object 타입의 변수에 할당한 뒤 순회할 때, 객체내의 생성 순서가 보장되지 않아 실제 디자인과 다르게 렌더링되는 문제가 발생했습니다. 앞에 있어야 할 디자인 요소가 뒤로 가려져 보이지 않는 등 **디자인 요소의 중첩 순서가 바뀌는 문제 가 발생** 했습니다.
 
+<br />
 
-### 2) 문제 해결
+### 2) 문제 해결 : BFS 알고리즘 적용과 Map 자료구조 사용으로 객체 생성 순서 보장
 
 1️⃣ 평탄화 시 실제 피그마 디자인의 중첩 구조를 보장하기 위해  `DFS(깊이 우선 탐색)` 대신 `BFS(너비 우선 탐색)로` 알고리즘을 변경하여 피그마 상에 중첩되어있는 구조를 보장하면서 평탄화할 수 있었습니다.<br />
 🔗 [**DFS** 로 피그마 데이터 평탄화 하기](#🗄️-복잡한-피그마-data를-mongodb에-어떻게-저장할까)
@@ -666,7 +733,7 @@ useEffect(() => {
 
 ## 🦥 diffing 응답속도가 너무 느려요! (feat. Testing)
 
-### 1) 문제 원인
+### 1) 문제 원인: MongoDB에서 diffing 결과 조회 시 서브트리로 치환 로직에서 응답 속도 지연
 
 유저가 선택한 페이지의 diffing 결과를 가져오는 것은 문제가 되지 않았지만, 예상보다 변경사항을 도출하고, 유저에게 응답하기까지의 시간이 너무 길었습니다.
 
@@ -711,7 +778,9 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 
 <br/>
 
-위 로직을 저희는 `Postman`을 사용해서 `테스트`를 진행해보았습니다.
+### 2) 원인 분석 : MongoDB의 diffing 결과 프레임 서브트리 치환 로직의 정확한 소요 시간 측정
+
+위 로직에 소요되는 정확한 시간을 확인하고자 `Postman`을 사용해서 `테스트`를 진행해보았습니다.
 
 - **before-version의 크기와 after-version의 크기 : `5.8mb`, `8.1mb`**
 - **10개의 다른 버전의 다른 페이지, `delay`는 `100ms`로 설정**
@@ -720,7 +789,7 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 
 <br />
 
-#### 테스트 결과
+#### 테스트 결과: diffing 결과를 바로 전송하는 방식으로 변경 후 속도 개선 확인
 
   <img src="./src/assets/readme/image_test_result.png" width="720" />
 
@@ -767,7 +836,7 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 
 <br />
 
-### 2) 문제 해결
+### 3) 문제 해결: diffing 결과를 바로 응답하므로 서브트리 치환 로직 생략
 
 저희는 아래와 같은 아이디어를 도출했습니다.
 
@@ -778,7 +847,9 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 
 <br />
 
-**_따라서 로직을 수정하고 테스팅을 진행해보았습니다._**
+### 4) 테스트 결과 : 개선된 로직으로 기존 대비 약 2.5배의 응답 속도 향상 달성
+
+**_기존 diffing 결과를 DB에 저장하는 로직을 삭제하고 클라이언트에 바로 응답을 전달하는 방법으로 로직을 수정 한 뒤 테스팅을 진행했습니다._**
 
 **`Result 스키마`를 삭제** 하고 `diffingResult`를 바로 클라이언트에게 응답으로 보냄으로써
 
@@ -796,16 +867,19 @@ DB에 저장되는 형태는 이미지와 같이 frames의 값에 해당 페이�
 #### 약 `2.5배` 정도의 성능 개선을 이루어 낼 수 있었습니다.
 
 <br />
-<br />
 
 ## ❔ gridFS Map 데이터가 JSON 직렬화시 데이터가 사라진다?
+
+### 1) 문제 인식 : 서버에서 gridFS Map 데이터 전송 시 내부 데이터 소실로 인한 렌더링 에러 발생
 
 서버에서 <span style="color: #CBF6C1">**gridFS의 Map 데이터**</span>를 전송할 때 Map 구조가 Object로 직렬화 되면서 Map 내부 데이터가 소실되고 빈 객체를 전달하면서 클라이언트에서 프레임 내부가 빈 화면으로 렌더링 되는 에러가 발생했습니다.
 
 반면에 <span style="color: #FFA5A5">**MongoDB에서 조회한 Map 데이터**</span>를 비교한 결과는 클라이언트에 전송될 때 데이터가 유지된 채 Object로 직렬화 되고 있었습니다. 이에 따라 <span style="color: #CBF6C1">**gridFS의 Map 데이터**</span>가 Object 타입으로  직렬화 시 데이터가 소실되는 이유와 데이터 소실을 방지하면서 Object 데이터로 직렬화 하기 위한 방법을 찾아야 했었습니다.
 
-### 1) Map 구조 데이터가 왜 Object 타입으로 변환 되어있을까?
-<hr />
+<br />
+
+### 2) 원인 분석 : Map 구조 데이터가 왜 Object 타입으로 변환 되어있을까?
+
 서버에서 데이터를 클라이언트에 전송할때 연속된 데이터 형식인 JSON로 ***직렬화*** 되어서 전송하고 클라이언트에서는 `response.json()` 를 실행해서 ***역직렬화*** 해서 Javascript 객체 형태로 데이터에 접근할 수 있습니다.
 
 이때 클라이언트에서 전송된 데이터를 확인해보면 Map 데이터가 Object로 변환되는 이유는 <u>***`JSON`은 Map을 지원하지 않기 때문에***</u>Map 구조가 Object로 변환됩니다.
@@ -815,8 +889,10 @@ JSON에 Map 지원이 없는 이유를 직접적으로  명시하지는 않지�
 
 > JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write
 
-### 2) Map 구조가 Object로 변환될때 왜 Map 데이터가 소실 될까?
-<hr />
+<br />
+
+### 3) 원인 분석 : Map 구조가 Object로 변환될때 왜 Map 데이터가 소실 될까?
+
 Map 데이터가 Object 로 변환되면서 Map 내부 데이터가 소실되고 빈 객체  `{}` 를 반환하고 있어서  프레임 내부 노드 데이터인 “nodes” 가 소실되고 캔버스에 렌더링 될때 빈 프레임만 렌더링 되는 에러가 발생했습니다.
 
 <br />
@@ -831,8 +907,10 @@ Map 데이터가 Object 로 변환되면서 Map 내부 데이터가 소실되고
 
 > **JSON은 Object 형태로 (키-값) 구성되어있지 않은 데이터는 다룰 수 없다.**
 
-### 3) MongoDB의 Map 데이터는 Object 변환시 소실되지 않는 이유
-<hr />
+<br />
+
+### 4) 원인 분석 : MongoDB의 Map 데이터는 Object 변환시 소실되지 않는 이유
+
 그렇다면 왜 <span style="color: #FFA5A5">MongoDB에서 조회한 Map 데이터</span>는 Object 직렬화시 왜 Map 내부 데이터가 소실되지 않을까?
 
 |MongoDB Map 데이터 nodes의 데이터가 유실되지 않고 Object로 직렬화 되어서 클라이언트 데이터 전송됨|
@@ -847,16 +925,14 @@ MongoDB Map 데이터와 gridFS Map 데이터가 어떤 차이점을 가지고 �
 |----|----|
 |![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/1c2fdfce-02ad-49dd-bd9e-4b463c267e5d)|![image](https://github.com/Figci/Figci-Plugin-Client/assets/95596243/51b8d2dd-b795-46c7-97a1-ea0d24319ff3)|
 
-<span style="color: #CBF6C1"></span>
-<span style="color: #FFA5A5"></span>
-
-
 <span style="color: #FFA5A5">MongoDB 데이터</span>는 `_id` 속성이 추가된것을 제외하면 <span style="color: #CBF6C1">gridFS 파일 데이터</span>와 구조가 동일해 보이지만 <span style="color: #FFA5A5">MongoDB 데이터</span>는 MongoDB 드라이버 내부에서 저장된 `BSON Map` 데이터를 `Javascript Map`으로 역직렬화해서 반환된 값이기 때문에 내부적으로는 ***Javascript Object 형태로도 값을 가지고 있는*** Map 데이터 입니다.
 
 > **즉, MongoDB 에서 조회한 데이터는 BSON Map 형식으로 Object 형태로도 값을 가지고 있기 때문에 직렬화시 Map 내부 데이터를 유지할 수 있습니다.**
 
-### 4) Map을 JSON으로 직렬화 할때 데이터를 유지할 수 있는 방법
-<hr />
+<br />
+
+### 5) 해결 방안 모색 : Map을 JSON으로 직렬화 할때 데이터를 유지할 수 있는 방법
+
 Map을 JSON으로 직렬화 할때 내부 데이터를 유지할 수 있는 방법에 대해서 코드로 확인해 보자면
 
 ```jsx
@@ -876,21 +952,26 @@ console.log(JSON.stringify(m));
 
 > **즉, Object 형태의 키-값으로 접근할 수 있는 데이터의 경우 JSON으로 직렬화시 데이터가 유지됩니다.**
 
-### 5) MongoDB에서 사용하는 BSON 형식은 무엇일까?
+<br />
+
+#### 🧐 MongoDB에서 사용하는 BSON 형식은 무엇일까?
+
 <hr />
-MongoDB에서는 데이터를 조금 다른 방식으로 저장합니다. document를 저장하거나 프로시저를 호출할 때 `BSON(Binary JSON)`이라는 이진 형식으로 직렬화된 포맷을 사용해서 데이터를 효율적으로 저장하고 전송할 수 있도록 합니다.
 
 > [BSON](https://www.mongodb.com/docs/manual/reference/glossary/#std-term-BSON) is a binary serialization format used to store documents and make remote procedure calls in MongoDB.
 
-### 🧐 BSON 이란?
 
-`BSON`은 MongoDB에서 개발한 바이너리 직렬화 형식으로 JSON 기반으로 설계되었지만 효율성과 유연성 때문에 데이터 직렬화와 전송에 적합한 형식으로 인정받아 현재는 다른 프로젝트와 시스템에서도 널리 사용되고 있습니다.  
+- MongoDB에서는 document를 저장하거나 프로시저를 호출할 때 `BSON(Binary JSON)`이라는 이진 형식으로 직렬화된 포맷을 사용해서 데이터를 효율적으로 저장하고 전송할 수 있도록 합니다.
+
+<br />
+
+#### 🧐 BSON 이란?
+
+> `BSON`은 MongoDB에서 개발한 바이너리 직렬화 형식으로 JSON 기반으로 설계되었지만 효율성과 유연성 때문에 데이터 직렬화와 전송에 적합한 형식으로 인정받아 현재는 다른 프로젝트와 시스템에서도 널리 사용되고 있습니다.  
 
 - BSON 의 구조
 
 아래의 간단한 JSON 데이터를 BSON 형식으로 변환한 코드를 보면서 차이점을 확인할 수 있습니다.
-
-JSON 데이터가 binary 형태의 데이터로 변환되고 데이터의 길이, 타입 등 여러 메타데이터를 가지게 됩니다.
 
 ```jsx
 // JSON - human readable
@@ -903,7 +984,11 @@ hello\x00                  // field name
 \x06\x00\x00\x00world\x00  // field value
 \x00                       // 0x00 = type EOO ('end of object')
 ```
+JSON 데이터가 binary 형태의 데이터로 변환되고 데이터의 길이, 타입 등 여러 메타데이터를 가지게 됩니다.
+
 <br />
+
+MongoDB에서 사용하는 BSON 형식에 대해서 요약하자면
 
 > 1. MongoDB는 데이터를 저장할때 내부적으로 `BSON` 형식을 사용하여서 저장한다.
 > 2. `BSON`은 `JSON`에서 지원하지 않는 다양한 자료구조를 지원하므로 유연성과 확장성이 높다.
@@ -911,43 +996,51 @@ hello\x00                  // field name
 > 4. `BSON`은 다양한 인덱싱, 쿼리 기능을 지원할 수 있게 하는 MongoDB의 핵심 기능 요소이다.
 
 <br />
-MongoDB Map 데이터를 조회해서 클라이언트 전송시 아래의 순서로 데이터 변환이 일어납니다.
 
-1. MongoDB 데이터 저장 :
+<hr />
+
+MongoDB Map 데이터를 조회해서 클라이언트 전송시 ***아래의 순서로 데이터 변환***이 일어납니다.
+
+1. **MongoDB 데이터 저장 :**
     - MongoDB Driver에서 Javacript Object  ⇒ BSON Map 형식으로 직렬화
-2. MongoDB 데이터 조회
+
+2. **MongoDB 데이터 조회 :**
     - MongoDB Driver에서 BSON Map ⇒ JavaScript Map으로 역직렬화 후 결과 반환
 
       ⇒ 이때 Javascript Object (키-값) 형태로도 값을 가질수 있게 됩니다.
     
-3. 서버 ⇒ 클라이언트 데이터 전송 :
+3. **서버 ⇒ 클라이언트 데이터 전송 :**
     - 네트워크 데이터 전송을 위해 JavaScript Map ⇒ JSON으로 직렬화하여 전송
     
       ⇒ Javascript Object 형태의 값을 가지고있기때문에 데이터가 소실되지 않습니다.
     
-4. 클라이언트 데이터 출력 : 
+4. **클라이언트 데이터 출력 :**
     - `response.json()` 으로 JSON  ⇒ Javascript Object 로 역직렬화 후 결과 반환
 
+<br />
 
-### 6) gridFS Map 데이터를 손실 없이 Object로 변환하기
+### 6) 문제 해결 : gridFS Map 데이터를 손실 없이 Object로 변환하기
+
 <hr />
+
 Map 으로 변환된 gridFS 파일의 데이터 유실을 막기위해서 아래와 같은 2가지 방법을 생각했습니다.
 
-<br />
 <br />
 
 > **❌ 방법 1.**  gridFS 파일 Map 변환시 Javascript Map 이 아닌 BSON Map 으로 변환하기 ( 불가능 )
 
-⇒ BSON으로 변환하는 작업은 MongoDB 드라이브 내부에서 이루어지는 작업이기 떄문에 직접 구현이 불가
+- BSON으로 변환하는 작업은 MongoDB 드라이브 내부에서 이루어지는 작업이기 떄문에 직접 구현이 불가
 
 > **✅  방법2.**  ****gridFS 파일 Map 변환시 Object 형태의 데이터 (키- 값) 추가 해추기
 
-⇒ JSON으로 직렬화시 Map을 Object 취급하므로 키-값으로 조회가능한 데이터의 경우 데이터 변환 가능함.
+- JSON으로 직렬화시 Map을 Object 취급하므로 키-값으로 조회가능한 데이터의 경우 데이터 변환 가능함.
+
+<br />
 
 **`방법 1`** 은 불가능 하다고 판단되어 **`방법 2`** 를 선택했습니다. Map 데이터를 생성시 Object 형태의 키-값 데이터를 함께 저장하면은 Map → Object 직렬화시 내부 데이터를 유지할 수가 있도록 했습니다.
 
 ```jsx
-// 기존 로직 - object Entries의 이중 배열 데이터를 Map으로 변환
+// [ 기존 로직 ] object Entries의 이중 배열 데이터를 Map으로 변환
 if (key === "pages" || key === "frames" || key === "nodes") {
   convertedObj[key] = new Map(
     Object.entries(obj[key]).map(([pageId, pageValue]) => [
@@ -957,7 +1050,7 @@ if (key === "pages" || key === "frames" || key === "nodes") {
   );
 }
 
-// 개선 후 로직 - set 메서드로 Map 데이터 추가 후 Object 타입의 데이터 추가
+// [ 개선 후 로직 ] set 메서드로 Map 데이터 추가 후 Object 타입의 데이터 추가
 if (key === "pages" || key === "frames" || key === "nodes") {
   const convertedMap = new Map();
 
@@ -976,7 +1069,7 @@ if (key === "pages" || key === "frames" || key === "nodes") {
 ## 📋 Team Culture
 
 <details>
-<summary>Team Culture가 궁금하시다면</summary>
+<summary><span style="font-size: 16px;">Team Culture가 궁금하시다면</span></summary>
 <div markdown="1">
 
 ### Team Culture
@@ -998,7 +1091,7 @@ if (key === "pages" || key === "frames" || key === "nodes") {
 ## 🤝 Convention
 
 <details>
-<summary>Convention이 궁금하시다면</summary>
+<summary><span style="font-size: 16px;">Convention이 궁금하시다면</span></summary>
 <div markdown="1">
 
 <br />
