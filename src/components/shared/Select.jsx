@@ -64,7 +64,7 @@ const SelectWrapper = styled.div`
 
   .description {
     display: block;
-    width: 500px;
+    width: 100%;
 
     color: #868e96;
     font-size: 1rem;
