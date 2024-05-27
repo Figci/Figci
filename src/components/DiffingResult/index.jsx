@@ -275,7 +275,7 @@ function DiffingResult() {
       {isClickedNewVersion && (
         <Modal>
           <TextWrapper>
-            <h1 className="re-version-title">Compare a new project?</h1>
+            <h1 className="re-version-title">Compare a new version?</h1>
             <Description
               className="re-version-description"
               size="medium"
